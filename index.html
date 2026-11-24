@@ -454,6 +454,8 @@ body[data-view="word"] main { padding-bottom: 0; }
 
 /* New brain games */
 :root { --c-ws: #CFE3F3; --c-su: #F3D6DC; --c-odd: #D5EEE6; --c-trivia: #EEDFCB; }
+.mgame { position: relative; }
+.mg-new { position: absolute; top: 8px; right: 8px; background: #F95A77; color: #fff; font-weight: 800; font-size: 0.8rem; letter-spacing: .04em; padding: 3px 10px; border-radius: 999px; z-index: 1; }
 .more-games { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .mgame { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 14px; border-radius: 20px; border: 0; background: var(--card); color: var(--card-ink); text-align: left; cursor: pointer; box-shadow: 0 3px 0 rgba(0, 0, 0, 0.08); }
 .mgame .mg-art svg { width: 54px; height: 54px; display: block; }
@@ -1072,6 +1074,7 @@ function sw(key, label) { return `<button class="switch" role="switch" data-swit
 /* ---------- Home ---------- */
 function greeting() { const h = new Date().getHours(); return h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening"; }
 const ENCOURAGE = ["Take it easy. There's no hurry.", "Have a cup of tea handy? Let's begin.", "Every match helps the garden grow.", "Your brain loves a gentle stretch.", "A little puzzle a day keeps the mind spry."];
+const NEW_GAMES = ["bee", "dbl", "vine"];   /* shown first under More games with a "New" label */
 function renderHome() {
   const rec = today(), done = gamesDone(rec), k = dayKey(), f = flowerFor(k), plan = planFor(k);
   const mw = rec.garden.mw || 0, lw = rec.garden.lw || 0;
@@ -1100,7 +1103,7 @@ function renderHome() {
     </section>
     <section class="stack" aria-labelledby="moreh">
       <h2 id="moreh">More games</h2>
-      <div class="more-games">${Object.keys(GAMES).filter(g => !plan.includes(g)).map(g => `<button class="mgame" ${typeof GAMES[g].open === "function" ? GAMES[g].open() : GAMES[g].open} style="--card:${GAMES[g].color}"><span class="mg-art">${GAMES[g].art()}</span><span class="mg-name">${GAMES[g].name}</span><span class="mg-dom"><i class="dom-dot" style="background:${DOMAINS[GAMES[g].domain]}"></i>${GAMES[g].domain}${GAMES[g].done(rec) ? " · ✓ done" : ""}</span></button>`).join("")}</div>
+      <div class="more-games">${Object.keys(GAMES).filter(g => !plan.includes(g)).sort((x, y) => NEW_GAMES.includes(y) - NEW_GAMES.includes(x)).map(g => `<button class="mgame" ${typeof GAMES[g].open === "function" ? GAMES[g].open() : GAMES[g].open} style="--card:${GAMES[g].color}">${NEW_GAMES.includes(g) ? `<span class="mg-new">New</span>` : ""}<span class="mg-art">${GAMES[g].art()}</span><span class="mg-name">${GAMES[g].name}</span><span class="mg-dom"><i class="dom-dot" style="background:${DOMAINS[GAMES[g].domain]}"></i>${GAMES[g].domain}${GAMES[g].done(rec) ? " · ✓ done" : ""}</span></button>`).join("")}</div>
     </section>
     ${S.family ? `<div class="card family"><div class="who">${ICON.heart} A note from your family</div><p style="font-size:1.1rem">${esc(S.family)}</p></div>` : ""}
     <section class="card" aria-labelledby="wk2">
