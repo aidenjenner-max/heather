@@ -534,6 +534,43 @@ body[data-contrast="high"] .wk-hedge { fill: #3E7A30; stroke: #000; }
 .nb-count svg { width: 100%; height: 100%; }
 .nb-card .tr-opts { width: 100%; }
 .nb-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+
+.pz-q { text-align: center; font-size: 1.15rem; margin: 4px auto 10px; max-width: 520px; }
+.pz-board { position: relative; display: grid; grid-template-columns: repeat(var(--n), 1fr); gap: 6px; width: min(100%, 460px); margin: 0 auto; touch-action: none; user-select: none; -webkit-user-select: none; }
+.pz-cell { position: relative; aspect-ratio: 1; border-radius: 14px; border: 2px solid var(--line); background: var(--surface); display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 1; }
+.pz-tools { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 14px auto 0; max-width: 520px; }
+.pz-tools .btn { flex: 1 1 140px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+.pz-tools .btn svg { width: 24px; height: 24px; flex: none; }
+.bee-cell { z-index: auto; }
+.bee-cell.on { background: #FFF1BF; border-color: #B88600; }
+.bee-cell.head { box-shadow: 0 0 0 4px #FEBF0E inset; }
+.bee-num { position: relative; z-index: 3; width: 72%; height: 72%; border-radius: 50%; background: #783EFD; color: #fff; font-family: "Fredoka", sans-serif; font-weight: 700; font-size: clamp(1.2rem, 6vw, 2rem); display: flex; align-items: center; justify-content: center; border: 3px solid #fff; box-shadow: 0 0 0 2px #4A1FB8; }
+.bee-line { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
+.bee-line polyline { fill: none; stroke: #C8580C; stroke-width: 0.2; stroke-linecap: round; stroke-linejoin: round; opacity: 0.85; }
+.du-board { gap: 10px; }
+.du-cell { border-radius: 50%; background: var(--tile); border: 3px solid #4A1FB8; font-family: "Fredoka", sans-serif; font-weight: 700; font-size: clamp(1.4rem, 8vw, 2.6rem); color: #120127; transition: transform .15s; }
+.du-cell.sel { transform: scale(1.08); box-shadow: 0 0 0 5px #FEBF0E; }
+.du-cell.glow { box-shadow: 0 0 0 6px #FEBF0E; animation: duGlow 1s ease-in-out 3; }
+.du-cell.pop { animation: duPop .35s ease-out; }
+.du-empty { border: 2px dashed var(--line); background: transparent; cursor: default; }
+@keyframes duPop { 0% { transform: scale(.7); } 70% { transform: scale(1.12); } 100% { transform: scale(1); } }
+@keyframes duGlow { 50% { box-shadow: 0 0 0 10px rgba(254, 191, 14, .45); } }
+.vine-board { gap: 6px; }
+.vine-cell span { font-family: "Fredoka", sans-serif; font-weight: 700; font-size: clamp(1.4rem, 8vw, 2.4rem); color: #120127; }
+.vine-cell.sel { background: #ECE4FF; border-color: #783EFD; box-shadow: 0 0 0 3px #783EFD inset; }
+.vine-cell.found { background: var(--tile); border-color: #2D6340; cursor: default; }
+.vine-cell.glow { box-shadow: 0 0 0 5px #FEBF0E; }
+.vine-wall { border: none; background: repeating-linear-gradient(45deg, #CFE6BE 0 8px, #BFDDAA 8px 16px); cursor: default; }
+.vine-line { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
+.vine-line polyline { fill: none; stroke-width: 0.12; stroke-linecap: round; stroke-linejoin: round; }
+.vine-line .done { stroke: #2D6340; opacity: .55; }
+.vine-line .now { stroke: #783EFD; opacity: .7; }
+.vine-sel { text-align: center; font-family: "Fredoka", sans-serif; font-size: 2rem; font-weight: 700; letter-spacing: .12em; min-height: 1.4em; margin-top: 10px; }
+.vine-words { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 14px; margin: 6px auto 0; max-width: 520px; }
+.vine-words .vw { font-family: "Fredoka", sans-serif; font-size: 1.3rem; font-weight: 600; letter-spacing: .06em; padding: 4px 12px; border-radius: 12px; background: var(--surface); border: 2px solid var(--line); }
+.vine-words .vw.got { background: #D6F0DA; border-color: #2D6340; }
+:root[data-theme="dark"] .du-cell, :root[data-theme="dark"] .vine-cell span { color: #120127; }
+:root[data-theme="dark"] .vine-cell:not(.found):not(.sel) span { color: var(--ink, #fff); }
 .odd-q { text-align: center; font-weight: 700; font-size: 1.1rem; }
 .odd-grid { display: grid; grid-template-columns: repeat(var(--n), 1fr); gap: 8px; width: min(100%, 460px); margin: 0 auto; }
 .odd-c { aspect-ratio: 1; border-radius: 16px; border: 2px solid var(--line); background: var(--surface); cursor: pointer; padding: 10%; }
@@ -584,6 +621,7 @@ body[data-contrast="high"] .wk-hedge { fill: #3E7A30; stroke: #000; }
   --c-peek: var(--tint-rose);
   --c-match: var(--tint-tangerine); --c-su: var(--tint-tangerine);
   --c-odd: var(--tint-orchid); --c-two: var(--tint-orchid);
+  --c-bee: var(--tint-tangerine); --c-dbl: var(--tint-tangerine); --c-vine: var(--tint-sun);
   --c-mem: var(--tint-violet); --c-trivia: var(--tint-violet); --c-walk: var(--tint-violet); --c-names: var(--tint-violet);
 }
 /* ---------- Share / invite ---------- */
@@ -707,6 +745,9 @@ function normRec(rec) {
   if (!rec.two) rec.two = { done: false };
   if (!rec.walk) rec.walk = { done: false };
   if (!rec.names) rec.names = { done: false };
+  if (!rec.bee) rec.bee = { done: false };
+  if (!rec.dbl) rec.dbl = { done: false };
+  if (!rec.vine) rec.vine = { done: false };
   return rec;
 }
 function today() {
@@ -715,7 +756,7 @@ function today() {
   S.days[k].k = k;
   return normRec(S.days[k]);
 }
-function played(rec) { if (rec) normRec(rec); return !!rec && (rec.ws.done || rec.ws.found.length > 0 || rec.su.done || rec.odd.done || rec.trivia.done || rec.peek.done || rec.two.done || rec.walk.done || rec.names.done || (rec.garden && rec.garden.plays > 0) || (rec.word && (rec.word.done || rec.word.guesses.length > 0)) || rec.memory.done || rec.tiles.done || rec.tiles.found.length > 0 || rec.tiles.bonus.length > 0); }
+function played(rec) { if (rec) normRec(rec); return !!rec && (rec.ws.done || rec.ws.found.length > 0 || rec.su.done || rec.odd.done || rec.trivia.done || rec.peek.done || rec.two.done || rec.walk.done || rec.names.done || rec.bee.done || rec.dbl.done || rec.vine.done || (rec.garden && rec.garden.plays > 0) || (rec.word && (rec.word.done || rec.word.guesses.length > 0)) || rec.memory.done || rec.tiles.done || rec.tiles.found.length > 0 || rec.tiles.bonus.length > 0); }
 function gamesDone(rec) { if (!rec) return 0; normRec(rec); return planFor(rec.k || dayKey()).filter(g => GAMES[g].done(rec)).length; }
 function streak() {
   let d = new Date(); if (!played(S.days[dayKey(d)])) d = addDays(d, -1);
@@ -860,6 +901,9 @@ const ART = {
   trivia: () => `<svg viewBox="0 0 90 90" aria-hidden="true"><rect x="8" y="12" width="74" height="58" rx="12" fill="#8A5A3B" stroke="#4A2E1C" stroke-width="3"/><rect x="16" y="20" width="44" height="42" rx="8" fill="#F6EBDA"/><text x="38" y="53" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="32" fill="#5E3A8C">?</text><circle cx="70" cy="30" r="5" fill="#F5B82E"/><circle cx="70" cy="46" r="5" fill="#F6EBDA"/><path d="M28 70 l-6 12 M62 70 l6 12" stroke="#4A2E1C" stroke-width="4" stroke-linecap="round"/><path d="M30 12 L45 2 L60 12" fill="none" stroke="#4A2E1C" stroke-width="3"/></svg>`,
   two: () => `<svg viewBox="0 0 90 90" aria-hidden="true"><rect x="3" y="3" width="84" height="84" rx="12" fill="#EAF4E2" stroke="#221A2B" stroke-width="2.5"/><rect x="30" y="9" width="30" height="28" rx="5" fill="#fff" stroke="#6B5E78" stroke-width="2"/><g transform="translate(34 12) scale(0.22)">${KIND_ART[1]}</g><rect x="6" y="68" width="78" height="14" rx="4" fill="#8A5A3B"/><g transform="translate(56 62) scale(1.3)">${plantArt(true)}</g><g transform="translate(36 44) scale(1.3)">${CAN_ART}</g></svg>`,
   walk: () => `<svg viewBox="0 0 90 90" aria-hidden="true"><rect x="3" y="3" width="84" height="84" rx="12" fill="#CFE6BE" stroke="#221A2B" stroke-width="2.5"/>${[[14, 14], [48, 14], [14, 48], [48, 48]].map(([x, y]) => `<rect x="${x}" y="${y}" width="28" height="28" rx="5" fill="#5E9E4E" stroke="#2D6340" stroke-width="1.5"/>`).join("")}<polyline points="45,80 45,45 11,45 11,11 79,11" fill="none" stroke="#E9A61C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1 6"/><g transform="translate(28 30) scale(1.1)">${LANDMARKS.fountain.art}</g><g transform="translate(79 11) scale(1.6)">${WALKER}</g></svg>`,
+  bee: () => `<svg viewBox="0 0 90 90" aria-hidden="true"><rect x="3" y="3" width="84" height="84" rx="12" fill="#DDEFD0" stroke="#221A2B" stroke-width="2.5"/>${[0, 1, 2].map(y => [0, 1, 2].map(x => `<rect x="${10 + x * 24}" y="${10 + y * 24}" width="22" height="22" rx="5" fill="#fff" stroke="#9BC48A" stroke-width="1.5"/>`).join("")).join("")}<polyline points="21,21 45,21 45,45 21,45 21,69 69,69 69,21" fill="none" stroke="#C8580C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 5"/><circle cx="21" cy="21" r="8" fill="#783EFD" stroke="#fff" stroke-width="2"/><text x="21" y="25.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Fredoka, sans-serif">1</text><circle cx="69" cy="21" r="8" fill="#783EFD" stroke="#fff" stroke-width="2"/><text x="69" y="25.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Fredoka, sans-serif">3</text><g transform="translate(45 45)"><ellipse cx="0" cy="0" rx="9" ry="7" fill="#FEBF0E" stroke="#221A2B" stroke-width="1.8"/><path d="M-3 -6.5v13M3 -6.5v13" stroke="#221A2B" stroke-width="2.2"/><ellipse cx="-4" cy="-9" rx="5" ry="4" fill="#fff" stroke="#221A2B" stroke-width="1.4" opacity=".9"/><ellipse cx="4" cy="-9" rx="5" ry="4" fill="#fff" stroke="#221A2B" stroke-width="1.4" opacity=".9"/></g></svg>`,
+  dbl: () => `<svg viewBox="0 0 90 90" aria-hidden="true"><rect x="3" y="3" width="84" height="84" rx="12" fill="#FFE8D3" stroke="#221A2B" stroke-width="2.5"/><circle cx="25" cy="28" r="15" fill="#FFE2E8" stroke="#4A1FB8" stroke-width="2.5"/><text x="25" y="35" text-anchor="middle" font-size="19" font-weight="700" fill="#120127" font-family="Fredoka, sans-serif">4</text><circle cx="65" cy="28" r="15" fill="#FFE2E8" stroke="#4A1FB8" stroke-width="2.5"/><text x="65" y="35" text-anchor="middle" font-size="19" font-weight="700" fill="#120127" font-family="Fredoka, sans-serif">4</text><path d="M41 28h8M45 24v8" stroke="#C8580C" stroke-width="3" stroke-linecap="round"/><path d="M45 47v8m-5-4 5 5 5-5" fill="none" stroke="#C8580C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="45" cy="70" r="14" fill="#F7E1F5" stroke="#4A1FB8" stroke-width="2.5"/><text x="45" y="77" text-anchor="middle" font-size="19" font-weight="700" fill="#120127" font-family="Fredoka, sans-serif">8</text></svg>`,
+  vine: () => `<svg viewBox="0 0 90 90" aria-hidden="true"><rect x="3" y="3" width="84" height="84" rx="12" fill="#FFF1BF" stroke="#221A2B" stroke-width="2.5"/>${[["S", 10, 10], ["E", 34, 10], ["E", 58, 10], ["D", 58, 34], ["L", 10, 58], ["I", 34, 58], ["L", 34, 34], ["Y", 58, 58]].map(([c, x, y]) => `<rect x="${x}" y="${y}" width="22" height="22" rx="5" fill="#fff" stroke="#B88600" stroke-width="1.5"/><text x="${x + 11}" y="${y + 16.5}" text-anchor="middle" font-size="14" font-weight="700" fill="#120127" font-family="Fredoka, sans-serif">${c}</text>`).join("")}<path d="M21 21H69V45" fill="none" stroke="#2D6340" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity=".6"/><path d="M45 45V69H69" fill="none" stroke="#2D6340" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity=".6"/><path d="M27 45c-6-6-14-4-15 2 6 3 12 3 15-2z" fill="#5E9E4E"/></svg>`,
   names: () => faceSVG({ female: true, style: "bun", hairColor: "silver", skin: 0, shirt: "#D4567F", bg: "#FBE7C6", glasses: true, hat: "", beard: "", earrings: true }),
   peek: () => `<svg viewBox="0 0 90 90" aria-hidden="true"><rect x="3" y="3" width="84" height="84" rx="12" fill="#F3F8EF" stroke="#221A2B" stroke-width="2.5"/><rect x="31" y="31" width="28" height="28" rx="6" fill="#fff" stroke="#6B5E78" stroke-width="2"/><g transform="translate(34 34) scale(0.22)">${KIND_ART[1]}</g><g transform="translate(58 8) scale(0.24)">${BUTTERFLY}</g><path d="M14 45 h9 M67 45 h9 M45 70 v9" stroke="#0E7C7B" stroke-width="3" stroke-linecap="round"/></svg>`,
   loop: () => `<svg viewBox="-46 -60 92 92" aria-hidden="true">${barrowSVG({ kind: 4, load: 2 }, 1.1)}</svg>`
@@ -908,13 +952,13 @@ function renderChrome() {
   nav.innerHTML = tabs.map(([v, l, i]) => `<button data-go="${v}" ${navView === v ? 'aria-current="page"' : ""}>${i}<span>${l}</span></button>`).join("");
   nav.style.display = (view === "welcome") ? "none" : "";
   document.body.dataset.view = view;
-  document.body.classList.toggle("playing", ["word", "tiles", "memory", "level", "loop", "splash", "ws", "su", "odd", "trivia", "peek", "two", "walk", "names"].includes(view));
+  document.body.classList.toggle("playing", ["word", "tiles", "memory", "level", "loop", "splash", "ws", "su", "odd", "trivia", "peek", "two", "walk", "names", "bee", "dbl", "vine"].includes(view));
 }
 function go(v, opts = {}) {
   if (view === "level" && v !== "level") stopLevel();
   if (view === "loop" && v !== "loop") stopLoop();
   view = v;
-  ({ report: renderReport, ws: renderWS, su: renderSU, odd: renderOdd, peek: renderPeek, two: renderTwo, walk: renderWalk, names: renderNames, trivia: renderTrivia, splash: renderSplash, loop: renderLoop, word: renderWord, home: renderHome, garden: renderGarden, level: renderLevel, tiles: renderTiles, memory: renderMemory, progress: renderProgress, settings: renderSettings, welcome: renderWelcome, results: renderResults }[v])(opts);
+  ({ report: renderReport, ws: renderWS, su: renderSU, odd: renderOdd, peek: renderPeek, two: renderTwo, walk: renderWalk, names: renderNames, bee: renderBee, dbl: renderDbl, vine: renderVine, trivia: renderTrivia, splash: renderSplash, loop: renderLoop, word: renderWord, home: renderHome, garden: renderGarden, level: renderLevel, tiles: renderTiles, memory: renderMemory, progress: renderProgress, settings: renderSettings, welcome: renderWelcome, results: renderResults }[v])(opts);
   renderChrome();
   window.scrollTo(0, 0);
   document.getElementById("app").focus({ preventScroll: true });
@@ -931,10 +975,11 @@ function invitedBanner() {
     <p>Free daily brain games made for older eyes: a word puzzle, memory games and a garden that grows as you play.${fam ? ` You're already in ${esc(fam)}.` : ""}</p></div>
   </div>`;
 }
-var welcomeStep = "start";
+var welcomeStep = "name";
+const ACCOUNTS_ON = false;   /* Facebook sign-in is built but switched off */
 function renderWelcome() {
   const app = document.getElementById("app");
-  if (welcomeStep === "start") {
+  if (ACCOUNTS_ON && welcomeStep === "start") {
     const by = S.invitedBy, fam = S.circle && S.circle.family_name;
     app.innerHTML = `<div class="welcome">
       ${bean("cheer", 120)}
@@ -949,10 +994,11 @@ function renderWelcome() {
     document.getElementById("w-guest").onclick = () => { welcomeStep = "name"; renderWelcome(); };
     return;
   }
-  const fromFb = signedIn() && AUTH.user;
+  const fromFb = signedIn() && AUTH.user, by = S.invitedBy, fam = S.circle && S.circle.family_name;
   app.innerHTML = `<div class="welcome">
     ${bean("cheer", 96)}
-    <h1>${fromFb && S.name ? `Hi, ${esc(S.name)}!` : "What should Bean call you?"}</h1>
+    <h1>${fromFb && S.name ? `Hi, ${esc(S.name)}!` : by ? `${esc(by)} invited you to play` : fam ? `Welcome to ${esc(fam)}` : "Welcome to Heather"}</h1>
+    ${fromFb ? "" : `<p class="welcome-lead">Free brain games, five minutes a day.</p>`}
     <div class="card welcome-card">
       <label class="lab" for="w-name">Your first name</label>
       <input type="text" id="w-name" maxlength="40" autocomplete="given-name" value="${esc(S.name || "")}" placeholder="Your name">
@@ -961,7 +1007,7 @@ function renderWelcome() {
       <p class="msg" id="w-msg" role="status" aria-live="polite"></p>
       <button class="btn block big" id="start">Open my garden</button>
     </div>
-    ${fromFb ? "" : `<button class="btn block quiet" id="w-back">Back</button>`}
+    ${fromFb || !ACCOUNTS_ON ? "" : `<button class="btn block quiet" id="w-back">Back</button>`}
   </div>`;
   const nm = document.getElementById("w-name");
   nm.oninput = () => { S.name = nm.value.trim(); save(); };
@@ -969,9 +1015,9 @@ function renderWelcome() {
   document.getElementById("start").onclick = () => {
     S.name = nm.value.trim();
     if (!S.name) { document.getElementById("w-msg").textContent = "Please type your first name."; nm.focus(); return; }
-    S.started = true; S.startedAt = S.startedAt || dayKey(); welcomeStep = "start"; save(); go("home");
+    S.started = true; S.startedAt = S.startedAt || dayKey(); welcomeStep = ACCOUNTS_ON ? "start" : "name"; save(); go("home");
     if (S.setupThenMemory) { S.setupThenMemory = false; save(); toast(`Welcome, ${S.name}! Now add a memory for the family.`); return goAddMemory(); }
-    toast(`Welcome to Heather, ${S.name}!`);
+    toast(S.invitedBy || inCircle() ? `Welcome to Heather, ${S.name}!` : `Welcome, ${S.name}!`);
   };
 }
 function sizePicker() {
@@ -2057,6 +2103,367 @@ function finishNames() {
   NB = null; sfx.win(); go("results", { game: "names", r: res });
 }
 
+
+/* =====================================================================
+   Three daily puzzles in the style of the short "daily logic" games:
+   Bee Line (one path through every square), Double Up (join matching
+   numbers until one is left) and Word Vines (words winding through a
+   letter grid, every letter used once). Our own names, art and rules
+   wording; all built for big fingers and no timers.
+   ===================================================================== */
+
+/* ---- shared grid helpers ---- */
+function gridNb(i, w, h) { const x = i % w, y = (i / w) | 0, o = []; if (x > 0) o.push(i - 1); if (x < w - 1) o.push(i + 1); if (y > 0) o.push(i - w); if (y < h - 1) o.push(i + w); return o; }
+function isNb(a, b, w) { const ax = a % w, ay = (a / w) | 0, bx = b % w, by = (b / w) | 0; return Math.abs(ax - bx) + Math.abs(ay - by) === 1; }
+/* A random path through every square of a w×h grid ("backbite" shuffling of a snake) */
+function randomFullPath(w, h, r) {
+  const N = w * h; let p = [];
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) p.push(y * w + (y % 2 ? w - 1 - x : x));
+  const iters = N * N * 4;
+  for (let t = 0; t < iters; t++) {
+    if (r() < 0.5) p.reverse();
+    const end = p[N - 1], nbs = gridNb(end, w, h).filter(c => c !== p[N - 2]);
+    const n = nbs[Math.floor(r() * nbs.length)], k = p.indexOf(n);
+    p = p.slice(0, k + 1).concat(p.slice(k + 1).reverse());
+  }
+  return p;
+}
+/* Pointer handling for "drag through squares, or tap one at a time" boards */
+function gridPointer(el, { down, move, up }) {
+  let active = false, last = null;
+  const cellAt = e => { const t = document.elementFromPoint(e.clientX, e.clientY); const c = t && t.closest("[data-cell]"); return c && el.contains(c) ? +c.dataset.cell : null; };
+  el.addEventListener("pointerdown", e => { const c = cellAt(e); if (c === null) return; e.preventDefault(); active = true; last = c; try { el.setPointerCapture(e.pointerId); } catch (x) { /* ignore */ } down(c); });
+  el.addEventListener("pointermove", e => { if (!active) return; const c = cellAt(e); if (c === null || c === last) return; last = c; move(c); });
+  const end = e => { if (!active) return; active = false; up && up(cellAt(e)); };
+  el.addEventListener("pointerup", end); el.addEventListener("pointercancel", end);
+}
+function bumpMsg(id, text) { const m = document.getElementById(id); if (m) m.textContent = text; }
+
+/* ======================= Bee Line ======================= */
+let BEE = null;
+function beeMake(practice) {
+  const lvl = adaptLevel("bee"), r = gameRng("bee", practice);
+  const w = [0, 4, 5, 6][lvl], N = w * w, K = [0, 5, 7, 8][lvl];
+  const sol = randomFullPath(w, w, r);
+  const inner = shuffle([...Array(N - 2)].map((_, i) => i + 1), r).slice(0, K - 2).sort((a, b) => a - b);
+  const idx = [0, ...inner, N - 1], nums = {};
+  idx.forEach((pi, n) => { nums[sol[pi]] = n + 1; });
+  return { w, N, K, sol, nums, path: [], hints: 0, practice, lvl, t0: Date.now(), done: false };
+}
+function renderBee(opts = {}) {
+  const rec = today();
+  BEE = beeMake(!!opts.practice || rec.bee.done);
+  document.getElementById("app").innerHTML = `
+    ${gameBar("home", BEE.practice ? "Practice Bee Line" : "Bee Line", `${BEE.w}×${BEE.w} garden · ${LEVEL_WORD[BEE.lvl]}`, iconBtn("beehow", ICON.help, "Help"))}
+    <p class="pz-q" id="beeq"></p>
+    <div class="pz-board bee-board" id="beeboard" style="--n:${BEE.w}"></div>
+    <div class="msg" id="beemsg" role="status" aria-live="polite"></div>
+    <div class="pz-tools"><button class="btn secondary" id="beeundo">${ICON.back} Undo</button><button class="btn secondary" id="beehint">${ICON.bulb} Hint</button><button class="btn quiet" id="beeclear">${ICON.restart} Start over</button></div>`;
+  document.getElementById("beehow").onclick = howToBee;
+  document.getElementById("beeundo").onclick = () => { if (BEE.done) return; BEE.path.pop(); drawBee(); };
+  document.getElementById("beeclear").onclick = () => { if (BEE.done) return; BEE.path = []; drawBee(); };
+  document.getElementById("beehint").onclick = beeHint;
+  gridPointer(document.getElementById("beeboard"), {
+    down: c => {
+      if (BEE.done) return;
+      const at = BEE.path.indexOf(c);
+      if (!BEE.path.length) { if (BEE.nums[c] === 1) { BEE.path = [c]; sfx.soft(); } else bumpMsg("beemsg", "Start on flower 1."); }
+      else if (at >= 0) BEE.path = BEE.path.slice(0, at + 1);
+      else if (isNb(c, BEE.path[BEE.path.length - 1], BEE.w)) beeStep(c);
+      else bumpMsg("beemsg", "Go one square at a time from the end of your path.");
+      drawBee();
+    },
+    move: c => {
+      if (BEE.done || !BEE.path.length) return;
+      const p = BEE.path;
+      if (p.length > 1 && c === p[p.length - 2]) p.pop();
+      else if (!p.includes(c) && isNb(c, p[p.length - 1], BEE.w)) beeStep(c);
+      drawBee();
+    }
+  });
+  drawBee();
+  if (!S.seenBeeHelp) { S.seenBeeHelp = true; save(); howToBee(); }
+}
+function beeNext() { return BEE.path.filter(c => BEE.nums[c]).length + 1; }
+function beeStep(c) {
+  const n = BEE.nums[c];
+  if (n && n !== beeNext()) { bumpMsg("beemsg", `Visit flower ${beeNext()} first.`); sfx.oops(); return false; }
+  if (n === BEE.K && BEE.path.length < BEE.N - 1) { bumpMsg("beemsg", `Flower ${BEE.K} is the last stop. Fill every other square first.`); sfx.oops(); return false; }
+  BEE.path.push(c); bumpMsg("beemsg", "");
+  if (n) sfx.good(); else sfx.pop && sfx.pop(BEE.path.length % 8);
+  if (BEE.path.length === BEE.N) setTimeout(finishBee, 350);
+  return true;
+}
+function beeHint() {
+  if (BEE.done) return;
+  let i = 0; while (i < BEE.path.length && BEE.path[i] === BEE.sol[i]) i++;
+  const had = BEE.path.length;
+  BEE.path = BEE.sol.slice(0, Math.min(BEE.N, i + 1));
+  BEE.hints++;
+  bumpMsg("beemsg", i < had ? "Your path went a different way here. Bean moved it back and showed the next square." : "Bean showed you the next square.");
+  drawBee();
+  if (BEE.path.length === BEE.N) setTimeout(finishBee, 350);
+}
+function drawBee() {
+  const { w, path, nums } = BEE, board = document.getElementById("beeboard"); if (!board) return;
+  const on = new Set(path), last = path[path.length - 1];
+  const pts = path.map(c => `${(c % w) + 0.5},${((c / w) | 0) + 0.5}`).join(" ");
+  board.innerHTML = [...Array(BEE.N)].map((_, c) => {
+    const n = nums[c];
+    return `<div class="pz-cell bee-cell${on.has(c) ? " on" : ""}${c === last ? " head" : ""}" data-cell="${c}" role="button" aria-label="${n ? `Flower ${n}` : "Square"}${on.has(c) ? ", on your path" : ""}">${n ? `<span class="bee-num">${n}</span>` : ""}</div>`;
+  }).join("") + `<svg class="bee-line" viewBox="0 0 ${w} ${w}" aria-hidden="true"><polyline points="${pts}"/></svg>`;
+  const left = BEE.N - path.length;
+  document.getElementById("beeq").textContent = !path.length ? "Start on flower 1 and drag the bee's path." : left ? `Next flower: ${beeNext() <= BEE.K ? beeNext() : BEE.K}. ${left} square${left === 1 ? "" : "s"} still to visit.` : "Every square visited!";
+}
+function howToBee() {
+  dialog(`<h2>How to play Bee Line</h2><ul>
+    <li>Help the bee fly one path through the garden.</li>
+    <li>Start on flower <strong>1</strong> and visit the flowers in order: 1, 2, 3…</li>
+    <li>Visit <strong>every square</strong> once. The path moves up, down, left or right, never corner to corner.</li>
+    <li>Drag your finger, or tap one square at a time. Tap a square on your path to go back to it.</li></ul>
+    <button class="btn block" data-close>Let's fly</button>`);
+}
+function finishBee() {
+  if (BEE.done) return; BEE.done = true;
+  const secs = Math.round((Date.now() - BEE.t0) / 1000), h = BEE.hints;
+  const note = BEE.practice ? "" : adaptSet("bee", h === 0, h >= 3);
+  if (!BEE.practice) { Object.assign(today().bee, { done: true, hints: h, secs }); save(); recordPerf("bee", Math.max(20, 100 - h * 15)); noteWin(checkBest("bee" + BEE.lvl, secs, true, `Bee Line in ${secs} seconds, your fastest yet!`)); }
+  sfx.win();
+  go("results", { game: "bee", r: { game: "bee", title: h ? "The bee made it home!" : "A perfect flight!", detail: `You visited all ${BEE.N} squares${h ? ` with ${h} hint${h > 1 ? "s" : ""}` : " without a hint"}, in ${secs >= 60 ? Math.floor(secs / 60) + " min " : ""}${secs % 60} sec.`, note, share: `${S.name} solved today's Bee Line in Heather!`, practice: BEE.practice } });
+}
+
+/* ======================= Double Up ======================= */
+let DU = null;
+function duMake(practice) {
+  const lvl = adaptLevel("dbl"), r = gameRng("dbl", practice);
+  const w = [0, 3, 4, 4][lvl], h = [0, 3, 3, 4][lvl], tiles = [0, 5, 7, 9][lvl];
+  for (let tries = 0; tries < 400; tries++) {
+    const cells = Array(w * h).fill(0);
+    cells[Math.floor(r() * cells.length)] = 2 ** (tiles + 1);
+    let n = 1;
+    while (n < tiles) {
+      const can = cells.map((v, i) => i).filter(i => cells[i] >= 4 && gridNb(i, w, h).some(j => !cells[j]));
+      if (!can.length) break;
+      can.sort((a, b) => cells[b] - cells[a] + (r() - 0.5) * cells[a]);
+      const i = can[Math.floor(r() * Math.min(can.length, 2))], empt = gridNb(i, w, h).filter(j => !cells[j]), j = empt[Math.floor(r() * empt.length)];
+      cells[i] /= 2; cells[j] = cells[i]; n++;
+    }
+    if (n === tiles && duSolve(cells, w, h)) return { w, h, start: cells.slice(), cells, hist: [], sel: null, hints: 0, restarts: 0, practice, lvl, t0: Date.now(), done: false, tiles };
+  }
+  return null;
+}
+function duMoves(cells, w, h) {
+  const out = [];
+  cells.forEach((v, i) => { if (v) gridNb(i, w, h).forEach(j => { if (cells[j] === v) out.push([i, j]); }); });
+  return out;
+}
+function duSolve(cells, w, h, seen = new Set()) {
+  if (cells.filter(Boolean).length === 1) return [];
+  const key = cells.join(","); if (seen.has(key)) return null; seen.add(key);
+  for (const [i, j] of duMoves(cells, w, h)) {
+    const nx = cells.slice(); nx[j] *= 2; nx[i] = 0;
+    const rest = duSolve(nx, w, h, seen); if (rest) return [[i, j], ...rest];
+  }
+  return null;
+}
+function renderDbl(opts = {}) {
+  const rec = today();
+  DU = duMake(!!opts.practice || rec.dbl.done);
+  document.getElementById("app").innerHTML = `
+    ${gameBar("home", DU.practice ? "Practice Double Up" : "Double Up", `${DU.tiles} numbers · ${LEVEL_WORD[DU.lvl]}`, iconBtn("duhow", ICON.help, "Help"))}
+    <p class="pz-q" id="duq">Join matching numbers that sit side by side.</p>
+    <div class="pz-board du-board" id="duboard" style="--n:${DU.w}"></div>
+    <div class="msg" id="dumsg" role="status" aria-live="polite"></div>
+    <div class="pz-tools"><button class="btn secondary" id="duundo">${ICON.back} Undo</button><button class="btn secondary" id="duhint">${ICON.bulb} Hint</button><button class="btn quiet" id="duclear">${ICON.restart} Start over</button></div>`;
+  document.getElementById("duhow").onclick = howToDbl;
+  document.getElementById("duundo").onclick = () => { if (DU.done || !DU.hist.length) return; DU.cells = DU.hist.pop(); DU.sel = null; bumpMsg("dumsg", ""); drawDbl(); };
+  document.getElementById("duclear").onclick = () => { if (DU.done) return; if (DU.hist.length) DU.restarts++; DU.cells = DU.start.slice(); DU.hist = []; DU.sel = null; bumpMsg("dumsg", ""); drawDbl(); };
+  document.getElementById("duhint").onclick = duHint;
+  let from = null;
+  gridPointer(document.getElementById("duboard"), {
+    down: c => { from = c; },
+    move: () => {},
+    up: c => {
+      if (DU.done || from === null) return;
+      if (c !== null && c !== from && DU.cells[from]) { duTry(from, c); from = null; return; }
+      const t = from; from = null;
+      if (!DU.cells[t]) { DU.sel = null; drawDbl(); return; }
+      if (DU.sel === null || DU.sel === t) { DU.sel = DU.sel === t ? null : t; drawDbl(); return; }
+      duTry(DU.sel, t);
+    }
+  });
+  drawDbl();
+  if (!S.seenDblHelp) { S.seenDblHelp = true; save(); howToDbl(); }
+}
+function duTry(a, b) {
+  const { cells, w } = DU;
+  if (!cells[b]) { DU.sel = null; drawDbl(); return; }
+  if (cells[a] !== cells[b]) { DU.sel = b; bumpMsg("dumsg", "Only the same numbers can join."); sfx.oops(); drawDbl(); return; }
+  if (!isNb(a, b, w)) { DU.sel = b; bumpMsg("dumsg", "They need to be side by side, not corner to corner."); sfx.oops(); drawDbl(); return; }
+  DU.hist.push(cells.slice()); cells[b] *= 2; cells[a] = 0; DU.sel = null; DU.pop = b; sfx.good();
+  const left = cells.filter(Boolean).length;
+  if (left === 1) { drawDbl(); setTimeout(finishDbl, 500); return; }
+  bumpMsg("dumsg", duMoves(cells, DU.w, DU.h).length ? "" : "No more numbers can join. Tap Undo or Start over.");
+  drawDbl();
+}
+function duHint() {
+  if (DU.done) return;
+  let steps = duSolve(DU.cells.slice(), DU.w, DU.h), back = 0;
+  const hist = DU.hist.slice(); let cells = DU.cells.slice();
+  while (!steps && hist.length) { cells = hist.pop(); back++; steps = duSolve(cells.slice(), DU.w, DU.h); }
+  if (!steps) { DU.cells = DU.start.slice(); DU.hist = []; steps = duSolve(DU.cells.slice(), DU.w, DU.h); back = -1; }
+  else if (back) { DU.cells = cells; DU.hist = hist; }
+  DU.hints++;
+  const [i, j] = steps[0]; DU.sel = null; DU.hintPair = [i, j];
+  bumpMsg("dumsg", back ? `That way gets stuck, so Bean went back${back > 0 ? ` ${back} step${back > 1 ? "s" : ""}` : " to the start"}. Try joining the two glowing ${DU.cells[i]}s.` : `Try joining the two glowing ${DU.cells[i]}s.`);
+  drawDbl();
+}
+const DU_COLORS = { 1: "#ECE4FF", 2: "#DCCFFF", 4: "#FFE2E8", 8: "#F7E1F5", 16: "#FFE8D3", 32: "#FFF1BF", 64: "#D6F0DA", 128: "#C9E8F7", 256: "#E5D8F5", 512: "#FFD9C2", 1024: "#FFE98F" };
+function drawDbl() {
+  const board = document.getElementById("duboard"); if (!board) return;
+  const hp = DU.hintPair || [];
+  board.innerHTML = DU.cells.map((v, c) => v
+    ? `<div class="pz-cell du-cell${DU.sel === c ? " sel" : ""}${hp.includes(c) ? " glow" : ""}${DU.pop === c ? " pop" : ""}" data-cell="${c}" role="button" aria-label="${v}" style="--tile:${DU_COLORS[v] || "#EEE"}"><span>${v}</span></div>`
+    : `<div class="pz-cell du-empty" data-cell="${c}" aria-hidden="true"></div>`).join("");
+  DU.pop = null; DU.hintPair = null;
+  const left = DU.cells.filter(Boolean).length;
+  document.getElementById("duq").textContent = left > 1 ? `${left} numbers left. Join matching numbers that sit side by side.` : "Just one number left!";
+}
+function howToDbl() {
+  dialog(`<h2>How to play Double Up</h2><ul>
+    <li>Join two <strong>matching</strong> numbers that sit side by side: 4 and 4 make 8.</li>
+    <li>Drag one number onto its twin, or tap one and then the other.</li>
+    <li>Up, down, left or right only, never corner to corner.</li>
+    <li>Keep going until just <strong>one</strong> number is left. Think ahead: the order matters!</li></ul>
+    <button class="btn block" data-close>Let's play</button>`);
+}
+function finishDbl() {
+  if (DU.done) return; DU.done = true;
+  const secs = Math.round((Date.now() - DU.t0) / 1000), h = DU.hints, rs = DU.restarts, final = DU.cells.find(Boolean);
+  const note = DU.practice ? "" : adaptSet("dbl", h === 0 && rs === 0, h >= 2);
+  if (!DU.practice) { Object.assign(today().dbl, { done: true, hints: h, restarts: rs, secs, final }); save(); recordPerf("dbl", Math.max(20, 100 - h * 12 - rs * 6)); }
+  sfx.win();
+  go("results", { game: "dbl", r: { game: "dbl", title: h || rs ? "Down to one!" : "Doubled up perfectly!", detail: `You joined everything into ${final}${h ? ` with ${h} hint${h > 1 ? "s" : ""}` : ""}${rs ? `${h ? " and" : " with"} ${rs} fresh start${rs > 1 ? "s" : ""}` : ""}.`, note, share: `${S.name} doubled up all the way to ${final} in Heather today!`, practice: DU.practice } });
+}
+
+/* ======================= Word Vines ======================= */
+let WV = null;
+function vineMake(practice) {
+  const lvl = adaptLevel("vine"), r = gameRng("vine", practice);
+  const themes = Object.keys(WS_THEMES);
+  const theme = practice ? themes[Math.floor(r() * themes.length)] : themes[((dayIndex(dayKey()) + 4) % themes.length + themes.length) % themes.length];
+  const [nW, lo, hi] = [[], [3, 3, 5], [4, 3, 6], [4, 4, 7]][lvl];
+  let words = shuffle(WS_THEMES[theme].filter(x => x.length >= lo && x.length <= hi), r);
+  const pick = []; for (const x of words) { if (pick.length < nW && !pick.some(p => p.includes(x) || x.includes(p))) pick.push(x); }
+  words = pick;
+  const L = words.reduce((s, x) => s + x.length, 0);
+  const cols = L <= 12 ? 4 : 5, rows = Math.ceil(L / cols), walls = rows * cols - L;
+  let path = randomFullPath(cols, rows, r);
+  const cut = Math.floor(r() * (walls + 1)); path = path.slice(cut, cut + L);
+  const grid = Array(rows * cols).fill(null), ans = [];
+  let at = 0;
+  for (const word of words) {
+    let cells = path.slice(at, at + word.length); at += word.length;
+    if (r() < 0.5) cells = cells.reverse();
+    cells.forEach((c, i) => { grid[c] = word[i]; });
+    ans.push({ word, cells, found: false, hinted: 0 });
+  }
+  return { theme, cols, rows, grid, ans, sel: [], hints: 0, practice, lvl, t0: Date.now(), done: false, dragged: false };
+}
+function renderVine(opts = {}) {
+  const rec = today();
+  WV = vineMake(!!opts.practice || rec.vine.done);
+  document.getElementById("app").innerHTML = `
+    ${gameBar("home", WV.practice ? "Practice Word Vines" : "Word Vines", `${WV.ans.length} words · ${LEVEL_WORD[WV.lvl]}`, iconBtn("vhow", ICON.help, "Help"))}
+    <p class="pz-q">Theme: <strong>${esc(WV.theme)}</strong></p>
+    <div class="pz-board vine-board" id="vboard" style="--n:${WV.cols}"></div>
+    <div class="vine-sel" id="vsel" aria-live="polite"></div>
+    <div class="msg" id="vmsg" role="status" aria-live="polite"></div>
+    <div class="vine-words" id="vwords"></div>
+    <div class="pz-tools"><button class="btn" id="vcheck">Check word</button><button class="btn secondary" id="vclear">Clear</button><button class="btn secondary" id="vhint">${ICON.bulb} Hint</button></div>`;
+  document.getElementById("vhow").onclick = howToVine;
+  document.getElementById("vcheck").onclick = vineCheck;
+  document.getElementById("vclear").onclick = () => { WV.sel = []; bumpMsg("vmsg", ""); drawVine(); };
+  document.getElementById("vhint").onclick = vineHint;
+  const usedBy = c => WV.ans.some(a => a.found && a.cells.includes(c));
+  gridPointer(document.getElementById("vboard"), {
+    down: c => {
+      if (WV.done || WV.grid[c] === null || usedBy(c)) return;
+      WV.dragged = false;
+      const at = WV.sel.indexOf(c);
+      if (at >= 0) WV.sel = WV.sel.slice(0, at + (at === WV.sel.length - 1 ? 0 : 1));
+      else if (!WV.sel.length || isNb(c, WV.sel[WV.sel.length - 1], WV.cols)) WV.sel.push(c);
+      else WV.sel = [c];
+      bumpMsg("vmsg", ""); drawVine();
+    },
+    move: c => {
+      if (WV.done || WV.grid[c] === null || usedBy(c) || !WV.sel.length) return;
+      const s = WV.sel;
+      if (s.length > 1 && c === s[s.length - 2]) s.pop();
+      else if (!s.includes(c) && isNb(c, s[s.length - 1], WV.cols)) { s.push(c); WV.dragged = true; }
+      drawVine();
+    },
+    up: () => { if (WV.dragged && WV.sel.length >= 3) vineCheck(); WV.dragged = false; }
+  });
+  drawVine();
+  if (!S.seenVineHelp) { S.seenVineHelp = true; save(); howToVine(); }
+}
+function vineCheck() {
+  if (WV.done) return;
+  const s = WV.sel, word = s.map(c => WV.grid[c]).join("");
+  if (s.length < 3) { bumpMsg("vmsg", "Words have at least 3 letters."); return; }
+  const a = WV.ans.find(x => !x.found && x.word === word);
+  if (a && a.cells.length === s.length && a.cells.every(c => s.includes(c))) {
+    a.found = true; WV.sel = []; sfx.good(); bumpMsg("vmsg", ["Lovely!", "That's one!", "Well found!", "Splendid!"][WV.ans.filter(x => x.found).length % 4]);
+    drawVine();
+    if (WV.ans.every(x => x.found)) setTimeout(finishVine, 600);
+    return;
+  }
+  sfx.oops();
+  bumpMsg("vmsg", a ? `${word} is one of the words, but it winds through different letters. Every letter is used once, so try another route.` : WV.ans.some(x => x.found && x.word === word) ? `You've already found ${word}.` : `${word} isn't one of today's words. Try again!`);
+  WV.sel = []; drawVine();
+}
+function vineHint() {
+  if (WV.done) return;
+  const a = WV.ans.filter(x => !x.found).sort((x, y) => y.hinted - x.hinted || x.word.length - y.word.length)[0];
+  WV.hints++; a.hinted++;
+  if (a.hinted === 1) bumpMsg("vmsg", `A ${a.word.length}-letter word starts on the glowing letter.`);
+  else if (a.hinted === 2) bumpMsg("vmsg", `It starts with ${a.word.slice(0, 2)}. Follow the glow.`);
+  else { a.found = true; bumpMsg("vmsg", `Bean found ${a.word} for you.`); if (WV.ans.every(x => x.found)) setTimeout(finishVine, 600); }
+  WV.sel = []; drawVine();
+}
+const VINE_TINTS = ["#D6F0DA", "#FFE2E8", "#ECE4FF", "#FFF1BF", "#FFE8D3"];
+function drawVine() {
+  const board = document.getElementById("vboard"); if (!board) return;
+  const { cols, rows, grid, ans, sel } = WV, glow = new Set();
+  ans.forEach(a => { if (!a.found && a.hinted) a.cells.slice(0, a.hinted >= 2 ? 2 : 1).forEach(c => glow.add(c)); });
+  const owner = {}; ans.forEach((a, i) => { if (a.found) a.cells.forEach(c => { owner[c] = i; }); });
+  const line = (cells, cls) => `<polyline class="${cls}" points="${cells.map(c => `${(c % cols) + 0.5},${((c / cols) | 0) + 0.5}`).join(" ")}"/>`;
+  board.innerHTML = grid.map((ch, c) => ch === null
+    ? `<div class="pz-cell vine-wall" aria-hidden="true"></div>`
+    : `<div class="pz-cell vine-cell${sel.includes(c) ? " sel" : ""}${glow.has(c) ? " glow" : ""}${owner[c] !== undefined ? " found" : ""}" data-cell="${c}" role="button" aria-label="${ch}" ${owner[c] !== undefined ? `style="--tile:${VINE_TINTS[owner[c] % VINE_TINTS.length]}"` : ""}><span>${ch}</span></div>`).join("")
+    + `<svg class="vine-line" viewBox="0 0 ${cols} ${rows}" aria-hidden="true">${ans.filter(a => a.found).map(a => line(a.cells, "done")).join("")}${sel.length > 1 ? line(sel, "now") : ""}</svg>`;
+  board.style.aspectRatio = `${cols} / ${rows}`;
+  document.getElementById("vsel").textContent = sel.map(c => grid[c]).join("") || " ";
+  document.getElementById("vwords").innerHTML = ans.slice().sort((x, y) => x.word.length - y.word.length).map(a => `<span class="vw${a.found ? " got" : ""}" aria-label="${a.found ? a.word : `${a.word.length} letters`}">${a.found ? a.word : "_ ".repeat(a.word.length).trim()}</span>`).join("");
+}
+function howToVine() {
+  dialog(`<h2>How to play Word Vines</h2><ul>
+    <li>Words grow through the grid like vines. They all fit today's theme.</li>
+    <li>Trace a word through letters that touch: up, down, left or right.</li>
+    <li>Drag your finger, or tap the letters one by one and press <strong>Check word</strong>.</li>
+    <li>Every letter is used <strong>exactly once</strong>, so the last word is what's left over!</li></ul>
+    <button class="btn block" data-close>Let's grow</button>`);
+}
+function finishVine() {
+  if (WV.done) return; WV.done = true;
+  const secs = Math.round((Date.now() - WV.t0) / 1000), h = WV.hints;
+  const note = WV.practice ? "" : adaptSet("vine", h === 0, h >= 4);
+  if (!WV.practice) { Object.assign(today().vine, { done: true, hints: h, secs, theme: WV.theme }); save(); recordPerf("vine", Math.max(20, 100 - h * 12)); }
+  sfx.win();
+  go("results", { game: "vine", r: { game: "vine", title: h ? "Every letter used!" : "Found them all on your own!", detail: `You found ${WV.ans.map(a => a.word).join(", ")}${h ? ` with ${h} hint${h > 1 ? "s" : ""}` : ""}.`, note, share: `${S.name} untangled today's Word Vines in Heather!`, practice: WV.practice } });
+}
+
 /* ---------- Games list, daily plan and brain areas ---------- */
 const GAMES = {
   peek: { name: "Quick Peek", line: "Catch a quick flash. Trains your speed of seeing.", color: "var(--c-peek)", domain: "Speed", art: () => ART.peek(), open: `data-go="splash" data-game="peek"`, done: r => r.peek.done },
@@ -2070,7 +2477,10 @@ const GAMES = {
   trivia: { name: "Memory Lane", line: "Five questions about days gone by.", color: "var(--c-trivia)", domain: "Memory", art: () => ART.trivia(), open: `data-go="splash" data-game="trivia"`, done: r => r.trivia.done },
   two: { name: "Two at Once", line: "Water the plant and spot sunflowers, both at once.", color: "var(--c-two)", domain: "Attention", art: () => ART.two(), open: `data-go="splash" data-game="two"`, done: r => r.two.done },
   walk: { name: "Garden Walk", line: "Watch Bean's walk, then find the way yourself.", color: "var(--c-walk)", domain: "Memory", art: () => ART.walk(), open: `data-go="splash" data-game="walk"`, done: r => r.walk.done },
-  names: { name: "Name the Neighbour", line: "Meet new neighbours and remember their names.", color: "var(--c-names)", domain: "Memory", art: () => ART.names(), open: `data-go="splash" data-game="names"`, done: r => r.names.done }
+  names: { name: "Name the Neighbour", line: "Meet new neighbours and remember their names.", color: "var(--c-names)", domain: "Memory", art: () => ART.names(), open: `data-go="splash" data-game="names"`, done: r => r.names.done },
+  bee: { name: "Bee Line", line: "Fly one path through every square, flowers in order.", color: "var(--c-bee)", domain: "Reasoning", art: () => ART.bee(), open: `data-go="splash" data-game="bee"`, done: r => r.bee.done },
+  dbl: { name: "Double Up", line: "Join matching numbers until just one is left.", color: "var(--c-dbl)", domain: "Reasoning", art: () => ART.dbl(), open: `data-go="splash" data-game="dbl"`, done: r => r.dbl.done },
+  vine: { name: "Word Vines", line: "Trace the hidden words. Every letter is used once.", color: "var(--c-vine)", domain: "Language", art: () => ART.vine(), open: `data-go="splash" data-game="vine"`, done: r => r.vine.done }
 };
 const PLAN_PAIRS = [["su", "trivia"], ["ws", "odd"], ["tiles", "memory"], ["odd", "trivia"], ["su", "ws"], ["memory", "odd"], ["tiles", "trivia"]];
 function domainBalance(days = 7) {
@@ -2137,7 +2547,7 @@ function checkBest(key, value, lowerIsBetter, text) {
 }
 
 /* --- Personalised daily plan: Daily Word + Quick Peek (speed has the best evidence) + the area that needs it most + Flower Match --- */
-const FOCUS_GAMES = { Language: ["ws", "tiles"], Memory: ["names", "walk", "trivia", "memory"], Attention: ["two", "odd"], Reasoning: ["su"] };
+const FOCUS_GAMES = { Language: ["vine", "ws", "tiles"], Memory: ["names", "walk", "trivia", "memory"], Attention: ["two", "odd"], Reasoning: ["bee", "dbl", "su"] };
 function planFor(k) {
   S.plans = S.plans || {};
   if (S.plans[k]) {
@@ -2640,7 +3050,7 @@ function gameCard(g, rec, k) {
 function brainBalanceHTML() {
   const b = domainBalance(7), max = Math.max(1, ...Object.values(b));
   const low = Object.entries(b).sort((x, y) => x[1] - y[1])[0][0];
-  const tip = { Speed: "Quick Peek", Language: "a word game", Memory: "Name the Neighbour or Garden Walk", Attention: "Two at Once or Odd One Out", Reasoning: "a Sudoku or a Flower Match level" }[low];
+  const tip = { Speed: "Quick Peek", Language: "Word Vines or another word game", Memory: "Name the Neighbour or Garden Walk", Attention: "Two at Once or Odd One Out", Reasoning: "Bee Line, Double Up or a Sudoku" }[low];
   return `<section class="card" aria-labelledby="bbh"><h2 id="bbh">Brain workout this week</h2>
     <p class="muted small">Each game works a different part of the brain. A mix is best!</p>
     <div class="bb">${Object.entries(b).map(([d, n]) => `<div class="bb-row"><span>${d}</span><span class="bb-bar"><i style="width:${Math.round(100 * n / max)}%;background:${DOMAINS[d]}"></i></span><b>${n}</b></div>`).join("")}</div>
@@ -2657,6 +3067,9 @@ const SPLASH = {
   odd: { name: "Odd One Out", line: "Spot the one picture that's different, eight times over.", color: "var(--c-odd)" },
   two: { name: "Two at Once", line: "Keep watering a moving plant while you watch for sunflowers. Doing two things at once is a great workout for focus.", color: "var(--c-two)" },
   walk: { name: "Garden Walk", line: "Watch Bean walk through the garden, then walk the same way from memory.", color: "var(--c-walk)" },
+  bee: { name: "Bee Line", line: "Help the bee fly one path through the garden: visit the numbered flowers in order and every square once.", color: "var(--c-bee)" },
+  dbl: { name: "Double Up", line: "Join matching numbers that sit side by side. Keep going until only one number is left.", color: "var(--c-dbl)" },
+  vine: { name: "Word Vines", line: "Words wind through the grid like vines. Find them all and every letter gets used.", color: "var(--c-vine)" },
   names: { name: "Name the Neighbour", line: "Meet a few new neighbours, then see how many names you remember.", color: "var(--c-names)" },
   peek: { name: "Quick Peek", line: "A flower flashes in the middle for a moment. What did you see? The flashes get quicker as you get faster.", color: "var(--c-peek)" },
   trivia: { name: "Memory Lane", line: "Five questions about music, TV, Canada and everyday life from years gone by.", color: "var(--c-trivia)" }
@@ -2681,7 +3094,7 @@ function renderSplash(opts = {}) {
     else btns = `<button class="btn block play" data-go="memory">Play</button>${how}`;
   } else {
     const d = rec[g];
-    const doneLine = { ws: () => `You found all of today's words${d.hints ? "" : " without a hint"}.`, su: () => `You solved today's puzzle${d.mistakes ? "" : " without a mistake"}.`, odd: () => `You spotted all 8 today${d.misses ? "" : " without a miss"}.`, peek: () => `You got ${d.right} of 15 today, with a ${d.thr} ms flash time.`, two: () => `Doing both at once: plant watered ${d.steer}% of the time, ${d.signs}% of sunflowers caught.`, walk: () => `You remembered ${d.route} of ${d.of} turns and ${d.lm} of ${d.lmOf} places today.`, names: () => `You remembered ${d.names} of ${d.of} names today. Bean will ask about them tomorrow!`, trivia: () => `You got ${d.right} of 5 right today.` }[g];
+    const doneLine = { ws: () => `You found all of today's words${d.hints ? "" : " without a hint"}.`, su: () => `You solved today's puzzle${d.mistakes ? "" : " without a mistake"}.`, odd: () => `You spotted all 8 today${d.misses ? "" : " without a miss"}.`, peek: () => `You got ${d.right} of 15 today, with a ${d.thr} ms flash time.`, two: () => `Doing both at once: plant watered ${d.steer}% of the time, ${d.signs}% of sunflowers caught.`, walk: () => `You remembered ${d.route} of ${d.of} turns and ${d.lm} of ${d.lmOf} places today.`, bee: () => `You flew today's Bee Line${d.hints ? "" : " without a hint"}.`, dbl: () => `You joined everything into ${d.final}${d.hints ? "" : " without a hint"}.`, vine: () => `You found every word in today's vines${d.hints ? "" : " without a hint"}.`, names: () => `You remembered ${d.names} of ${d.of} names today. Bean will ask about them tomorrow!`, trivia: () => `You got ${d.right} of 5 right today.` }[g];
     if (d.done) { status = doneLine(); btns = `<button class="btn block play" data-go="${g}" data-practice="1">Play a practice round</button>`; }
     else btns = `<button class="btn block play" data-go="${g}">${g === "ws" && d.found && d.found.length ? "Continue" : "Play"}</button>${how}`;
     if (g === "trivia") btns += `<button class="btn block out" id="sp-together">Play together (2 players)</button>`;
@@ -2697,11 +3110,11 @@ function renderSplash(opts = {}) {
       <p class="line">${s.line}</p>
       ${status ? `<p style="font-weight:700">${status}</p>` : ""}
       <div class="btns">${btns}</div>
-      <p class="meta"><strong>${date}</strong>${g === "word" ? `No. ${dayIndex(k) + 1}` : { tiles: "Today's letters", memory: "Today's cards", ws: "Today's theme: " + wsThemeFor(k, () => 0, false), su: "Today's puzzle", odd: "Today's rounds", peek: "15 quick peeks", two: "4 short rounds", walk: "Today's walk", names: "Today's neighbours", trivia: "Today's questions" }[g]} · ${GAMES[g].domain}</p>
+      <p class="meta"><strong>${date}</strong>${g === "word" ? `No. ${dayIndex(k) + 1}` : { tiles: "Today's letters", memory: "Today's cards", ws: "Today's theme: " + wsThemeFor(k, () => 0, false), su: "Today's puzzle", odd: "Today's rounds", peek: "15 quick peeks", two: "4 short rounds", walk: "Today's walk", names: "Today's neighbours", bee: "Today's garden", dbl: "Today's numbers", vine: "Today's vines", trivia: "Today's questions" }[g]} · ${GAMES[g].domain}</p>
     </section>`;
   const tg = document.getElementById("sp-together"); if (tg) tg.onclick = startTogether;
   const h = document.getElementById("sp-how");
-  if (h) h.onclick = () => ({ word: howToPlayWord, tiles: howToTiles, memory: howToMemory, ws: howToWS, su: howToSU, odd: howToOdd, peek: howToPeek, two: howToTwo, walk: howToWalk, names: howToNames, trivia: howToTrivia }[g])();
+  if (h) h.onclick = () => ({ word: howToPlayWord, tiles: howToTiles, memory: howToMemory, ws: howToWS, su: howToSU, odd: howToOdd, peek: howToPeek, two: howToTwo, walk: howToWalk, names: howToNames, bee: howToBee, dbl: howToDbl, vine: howToVine, trivia: howToTrivia }[g])();
 }
 function howToTiles() {
   dialog(`<h2>How to play Word Tiles</h2><ul>
@@ -4174,7 +4587,7 @@ function renderProgress() {
 function renderSettings() {
   document.getElementById("app").innerHTML = `
     <h1>Settings</h1>
-    ${accountCard()}
+    ${ACCOUNTS_ON ? accountCard() : ""}
     <div class="card">
       <label class="lab" for="set-name">Your name</label>
       <input type="text" id="set-name" value="${esc(S.name)}">
@@ -4203,11 +4616,11 @@ function renderSettings() {
     </div>
     <div class="card">
       <h3>About your progress</h3>
-      <p class="muted">${signedIn() ? "Progress is saved on this device and to your account." : "Progress is saved in this web browser on this device. Clearing the browser's history or data will clear it too. Sign in with Facebook (at the top) to keep it safe."}</p>
+      <p class="muted">${signedIn() ? "Progress is saved on this device and to your account." : "Progress is saved in this web browser on this device. Clearing the browser's history or data will clear it too."}</p>
       <button class="btn quiet" id="reset">Start fresh</button>
     </div>`;
   wireFamilyQuestions();
-  wireAccountCard();
+  if (ACCOUNTS_ON) wireAccountCard();
   const nm = document.getElementById("set-name");
   nm.addEventListener("change", () => { S.name = nm.value.trim() || S.name; save(); renderChrome(); toast("Name saved."); });
   document.getElementById("save-family").onclick = () => { S.family = document.getElementById("set-family").value.trim(); save(); toast(S.family ? "Note saved. It's on the Today screen." : "Note removed."); };
