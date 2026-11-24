@@ -640,6 +640,23 @@ body[data-contrast="high"] .wk-hedge { fill: #3E7A30; stroke: #000; }
 .welcome-card { text-align: left; margin-top: 14px; margin-bottom: 14px; }
 #account-card .btn.fb { display: flex; align-items: center; justify-content: center; gap: 12px; }
 #account-card .btn.fb svg { width: 26px; height: 26px; flex: none; }
+.club { max-width: 560px; margin: 0 auto; }
+.club-hero { text-align: center; }
+.club-hero > :first-child { margin-left: auto; margin-right: auto; }
+.club-hero h1 { font-size: 1.9em; line-height: 1.15; margin: 8px 0 4px; }
+.club-perks { list-style: none; padding: 0; margin: 8px 0 16px; display: grid; gap: 12px; }
+.club-perks li { display: flex; gap: 12px; align-items: flex-start; font-size: 1.1em; }
+.club-perks svg { width: 32px; height: 32px; flex: none; }
+.club-card { text-align: center; }
+.club-price { margin: 4px 0 0; font-size: 1.2em; }
+.club-price span { font-family: "Fredoka", sans-serif; font-size: 2.6em; font-weight: 700; vertical-align: middle; }
+.club-cur { margin: 0 0 14px; }
+.club-offer { background: var(--surface-tint, var(--accent-soft)); border: 2px dashed var(--accent); border-radius: 18px; padding: 12px 14px; margin: 0 0 14px; }
+.club-offer p { margin: 0 0 10px; }
+.club-offer .btn.fb, .club .btn.fb { display: flex; align-items: center; justify-content: center; gap: 10px; }
+.club-offer-done { display: flex; gap: 10px; align-items: center; justify-content: center; margin: 0 0 14px; }
+.club-offer-done svg { width: 28px; height: 28px; flex: none; }
+.club-fine { margin: 10px 0 0; }
 .invited-banner { display: flex; gap: 14px; align-items: flex-start; background: var(--surface-tint, var(--accent-soft)); border: 2px solid var(--accent); border-radius: 20px; padding: 16px 18px; margin: 0 0 14px; }
 .invited-banner .mark-img { width: 34px; height: 50px; flex: none; }
 .invited-banner strong { font-family: "Fredoka", sans-serif; font-size: 1.25em; display: block; margin-bottom: 4px; }
@@ -958,7 +975,7 @@ function go(v, opts = {}) {
   if (view === "level" && v !== "level") stopLevel();
   if (view === "loop" && v !== "loop") stopLoop();
   view = v;
-  ({ report: renderReport, ws: renderWS, su: renderSU, odd: renderOdd, peek: renderPeek, two: renderTwo, walk: renderWalk, names: renderNames, bee: renderBee, dbl: renderDbl, vine: renderVine, trivia: renderTrivia, splash: renderSplash, loop: renderLoop, word: renderWord, home: renderHome, garden: renderGarden, level: renderLevel, tiles: renderTiles, memory: renderMemory, progress: renderProgress, settings: renderSettings, welcome: renderWelcome, results: renderResults }[v])(opts);
+  ({ report: renderReport, ws: renderWS, su: renderSU, odd: renderOdd, peek: renderPeek, two: renderTwo, walk: renderWalk, names: renderNames, bee: renderBee, dbl: renderDbl, vine: renderVine, club: renderClub, trivia: renderTrivia, splash: renderSplash, loop: renderLoop, word: renderWord, home: renderHome, garden: renderGarden, level: renderLevel, tiles: renderTiles, memory: renderMemory, progress: renderProgress, settings: renderSettings, welcome: renderWelcome, results: renderResults }[v])(opts);
   renderChrome();
   window.scrollTo(0, 0);
   document.getElementById("app").focus({ preventScroll: true });
@@ -3595,6 +3612,72 @@ function outOfMoves() {
 const SHARE_URL = APP_URL;
 const AD_SECONDS = 15;
 function fbShareUrl() { return "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(friendLink()); }
+
+/* ---------- Garden Club: the payment page (built, not switched on) ----------
+   Hidden until CLUB.on is true: nothing in the app links here yet. Preview it at
+   heather-delta.vercel.app/?club . Payments go through Stripe Payment Links (no card
+   details ever touch Heather): paste the links below once they exist in Stripe.
+   In Stripe, set each link's "After payment" redirect to  https://heather-delta.vercel.app/?club=welcome  */
+const CLUB = {
+  on: false,                       // true = show the Garden Club in Settings and in the "stuck" pop-up
+  price: "$19",                    // shown on the page
+  per: "a month",
+  currency: "CAD",
+  links: {
+    monthly: "",                   // Stripe Payment Link: monthly plan
+    freeMonth: "",                 // Stripe Payment Link: same plan with a 30-day free trial (for Facebook sharers)
+    manage: ""                     // Stripe customer portal link (cancel / change card)
+  }
+};
+function clubFromUrl() {
+  const v = new URLSearchParams(location.search).get("club");
+  if (v === null) return null;
+  try { const u = new URL(location.href); u.searchParams.delete("club"); history.replaceState(null, "", u.pathname + u.search + u.hash); } catch (e) { /* ignore */ }
+  if (v === "welcome") { S.member = true; S.memberSince = S.memberSince || dayKey(); save(); return "welcome"; }
+  return "open";
+}
+const CLUB_TICK = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#D6F0DA" stroke="#2D6340" stroke-width="1.6"/><path d="m7 12.5 3.2 3.2L17 9" fill="none" stroke="#2D6340" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+function renderClub() {
+  const shared = !!S.clubShared, member = !!S.member;
+  const join = shared ? (CLUB.links.freeMonth || CLUB.links.monthly) : CLUB.links.monthly;
+  document.getElementById("app").innerHTML = `
+    ${gameBar("settings", "Garden Club", "", "")}
+    <div class="club">
+      <div class="club-hero">
+        ${bean("cheer", 104)}
+        <h1>${member ? `You're in the Garden Club, ${esc(S.name)}!` : "Join the Garden Club"}</h1>
+        <p class="welcome-lead">${member ? "Thank you for helping Heather grow." : "No videos, and help whenever you're stuck."}</p>
+      </div>
+      <ul class="club-perks">
+        <li>${CLUB_TICK}<span><strong>No videos, ever.</strong></span></li>
+        <li>${CLUB_TICK}<span><strong>Never stuck.</strong> Out of moves in Flower Match? Extra moves are yours straight away.</span></li>
+        <li>${CLUB_TICK}<span><strong>Helps Heather grow.</strong> New games and puzzles keep coming.</span></li>
+      </ul>
+      ${member ? `
+        <div class="card club-card">
+          <p>Your membership is active${S.memberSince ? ` since ${new Date(S.memberSince + "T12:00:00").toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" })}` : ""}.</p>
+          <button class="btn block secondary" id="club-manage">Change card or cancel</button>
+        </div>` : `
+        <div class="card club-card">
+          <p class="club-price"><span>${CLUB.price}</span> ${CLUB.per}</p>
+          <p class="muted small club-cur">${CLUB.currency} · cancel any time</p>
+          ${shared
+            ? `<p class="club-offer-done">${CLUB_TICK}<span>Thanks for sharing! <strong>Your first month is free.</strong></span></p>`
+            : `<div class="club-offer"><p><strong>Your first month free</strong> when you share Heather on Facebook.</p>
+                 <a class="btn block fb" id="club-fb" href="${fbShareUrl()}" target="_blank" rel="noopener">${ICON.fb} Share on Facebook</a></div>`}
+          <button class="btn block big" id="club-join">${shared ? "Start my free month" : `Join for ${CLUB.price} ${CLUB.per}`}</button>
+          <p class="muted small club-fine">${shared ? `Free for 30 days, then ${CLUB.price} ${CLUB.per}. ` : ""}You'll pay on Stripe's secure page. Heather never sees your card number.</p>
+        </div>`}
+      <p class="muted small" style="text-align:center"><a href="privacy" target="_blank" rel="noopener">Privacy</a></p>
+    </div>`;
+  const fb = document.getElementById("club-fb");
+  if (fb) fb.addEventListener("click", () => setTimeout(() => { S.clubShared = dayKey(); save(); renderClub(); toast("Thanks for sharing! Your first month is free."); }, 500));
+  const j = document.getElementById("club-join");
+  if (j) j.onclick = () => { if (join) location.href = join; else toast("Payments aren't switched on yet. Check back soon!"); };
+  const m = document.getElementById("club-manage");
+  if (m) m.onclick = () => { if (CLUB.links.manage) window.open(CLUB.links.manage, "_blank", "noopener"); else toast("Membership settings are coming soon."); };
+}
+
 function offerRescue({ title, text, reward, grant, again, leave }) {
   const give = () => { S.rescues = (S.rescues || 0) + 1; save(); grant(); };
   dialog(`<div class="center">${bean("calm", 84)}<h2>${title}</h2><p>${text}</p>
@@ -3604,7 +3687,8 @@ function offerRescue({ title, text, reward, grant, again, leave }) {
     <a class="btn block fb" id="rs-fb" href="${fbShareUrl()}" target="_blank" rel="noopener">${ICON.fb} Share on Facebook</a>`}
     <button class="btn block secondary" id="rs-again">Start the level again</button>
     <button class="btn block quiet" id="rs-leave">Back to levels</button>
-    ${S.member ? "" : `<p class="muted small" style="text-align:center">Coming later: Garden Club members skip the videos.</p>`}`, o => {
+    ${S.member ? "" : CLUB.on ? `<button class="btn block quiet" id="rs-club">Skip the videos: join the Garden Club</button>` : `<p class="muted small" style="text-align:center">Coming later: Garden Club members skip the videos.</p>`}`, o => {
+      const cl = o.querySelector("#rs-club"); if (cl) cl.onclick = () => { o.remove(); go("club"); };
       const v = o.querySelector("#rs-video"), f = o.querySelector("#rs-fb"), fr = o.querySelector("#rs-free");
       if (v) v.onclick = () => { o.remove(); playVideo(reward, give); };
       if (f) f.addEventListener("click", () => { setTimeout(() => { o.remove(); give(); toast(`Thanks for sharing! Here's ${reward}.`); }, 400); });
@@ -4610,7 +4694,8 @@ function renderSettings() {
       <button class="btn secondary" id="save-family">Save note</button>
     </div>
     <div class="card" style="border-color:var(--sun)">
-      <h3>Garden Club <span class="status todo" style="margin-left:6px">Coming later</span></h3>
+      <h3>Garden Club ${CLUB.on ? (S.member ? `<span class="status done" style="margin-left:6px">Member</span>` : "") : `<span class="status todo" style="margin-left:6px">Coming later</span>`}</h3>
+      ${CLUB.on ? `<button class="btn block secondary" data-go="club" style="margin-bottom:10px">${S.member ? "Your membership" : "See the Garden Club"}</button>` : ""}
       <p>Right now everything is free. When you're stuck, you can watch a short video or share on Facebook to keep going.</p>
       <p class="muted small">Later, an optional Garden Club subscription will remove the videos and give you help whenever you need it.</p>
     </div>
@@ -4674,7 +4759,9 @@ applySettings();
 noteArrival();
 const authResult = authFromUrl();
 if (authResult === "signed_in" && !S.started) welcomeStep = "name";
-go(S.started ? "home" : "welcome");
+const clubResult = clubFromUrl();
+go(clubResult ? "club" : S.started ? "home" : "welcome");
+if (clubResult === "welcome") setTimeout(() => toast("Welcome to the Garden Club! No more videos."), 3200);
 (function accountStartup() {
   if (authResult === "error") return setTimeout(() => toast("Facebook sign-in didn't finish. You can try again, or play without signing up."), 3200);
   if (authResult === "signed_in") {
