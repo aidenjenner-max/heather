@@ -663,6 +663,8 @@ body[data-contrast="high"] .wk-hedge { fill: #3E7A30; stroke: #000; }
 html.native body { padding-top: env(safe-area-inset-top); }
 html.native, html.native body { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
 html.native input, html.native textarea { -webkit-user-select: text; user-select: text; }
+.help-links .row { display: flex; flex-wrap: wrap; gap: 10px; }
+.help-links .btn { text-decoration: none; flex: 1 1 160px; text-align: center; }
 .invited-banner { display: flex; gap: 14px; align-items: flex-start; background: var(--surface-tint, var(--accent-soft)); border: 2px solid var(--accent); border-radius: 20px; padding: 16px 18px; margin: 0 0 14px; }
 .invited-banner .mark-img { width: 34px; height: 50px; flex: none; }
 .invited-banner strong { font-family: "Fredoka", sans-serif; font-size: 1.25em; display: block; margin-bottom: 4px; }
@@ -4771,6 +4773,11 @@ function renderSettings() {
       <h3>About your progress</h3>
       <p class="muted">${signedIn() ? "Progress is saved on this device and to your account." : "Progress is saved in this web browser on this device. Clearing the browser's history or data will clear it too."}</p>
       <button class="btn quiet" id="reset">Start fresh</button>
+    </div>
+    <div class="card help-links">
+      <h3>Help</h3>
+      <p class="muted small">How to play, family circle safety and how to contact us.</p>
+      <div class="row"><a class="btn secondary" href="support" target="_blank" rel="noopener">Help and contact</a><a class="btn quiet" href="privacy" target="_blank" rel="noopener">Privacy</a></div>
     </div>`;
   wireFamilyQuestions();
   if (ACCOUNTS_ON) wireAccountCard();
