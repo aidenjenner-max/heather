@@ -206,7 +206,7 @@ main:focus { outline: none; }
 .stars-big .on { color: var(--sun); }
 .stars-big .off { color: var(--line); }
 
-/* Daily Word */
+/* Letter tiles */
 .grid-word { display: grid; grid-template-rows: repeat(6, 1fr); gap: 8px; width: min(100%, 360px); margin: 0 auto; }
 .grid-word .r { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
 .tile { aspect-ratio: 1; border: 3px solid var(--line); border-radius: 10px; display: grid; place-items: center; font-family: var(--display); font-weight: 700; font-size: 1.9rem; text-transform: uppercase; background: var(--surface); position: relative; }
@@ -430,7 +430,7 @@ body[data-view="splash"] .gamebar .iconbtn { background: rgba(255, 255, 255, 0.7
 .lvl-pop .big { font-size: 2.6rem; }
 .lvl-pop .hud-goals { margin: 6px 0 4px; }
 
-/* Wordle-style Daily Word */
+/* (retired word game styles) */
 body[data-view="word"] main { padding-bottom: 0; }
 .grid-word { width: min(100%, 330px); gap: 7px; }
 .grid-word .r { gap: 7px; }
@@ -726,7 +726,6 @@ html.native input, html.native textarea { -webkit-user-select: text; user-select
 <div id="layer"></div>
 <script>
 "use strict";
-const ANSWERS = ["abide","about","above","acorn","actor","acute","adapt","admit","adopt","adult","after","again","agent","aging","agree","ahead","alarm","album","alert","alien","align","alike","alive","allow","alone","along","aloud","alpha","alter","amaze","amber","amend","among","ample","amuse","angel","anger","angle","angry","annoy","apart","apple","apply","arena","argue","arise","arose","array","arrow","aside","asset","audio","avoid","await","awake","award","aware","awful","axiom","badge","badly","basic","batch","beach","beard","beast","began","begin","begun","being","below","bench","birth","black","blade","blame","blank","blast","bless","blind","blink","bliss","block","blown","blurb","board","boost","borne","bound","brain","brake","brand","brass","brave","bread","break","brick","brief","bring","broad","broke","brown","brush","build","built","bunch","burnt","burst","buyer","cable","carry","catch","cater","cause","cease","chain","chair","chalk","charm","chart","chase","cheap","cheat","check","cheek","cheer","chess","chest","chief","child","choir","chord","chose","chuck","chunk","cider","civil","claim","clash","class","clean","clear","click","cliff","climb","clock","clone","close","cloth","cloud","coach","coast","colon","comic","comma","cough","could","count","court","cover","crack","craft","cramp","crash","crass","crawl","crazy","cream","creep","crisp","cross","crowd","crown","crude","crush","cubic","curly","curry","curve","cycle","daily","dance","dealt","decay","delay","delta","dense","depth","deter","diary","digit","diner","dirty","disco","ditch","dodge","doing","doubt","dozen","draft","drain","drama","drank","drawn","dread","dream","dress","drift","drill","drink","drive","drove","dummy","dusty","eager","eagle","early","earth","eaten","eight","elect","elite","empty","enjoy","enter","entry","equal","equip","erase","error","essay","ethic","event","every","exact","exist","extra","faint","fairy","faith","false","fancy","farce","fault","fence","fetch","fever","fewer","field","fifth","fifty","fight","final","finer","first","fizzy","flame","flash","fleet","float","flood","floor","flour","flown","fluid","flush","flute","force","forth","forty","forum","found","frame","frank","fresh","front","frown","froze","fruit","fudge","fully","funny","furry","fussy","fuzzy","genre","ghost","giant","given","glass","glean","glory","glove","gnome","going","goody","grace","grade","grain","grand","grant","graph","grasp","grass","great","green","grind","groan","gross","group","grown","guard","guess","guest","guide","habit","hairy","halve","handy","happy","hardy","harsh","hasty","havoc","heard","heart","heavy","hello","hence","hobby","honey","horse","hotel","house","human","hurry","ideal","idiom","image","imply","incur","index","infer","inner","input","irony","issue","jelly","joint","jolly","judge","juice","knife","knock","known","label","large","laser","later","laugh","layer","learn","least","leave","legal","lemon","level","light","limit","liver","lobby","local","lodge","logic","loose","lover","lower","loyal","lucky","lunch","lyric","magic","maize","major","maker","mania","march","marry","match","maybe","mayor","meant","media","mercy","merge","merit","merry","messy","metal","metro","might","mimic","minor","model","money","month","moral","motor","motto","mould","mount","mouse","mouth","movie","mummy","music","naive","nerve","never","newer","newly","nicer","night","noble","noise","noisy","north","novel","nurse","occur","ocean","oddly","offer","often","older","onion","opera","optic","orbit","order","organ","other","ought","outer","owing","owner","ozone","paint","panel","panic","paper","party","paste","patch","pause","peace","pedal","penny","petty","phase","phone","photo","piano","piece","pilot","pinch","pitch","pizza","place","plain","plane","plant","plate","point","polar","pound","power","press","price","pride","prime","print","prior","prize","prone","proof","prose","proud","prove","pulse","punch","pupil","purge","queen","query","quest","queue","quick","quiet","quite","quota","quote","radar","radio","raise","range","rapid","ratio","razor","reach","react","ready","realm","refer","reign","relax","relay","renew","reply","reset","reuse","rhyme","right","rigid","risen","risky","rival","river","robot","rough","round","route","royal","ruler","rural","rusty","sadly","safer","saint","sauce","scale","scare","scarf","scene","scope","score","scrap","sense","serve","seven","shade","shake","shaky","shall","shame","shape","share","sharp","sheep","sheer","sheet","shelf","shell","shift","shine","shiny","shirt","shock","shone","shook","shoot","short","shout","shove","shown","sight","silly","since","sixth","sixty","skill","skirt","slang","slash","sleep","slept","slice","slide","slope","small","smart","smash","smell","smile","smith","smoke","snack","snail","sneak","sniff","sober","solar","solid","solve","sorry","sound","south","space","spare","speak","spell","spend","spent","spike","spill","split","spoil","spoke","spoof","spool","sport","spout","spray","squad","stack","staff","stage","stair","stake","stale","stall","stamp","stand","stare","stark","start","state","steal","steam","steel","steep","steer","stick","stiff","still","stock","stole","stone","stood","store","storm","story","straw","stray","strip","stuck","study","stuff","stunt","style","sugar","suite","sunny","super","swamp","swear","sweat","sweep","sweet","swept","swing","sword","swore","sworn","table","taken","taste","teach","teeth","tempt","tense","tenth","thank","their","theme","there","these","thick","thing","think","third","those","three","threw","throw","thumb","tiger","tight","timer","title","toast","today","token","tooth","topic","total","touch","tough","tower","trace","track","trade","trail","train","trash","tread","treat","trend","trial","tribe","trick","troop","truck","truly","trunk","trust","truth","tutor","twice","twist","uncle","under","unify","union","unite","unity","until","upper","upset","urban","usage","using","usual","utter","vague","valid","value","valve","venue","verse","vicar","video","vinyl","visit","vital","vocal","voice","voter","vouch","vowel","waste","watch","water","weary","weigh","weird","whale","wheel","where","which","while","white","whole","whoop","whose","wider","width","wiser","witch","witty","woken","woman","women","world","worry","worse","worst","worth","would","wreck","wrist","write","wrong","wrote","yield","young","youth"];
 const BASES = "__BASES__".split(" ");
 const LETTER_VALUES = {a:1,b:3,c:3,d:2,e:1,f:4,g:2,h:4,i:1,j:8,k:5,l:1,m:3,n:1,o:1,p:3,q:10,r:1,s:1,t:1,u:1,v:4,w:4,x:8,y:4,z:10};
 const PICTURES = ["🌻","🍎","☕","🐦","🧶","🎹","🌷","🐈","⛵","🍰","🍋","🦋","🍓","🌈","🐝","🥕"];
@@ -772,8 +771,6 @@ function rng(seed) { let a = seed >>> 0; return () => { a |= 0; a = a + 0x6D2B79
 function shuffle(arr, r = Math.random) { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
 function dayIndex(key) { const [y, m, d] = key.split("-").map(Number); return Math.round((Date.UTC(y, m - 1, d) - Date.UTC(2026, 0, 1)) / 86400000); }
 const BASE_ORDER = shuffle(BASES, rng(424242));
-const ANSWER_ORDER = shuffle(ANSWERS, rng(20261123));
-function dailyAnswer(key) { const i = dayIndex(key); return ANSWER_ORDER[((i % ANSWER_ORDER.length) + ANSWER_ORDER.length) % ANSWER_ORDER.length]; }
 function dailyBase(key) { const i = dayIndex(key); return BASE_ORDER[((i % BASE_ORDER.length) + BASE_ORDER.length) % BASE_ORDER.length]; }
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const reduceMotion = () => window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -1082,7 +1079,6 @@ function goalBadges(spec, G) {
 }
 /* Card art for each game */
 const ART = {
-  word: () => `<svg viewBox="0 0 90 90" aria-hidden="true">${[["W", 0, 0, "#2E7A4B", "#fff"], ["O", 46, 0, "#E9A61C", "#2A1E00"], ["R", 0, 46, "#fff", "#221A2B"], ["D", 46, 46, "#2E7A4B", "#fff"]].map(([l, x, y, f, c]) => `<rect x="${x + 1}" y="${y + 1}" width="42" height="42" rx="7" fill="${f}" stroke="#221A2B" stroke-width="2.5"/><text x="${x + 22}" y="${y + 32}" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="26" fill="${c}">${l}</text>`).join("")}</svg>`,
   tiles: () => `<svg viewBox="0 0 90 90" aria-hidden="true"><g transform="rotate(-8 30 48)"><rect x="6" y="22" width="44" height="48" rx="8" fill="#F6DFAE" stroke="#B88A3E" stroke-width="3"/><text x="28" y="56" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="28" fill="#2E2410">A</text><text x="43" y="66" text-anchor="middle" font-size="10" font-weight="700" fill="#2E2410">1</text></g><g transform="rotate(7 62 44)"><rect x="40" y="16" width="44" height="48" rx="8" fill="#F6DFAE" stroke="#B88A3E" stroke-width="3"/><text x="62" y="50" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="28" fill="#2E2410">B</text><text x="77" y="60" text-anchor="middle" font-size="10" font-weight="700" fill="#2E2410">3</text></g></svg>`,
   memory: () => `<svg viewBox="0 0 90 90" aria-hidden="true"><g transform="rotate(-8 28 46)"><rect x="6" y="14" width="44" height="62" rx="9" fill="#5E3A8C" stroke="#221A2B" stroke-width="2.5"/>${[0, 72, 144, 216, 288].map(a => `<circle cx="28" cy="36" r="6" fill="#fff" opacity="0.55" transform="rotate(${a} 28 45)"/>`).join("")}<circle cx="28" cy="45" r="4.5" fill="#fff"/></g><g transform="rotate(8 62 46)"><rect x="40" y="14" width="44" height="62" rx="9" fill="#fff" stroke="#221A2B" stroke-width="2.5"/><g transform="translate(44,27) scale(0.36)">${KIND_ART[1]}</g></g></svg>`,
   match: () => `<svg viewBox="0 0 90 90" aria-hidden="true">${[[0, 0, 0], [1, 46, 0], [4, 0, 46], [3, 46, 46]].map(([k, x, y]) => `<g transform="translate(${x},${y}) scale(0.44)">${KIND_ART[k]}</g>`).join("")}</svg>`,
@@ -1144,13 +1140,13 @@ function renderChrome() {
   nav.innerHTML = tabs.map(([v, l, i]) => `<button data-go="${v}" ${navView === v ? 'aria-current="page"' : ""}>${i}<span>${l}</span></button>`).join("");
   nav.style.display = (view === "welcome") ? "none" : "";
   document.body.dataset.view = view;
-  document.body.classList.toggle("playing", ["word", "tiles", "memory", "level", "loop", "splash", "ws", "su", "odd", "trivia", "peek", "two", "walk", "names", "bee", "dbl", "vine"].includes(view));
+  document.body.classList.toggle("playing", ["tiles", "memory", "level", "loop", "splash", "ws", "su", "odd", "trivia", "peek", "two", "walk", "names", "bee", "dbl", "vine"].includes(view));
 }
 function go(v, opts = {}) {
   if (view === "level" && v !== "level") stopLevel();
   if (view === "loop" && v !== "loop") stopLoop();
   view = v;
-  ({ report: renderReport, ws: renderWS, su: renderSU, odd: renderOdd, peek: renderPeek, two: renderTwo, walk: renderWalk, names: renderNames, bee: renderBee, dbl: renderDbl, vine: renderVine, club: renderClub, trivia: renderTrivia, splash: renderSplash, loop: renderLoop, word: renderWord, home: renderHome, garden: renderGarden, level: renderLevel, tiles: renderTiles, memory: renderMemory, progress: renderProgress, settings: renderSettings, welcome: renderWelcome, results: renderResults }[v])(opts);
+  ({ report: renderReport, ws: renderWS, su: renderSU, odd: renderOdd, peek: renderPeek, two: renderTwo, walk: renderWalk, names: renderNames, bee: renderBee, dbl: renderDbl, vine: renderVine, club: renderClub, trivia: renderTrivia, splash: renderSplash, loop: renderLoop, home: renderHome, garden: renderGarden, level: renderLevel, tiles: renderTiles, memory: renderMemory, progress: renderProgress, settings: renderSettings, welcome: renderWelcome, results: renderResults }[v])(opts);
   renderChrome();
   window.scrollTo(0, 0);
   document.getElementById("app").focus({ preventScroll: true });
@@ -1249,7 +1245,7 @@ function renderHome() {
     </section>
     <section class="stack" aria-labelledby="moreh">
       <h2 id="moreh">More games</h2>
-      <div class="more-games">${Object.keys(GAMES).filter(g => !plan.includes(g)).sort((x, y) => NEW_GAMES.includes(y) - NEW_GAMES.includes(x)).map(g => `<button class="mgame" ${typeof GAMES[g].open === "function" ? GAMES[g].open() : GAMES[g].open} style="--card:${GAMES[g].color}">${NEW_GAMES.includes(g) ? `<span class="mg-new">New</span>` : ""}<span class="mg-art">${GAMES[g].art()}</span><span class="mg-name">${GAMES[g].name}</span><span class="mg-dom"><i class="dom-dot" style="background:${DOMAINS[GAMES[g].domain]}"></i>${GAMES[g].domain}${GAMES[g].done(rec) ? " · ✓ done" : ""}</span></button>`).join("")}</div>
+      <div class="more-games">${Object.keys(GAMES).filter(g => !plan.includes(g) && !GAMES[g].hidden).sort((x, y) => NEW_GAMES.includes(y) - NEW_GAMES.includes(x)).map(g => `<button class="mgame" ${typeof GAMES[g].open === "function" ? GAMES[g].open() : GAMES[g].open} style="--card:${GAMES[g].color}">${NEW_GAMES.includes(g) ? `<span class="mg-new">New</span>` : ""}<span class="mg-art">${GAMES[g].art()}</span><span class="mg-name">${GAMES[g].name}</span><span class="mg-dom"><i class="dom-dot" style="background:${DOMAINS[GAMES[g].domain]}"></i>${GAMES[g].domain}${GAMES[g].done(rec) ? " · ✓ done" : ""}</span></button>`).join("")}</div>
     </section>
     ${S.family ? `<div class="card family"><div class="who">${ICON.heart} A note from your family</div><p style="font-size:1.1rem">${esc(S.family)}</p></div>` : ""}
     <section class="card" aria-labelledby="wk2">
@@ -2662,7 +2658,7 @@ function finishVine() {
 /* ---------- Games list, daily plan and brain areas ---------- */
 const GAMES = {
   peek: { name: "Quick Peek", line: "Catch a quick flash. Trains your speed of seeing.", color: "var(--c-peek)", domain: "Speed", art: () => ART.peek(), open: `data-go="splash" data-game="peek"`, done: r => r.peek.done },
-  word: { name: "Daily Word", line: "Guess the hidden 5-letter word in 6 tries.", color: "var(--c-word)", domain: "Language", art: () => ART.word(), open: `data-go="splash" data-game="word"`, done: r => r.word.done },
+  word: { name: "Word game (retired)", hidden: true, domain: "Language", color: "var(--c-ws)", art: () => "", open: "", done: r => !!(r.word && r.word.done) },
   match: { name: "Flower Match", line: "Swap flowers to make rows of three.", color: "var(--c-match)", domain: "Reasoning", art: () => ART.match(), open: () => `data-level="${S.garden.unlocked}"`, done: r => (r.garden.mw || 0) > 0 },
   tiles: { name: "Word Tiles", line: "Make words from six letter tiles.", color: "var(--c-tiles)", domain: "Language", art: () => ART.tiles(), open: `data-go="splash" data-game="tiles"`, done: r => r.tiles.done },
   memory: { name: "Memory Match", line: "Turn over cards to find the pairs.", color: "var(--c-mem)", domain: "Memory", art: () => ART.memory(), open: `data-go="splash" data-game="memory"`, done: r => r.memory.done },
@@ -2741,12 +2737,15 @@ function checkBest(key, value, lowerIsBetter, text) {
   return "";
 }
 
-/* --- Personalised daily plan: Daily Word + Quick Peek (speed has the best evidence) + the area that needs it most + Flower Match --- */
+/* --- Personalised daily plan: a word game + Quick Peek (speed has the best evidence) + the area that needs it most + Flower Match --- */
 const FOCUS_GAMES = { Language: ["vine", "ws", "tiles"], Memory: ["names", "walk", "trivia", "memory"], Attention: ["two", "odd"], Reasoning: ["bee", "dbl", "su"] };
+const LANG_GAMES = ["vine", "ws", "tiles"];
+function langGameFor(k, avoid) { const opts = LANG_GAMES.filter(g => !avoid.includes(g)), d = dayIndex(k); return opts[((d % opts.length) + opts.length) % opts.length]; }
 function planFor(k) {
   S.plans = S.plans || {};
   if (S.plans[k]) {
     const P = S.plans[k];
+    if (k === dayKey() && P.games.includes("word")) { P.games[P.games.indexOf("word")] = langGameFor(k, P.games); save(); }
     if (k === dayKey() && !P.games.includes("peek")) { const rec = today(), slot = P.games.length - 1; if (!GAMES[P.games[slot]].done(rec)) { P.games[slot] = "peek"; save(); } }
     return P.games;
   }
@@ -2756,14 +2755,14 @@ function planFor(k) {
     .sort((x, y) => (x.n - y.n) || (x.a - y.a) || (doms.indexOf(x.dom) - doms.indexOf(y.dom)));
   const focus = need[0].dom, fg = FOCUS_GAMES[focus][d % FOCUS_GAMES[focus].length];
   const why = need[0].n === 0 ? `${focus} hasn't had a workout this week, so ${GAMES[fg].name} is on today's plan.` : `${GAMES[fg].name} is on today's plan to give ${focus.toLowerCase()} a little extra practice.`;
-  S.plans[k] = { games: ["word", "peek", fg, "match"], why, focus };
+  S.plans[k] = { games: [langGameFor(k, [fg]), "peek", fg, "match"], why, focus };
   save();
   return S.plans[k].games;
 }
 
 /* --- Family report --- */
 function renderReport() {
-  const t = Object.keys(GAMES).length, days28 = [...Array(28)].map((_, i) => dayKey(addDays(new Date(), -i)));
+  const t = Object.keys(GAMES).filter(g => !GAMES[g].hidden).length, days28 = [...Array(28)].map((_, i) => dayKey(addDays(new Date(), -i)));
   const active = days28.filter(k => played(S.days[k])).length;
   const finished = days28.reduce((s, k) => s + (S.days[k] ? Object.keys(GAMES).filter(g => GAMES[g].done(normRec(S.days[k]))).length : 0), 0);
   const trends = Object.keys(DOMAINS).map(domainTrend);
@@ -3255,8 +3254,7 @@ function startTogether() {
 function gameCard(g, rec, k) {
   const G = GAMES[g], pill = (state, text) => `<span class="pill ${state}">${text}</span>`;
   let footL = G.domain, st;
-  if (g === "word") { const w = rec.word; footL = `No. ${dayIndex(k) + 1} · Language`; st = w.done ? pill("done", w.won ? `✓ Solved in ${w.guesses.length}` : "✓ Played") : w.guesses.length ? pill("going", "Keep going") : pill("", "Play"); }
-  else if (g === "match") { footL = `Level ${S.garden.unlocked} · Reasoning`; st = G.done(rec) ? pill("done", "✓ Level done") : pill("", "Play"); }
+  if (g === "match") { footL = `Level ${S.garden.unlocked} · Reasoning`; st = G.done(rec) ? pill("done", "✓ Level done") : pill("", "Play"); }
   else if (g === "tiles") { const n = rec.tiles.found.length + rec.tiles.bonus.length; st = rec.tiles.done ? pill("done", `✓ ${n} words`) : n ? pill("going", `${n} found`) : pill("", "Play"); }
   else if (g === "memory") st = rec.memory.done ? pill("done", `✓ ${rec.memory.moves} turns`) : pill("", "Play");
   else if (g === "ws") st = rec.ws.done ? pill("done", "✓ All found") : rec.ws.found.length ? pill("going", `${rec.ws.found.length} found`) : pill("", "Play");
@@ -3278,7 +3276,6 @@ function brainBalanceHTML() {
 
 /* ---------- Launch screen for the daily puzzles (NYT style) ---------- */
 const SPLASH = {
-  word: { name: "Daily Word", line: "Get 6 chances to guess a 5-letter word.", color: "var(--c-word)" },
   tiles: { name: "Word Tiles", line: "Make as many words as you can from six letter tiles.", color: "var(--c-tiles)" },
   memory: { name: "Memory Match", line: "Turn over two cards at a time to find all the pairs.", color: "var(--c-mem)" },
   ws: { name: "Word Search", line: "Find the hidden words in the letter grid.", color: "var(--c-ws)" },
@@ -3294,17 +3291,12 @@ const SPLASH = {
   trivia: { name: "Memory Lane", line: "Five questions about music, TV, Canada and everyday life from years gone by.", color: "var(--c-trivia)" }
 };
 function renderSplash(opts = {}) {
-  const g = opts.game || "word", s = SPLASH[g], rec = today(), k = dayKey();
-  wordPractice = null;
+  const g = opts.game || "vine", s = SPLASH[g], rec = today(), k = dayKey();
   document.body.style.setProperty("--splash-bg", getComputedStyle(document.documentElement).getPropertyValue(s.color.slice(4, -1)) || "#eee");
   const date = new Date().toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
   let status = "", btns = "";
   const how = `<button class="btn block out" id="sp-how">How to play</button>`;
-  if (g === "word") {
-    const w = rec.word;
-    if (w.done) { status = w.won ? `You solved today's word in ${w.guesses.length} ${w.guesses.length === 1 ? "try" : "tries"}.` : "You played today's word. A new one comes tomorrow."; btns = `<button class="btn block play" data-go="results" data-game="word">See today's result</button><button class="btn block out" data-go="word" data-practice="1">Play a practice word</button>`; }
-    else btns = `<button class="btn block play" data-go="word">${w.guesses.length ? "Continue" : "Play"}</button>${how}`;
-  } else if (g === "tiles") {
+  if (g === "tiles") {
     const n = rec.tiles.found.length + rec.tiles.bonus.length;
     if (rec.tiles.done) { status = `You found ${n} word${n === 1 ? "" : "s"} today.`; btns = `<button class="btn block play" data-go="tiles">See today's words</button><button class="btn block out" data-go="tiles" data-practice="1">Play a practice round</button>`; }
     else btns = `<button class="btn block play" data-go="tiles">${n ? "Continue" : "Play"}</button>${how}`;
@@ -3329,11 +3321,11 @@ function renderSplash(opts = {}) {
       <p class="line">${s.line}</p>
       ${status ? `<p style="font-weight:700">${status}</p>` : ""}
       <div class="btns">${btns}</div>
-      <p class="meta"><strong>${date}</strong>${g === "word" ? `No. ${dayIndex(k) + 1}` : { tiles: "Today's letters", memory: "Today's cards", ws: "Today's theme: " + wsThemeFor(k, () => 0, false), su: "Today's puzzle", odd: "Today's rounds", peek: "15 quick peeks", two: "4 short rounds", walk: "Today's walk", names: "Today's neighbours", bee: "Today's garden", dbl: "Today's numbers", vine: "Today's vines", trivia: "Today's questions" }[g]} · ${GAMES[g].domain}</p>
+      <p class="meta"><strong>${date}</strong>${{ tiles: "Today's letters", memory: "Today's cards", ws: "Today's theme: " + wsThemeFor(k, () => 0, false), su: "Today's puzzle", odd: "Today's rounds", peek: "15 quick peeks", two: "4 short rounds", walk: "Today's walk", names: "Today's neighbours", bee: "Today's garden", dbl: "Today's numbers", vine: "Today's vines", trivia: "Today's questions" }[g]} · ${GAMES[g].domain}</p>
     </section>`;
   const tg = document.getElementById("sp-together"); if (tg) tg.onclick = startTogether;
   const h = document.getElementById("sp-how");
-  if (h) h.onclick = () => ({ word: howToPlayWord, tiles: howToTiles, memory: howToMemory, ws: howToWS, su: howToSU, odd: howToOdd, peek: howToPeek, two: howToTwo, walk: howToWalk, names: howToNames, bee: howToBee, dbl: howToDbl, vine: howToVine, trivia: howToTrivia }[g])();
+  if (h) h.onclick = () => ({ tiles: howToTiles, memory: howToMemory, ws: howToWS, su: howToSU, odd: howToOdd, peek: howToPeek, two: howToTwo, walk: howToWalk, names: howToNames, bee: howToBee, dbl: howToDbl, vine: howToVine, trivia: howToTrivia }[g])();
 }
 function howToTiles() {
   dialog(`<h2>How to play Word Tiles</h2><ul>
@@ -4302,128 +4294,6 @@ function winLoop() {
     }, false);
 }
 
-/* ---------- Daily Word ---------- */
-let wordPractice = null; // {answer, guesses, done, won, hints}
-let wordInput = "";
-function newPracticeWord() { const a = ANSWERS[Math.floor(Math.random() * ANSWERS.length)]; return { answer: a, guesses: [], done: false, won: false, hints: [], practice: true }; }
-function wordGame() { if (wordPractice) return wordPractice; const r = today().word; r.answer = dailyAnswer(dayKey()); return r; }
-function score(guess, answer) {
-  const res = Array(5).fill("absent"), left = {};
-  for (let i = 0; i < 5; i++) { if (guess[i] === answer[i]) res[i] = "correct"; else left[answer[i]] = (left[answer[i]] || 0) + 1; }
-  for (let i = 0; i < 5; i++) { if (res[i] !== "correct" && left[guess[i]]) { res[i] = "present"; left[guess[i]]--; } }
-  return res;
-}
-function keyStates(g) {
-  const st = {}, rank = { absent: 1, present: 2, correct: 3 };
-  for (const gu of g.guesses) score(gu, g.answer).forEach((s, i) => { const ch = gu[i]; if (!st[ch] || rank[s] > rank[st[ch]]) st[ch] = s; });
-  return st;
-}
-const MARK = { correct: "✓", present: "•", absent: "" };
-function renderWord(opts = {}) {
-  if (opts.practice) wordPractice = newPracticeWord();
-  else wordPractice = null;
-  wordInput = "";
-  const app = document.getElementById("app");
-  const g = wordGame();
-  app.innerHTML = `
-    ${gameBar("home", g.practice ? "Practice Word" : "Daily Word", g.practice ? "Doesn't count toward today" : `No. ${dayIndex(dayKey()) + 1}`, iconBtn("hint", ICON.bulb, "Hint") + iconBtn("wstats", ICON.stats, "Stats") + iconBtn("how", ICON.help, "Help"))}
-    <div id="hints"></div>
-    <div class="grid-word" id="wgrid" aria-label="Word grid"></div>
-    <div class="msg" id="wmsg" role="status" aria-live="polite"></div>
-    <div class="kb-dock"><div class="kb" id="kb"></div></div>`;
-  document.getElementById("how").onclick = howToPlayWord;
-  document.getElementById("hint").onclick = wordHint;
-  document.getElementById("wstats").onclick = () => dialog(`<h2>Daily Word stats</h2>${wordStatsHTML(-1)}<button class="btn block" data-close>Close</button>`);
-  drawWord();
-  if (!S.seenWordHelp) { S.seenWordHelp = true; save(); howToPlayWord(); }
-}
-function exampleRow(word, idx, state) {
-  return `<div class="ex-row" aria-hidden="true">${[...word].map((c, i) => `<div class="tile ${i === idx ? state : "filled"}">${c}${i === idx && MARK[state] ? `<span class="mark">${MARK[state]}</span>` : ""}</div>`).join("")}</div>`;
-}
-function howToPlayWord() {
-  dialog(`<h2>How to play</h2><p>Guess the hidden word in 6 tries. Type a 5-letter word with the big keys and press <strong>Enter</strong>. The colours show how close you are.</p>
-    <h3>Examples</h3>
-    ${exampleRow("plant", 0, "correct")}<p><strong>P</strong> is in the word and in the right spot.</p>
-    ${exampleRow("daisy", 2, "present")}<p><strong>I</strong> is in the word, but in a different spot.</p>
-    ${exampleRow("robin", 2, "absent")}<p><strong>B</strong> isn't in the word at all.</p>
-    <p class="muted small">Stuck? Tap <strong>Hint</strong> to see a letter. There's no timer, and words it doesn't know never use up a try. A new word arrives every day at midnight.</p>
-    <button class="btn block" data-close>Let's play</button>`);
-}
-function wordStatsHTML(hiRow) {
-  const keys = Object.keys(S.days).sort(), dd = keys.map(k => S.days[k].word).filter(w => w && w.done);
-  const playedN = dd.length, wins = dd.filter(w => w.won).length;
-  let cur = 0, d = new Date(); if (!(S.days[dayKey(d)] && S.days[dayKey(d)].word && S.days[dayKey(d)].word.done)) d = addDays(d, -1);
-  while (S.days[dayKey(d)] && S.days[dayKey(d)].word && S.days[dayKey(d)].word.won) { cur++; d = addDays(d, -1); }
-  let best = 0, run = 0, prev = null;
-  for (const k of keys) { const w = S.days[k].word; if (w && w.won) { run = prev && dayKey(addDays(new Date(prev + "T12:00:00"), 1)) === k ? run + 1 : 1; best = Math.max(best, run); prev = k; } else if (w && w.done) { run = 0; prev = null; } }
-  const max = Math.max(1, ...S.word.dist);
-  return `<div class="wstats"><div><b>${playedN}</b><span>Played</span></div><div><b>${playedN ? Math.round(100 * wins / playedN) : 0}</b><span>Win %</span></div><div><b>${cur}</b><span>Current streak</span></div><div><b>${best}</b><span>Best streak</span></div></div>
-    <h3 style="margin-top:6px">Tries needed</h3>
-    <div class="dist">${S.word.dist.slice(0, 6).map((v, i) => `<div class="b"><span>${i + 1}</span><span class="bar2 ${i === hiRow ? "hi" : ""}" style="width:${Math.max(8, Math.round(100 * v / max))}%">${v}</span></div>`).join("")}</div>`;
-}
-function drawWord(revealRow = -1) {
-  const g = wordGame();
-  const rows = [];
-  for (let r = 0; r < 6; r++) {
-    const gu = g.guesses[r];
-    let cells = "";
-    if (gu) { const sc = score(gu, g.answer); for (let i = 0; i < 5; i++) cells += `<div class="tile ${sc[i]} ${r === revealRow ? "reveal" : ""}" style="${r === revealRow ? `animation-delay:${i * 0.12}s` : ""}" aria-label="${gu[i]}, ${sc[i] === "correct" ? "right spot" : sc[i] === "present" ? "in the word" : "not in the word"}">${gu[i]}<span class="mark">${MARK[sc[i]]}</span></div>`; }
-    else if (r === g.guesses.length && !g.done) { for (let i = 0; i < 5; i++) cells += `<div class="tile ${wordInput[i] ? "filled" : ""}">${wordInput[i] || ""}</div>`; }
-    else { for (let i = 0; i < 5; i++) cells += `<div class="tile"></div>`; }
-    rows.push(`<div class="r" ${r === g.guesses.length ? 'id="cur"' : ""}>${cells}</div>`);
-  }
-  document.getElementById("wgrid").innerHTML = rows.join("");
-  const ks = keyStates(g);
-  const layout = ["qwertyuiop", "asdfghjkl", "+zxcvbnm-"];
-  document.getElementById("kb").innerHTML = layout.map(row => `<div class="r">${[...row].map(ch =>
-    ch === "+" ? `<button class="key wide" data-k="enter">Enter</button>` :
-    ch === "-" ? `<button class="key wide" data-k="back" aria-label="Delete letter">Delete</button>` :
-    `<button class="key ${ks[ch] || ""}" data-k="${ch}">${ch}</button>`).join("")}</div>`).join("");
-  document.getElementById("hints").innerHTML = (g.hints || []).length ? `<div class="hintbox"><strong>Hint${g.hints.length > 1 ? "s" : ""}:</strong> ${g.hints.map(i => `letter ${i + 1} is <strong style="text-transform:uppercase">${g.answer[i]}</strong>`).join(", ")}</div>` : "";
-  const hb = document.getElementById("hint"); if (hb) hb.disabled = g.done || (g.hints || []).length >= 2;
-}
-function wordMsg(t) { const m = document.getElementById("wmsg"); if (m) m.textContent = t; }
-function wordKey(k) {
-  const g = wordGame(); if (g.done) return;
-  if (k === "back") { wordInput = wordInput.slice(0, -1); drawWord(); return; }
-  if (k === "enter") return submitWord();
-  if (/^[a-z]$/.test(k) && wordInput.length < 5) { wordInput += k; sfx.soft(); drawWord(); wordMsg(""); }
-}
-function submitWord() {
-  const g = wordGame();
-  if (wordInput.length < 5) { wordMsg("Use five letters, then press Enter."); return shakeRow(); }
-  if (!isWord(wordInput)) { wordMsg(`I don't know "${wordInput.toUpperCase()}". Try another word. This one doesn't count as a try.`); sfx.oops(); return shakeRow(); }
-  g.guesses.push(wordInput); const guess = wordInput; wordInput = "";
-  const row = g.guesses.length - 1;
-  if (guess === g.answer) { g.done = true; g.won = true; }
-  else if (g.guesses.length >= 6) { g.done = true; g.won = false; }
-  if (g.done) finishWord(g);
-  save(); drawWord(row);
-  if (!g.done) { const sc = score(guess, g.answer); const c = sc.filter(s => s === "correct").length, p = sc.filter(s => s === "present").length; wordMsg(c + p === 0 ? "No matching letters. That's useful to know!" : `${c} in the right spot, ${p} elsewhere in the word.`); sfx.soft(); }
-  else { wordMsg(g.won ? "You got it!" : `The word was ${g.answer.toUpperCase()}.`); setTimeout(() => go("results", { game: "word" }), 1400); }
-}
-function finishWord(g) {
-  const n = g.guesses.length;
-  let xp = g.won ? 40 + (7 - n) * 10 - (g.hints || []).length * 10 : 20;
-  if (g.practice) xp = Math.round(xp / 2);
-  g.xp = xp;
-  if (!g.practice) {
-    S.word.dist[g.won ? n - 1 : 6]++;
-    recordPerf("word", g.won ? Math.max(30, 100 - (n - 1) * 12 - (g.hints || []).length * 10) : 10);
-    if (g.won) noteWin(checkBest("word", n, true, `Solved the Daily Word in ${n} ${n === 1 ? "try" : "tries"}, a personal best!`));
-  }
-  g.won ? sfx.win() : sfx.soft();
-}
-function shakeRow() { const r = document.getElementById("cur"); if (!r) return; r.classList.remove("shake"); void r.offsetWidth; r.classList.add("shake"); }
-function wordHint() {
-  const g = wordGame(); g.hints = g.hints || [];
-  const known = new Set(g.hints);
-  g.guesses.forEach(gu => score(gu, g.answer).forEach((s, i) => { if (s === "correct") known.add(i); }));
-  const open = [0, 1, 2, 3, 4].filter(i => !known.has(i));
-  if (!open.length) { wordMsg("You already know every letter's spot!"); return; }
-  g.hints.push(open[Math.floor(Math.random() * open.length)]); save(); drawWord(); sfx.soft();
-}
-
 /* ---------- Word Tiles ---------- */
 let T = null;
 function tilesGame(practice) {
@@ -4580,12 +4450,6 @@ function renderResults(opts) {
   const rec = today(); let title, detail, xp, share, grid = "", note = "";
   if (opts.r) {
     ({ title, detail, share } = opts.r); note = opts.r.note || ""; xp = null;
-  } else if (opts.game === "word") {
-    const g = wordGame(); xp = g.xp || 0;
-    grid = g.guesses.map(gu => score(gu, g.answer).map(s => s === "correct" ? "🟩" : s === "present" ? "🟨" : "⬜").join("")).join("\n");
-    title = g.won ? (g.guesses.length <= 3 ? "Brilliant!" : "You solved it!") : "Good try!";
-    detail = g.won ? `The word was ${g.answer.toUpperCase()}. You found it in ${g.guesses.length} ${g.guesses.length === 1 ? "try" : "tries"}.` : `The word was ${g.answer.toUpperCase()}. Tricky one! A new word is waiting tomorrow.`;
-    share = `${S.name} ${g.won ? `solved today's Daily Word in ${g.guesses.length}/6` : "played today's Daily Word"}!\n${grid}`;
   } else if (opts.game === "tiles") {
     if (!T.rec.practice && !T.rec.scored) { T.rec.scored = true; recordPerf("tiles", Math.min(100, 20 + 80 * (T.rec.found.length + T.rec.bonus.length) / T.goalN - T.rec.hints.length * 5)); const n = T.rec.found.length + T.rec.bonus.length; noteWin(checkBest("tiles", n, false, `${n} words in Word Tiles, a personal best!`)); }
     const t = T.rec, n = t.found.length + t.bonus.length; xp = t.xp;
@@ -4607,8 +4471,6 @@ function renderResults(opts) {
     <div class="card" style="text-align:center;align-items:center">
       <h1>${title}</h1>
       <p>${esc(detail)}</p>
-      ${opts.game === "word" ? `<div class="mini-grid" aria-hidden="true">${wordGame().guesses.map(gu => `<div>${score(gu, wordGame().answer).map(s => `<i class="${s}"></i>`).join("")}</div>`).join("")}</div>` : ""}
-      ${opts.game === "word" && !wordGame().practice ? wordStatsHTML(wordGame().won ? wordGame().guesses.length - 1 : -1) : ""}
       ${xp !== null && xp !== undefined ? `<div class="big-xp">+${xp}</div><p class="muted">points</p>` : ""}
       ${(() => { const ns = popNotes(); return ns.length ? `<div class="win-note">${ns.map(n => `<p>⭐ ${esc(n)}</p>`).join("")}</div>` : ""; })()}
       ${note ? `<p class="muted">${esc(note)}</p>` : ""}
@@ -4747,7 +4609,7 @@ const DECOR = {
 function trophies() {
   const days = Object.keys(S.days).filter(k => played(S.days[k]));
   const perfect = days.filter(k => gamesDone(S.days[k]) >= 4).length;
-  const words = S.word.dist.slice(0, 6).reduce((a, b) => a + b, 0);
+  const vines = Object.values(S.days).filter(r => r.vine && r.vine.done).length;
   const mem = Object.values(S.days).filter(d => d.memory.done).length;
   const tileWords = Object.values(S.days).reduce((s, d) => s + d.tiles.found.length + d.tiles.bonus.length, 0);
   const T0 = (id, name, desc, have, need, art) => ({ id, name, desc, have: Math.min(have, need), need, art, got: !!S.trophies[id] || have >= need });
@@ -4757,7 +4619,7 @@ function trophies() {
     T0("butterfly", "Butterfly", "Finish all 4 things in one day", perfect, 1, "butterfly"),
     T0("bench", "Garden bench", "Play 7 days in a row", bestStreak(), 7, "bench"),
     T0("gnome", "Garden gnome", "Earn 25 stars in the garden games", totalStars(), 25, "gnome"),
-    T0("birdhouse", "Birdhouse", "Solve 10 Daily Words", words, 10, "birdhouse"),
+    T0("birdhouse", "Birdhouse", "Untangle 10 Word Vines", vines, 10, "birdhouse"),
     T0("sundial", "Sundial", "Finish 10 Memory Match games", mem, 10, "sundial"),
     T0("beehive", "Beehive", "Play on 14 different days", days.length, 14, "beehive"),
     T0("scarecrow", "Scarecrow", "Find 100 words in Word Tiles", tileWords, 100, "scarecrow"),
@@ -4876,15 +4738,11 @@ function renderProgress() {
       <div class="stat"><div class="n">${S.garden.unlocked - 1}</div><div class="l">Flower Match levels</div></div>
       <div class="stat"><div class="n">${S.suCount || 0}</div><div class="l">Sudoku solved</div></div>
       <div class="stat"><div class="n">${totalStars()}</div><div class="l">Stars earned</div></div>
-      <div class="stat"><div class="n">${S.word.dist.slice(0, 6).reduce((a, b) => a + b, 0)}</div><div class="l">Daily Words solved</div></div>
+      <div class="stat"><div class="n">${Object.values(S.days).filter(r => r.vine && r.vine.done).length}</div><div class="l">Word Vines untangled</div></div>
       <div class="stat"><div class="n">${tilesWords}</div><div class="l">Tile words found</div></div>
       <div class="stat"><div class="n">${memGames}</div><div class="l">Memory games${S.best.memory ? `, best ${S.best.memory} turns` : ""}</div></div>
     </div>
-    <div class="card">
-      <h3>Daily Word: tries needed</h3>
-      <div class="dist">${S.word.dist.map((v, i) => `<div class="b"><span>${i < 6 ? i + 1 : "–"}</span><span class="bar2 ${v === Math.max(...S.word.dist) && v > 0 ? "hi" : ""}" style="width:${Math.max(8, Math.round(100 * v / Math.max(1, ...S.word.dist)))}%">${v}</span></div>`).join("")}</div>
-      <p class="muted small">The last row counts words that got away.</p>
-    </div>`;
+`;
   setTimeout(showTrophyUnlocks, 400);
 }
 
@@ -4969,11 +4827,7 @@ document.addEventListener("click", e => {
 document.addEventListener("keydown", e => {
   if (e.metaKey || e.ctrlKey || e.altKey || document.querySelector(".overlay")) return;
   if (e.target.matches("input, textarea")) return;
-  if (view === "word") {
-    if (e.key === "Enter") { e.preventDefault(); wordKey("enter"); }
-    else if (e.key === "Backspace") { e.preventDefault(); wordKey("back"); }
-    else if (/^[a-zA-Z]$/.test(e.key)) wordKey(e.key.toLowerCase());
-  } else if (view === "tiles" && T) {
+  if (view === "tiles" && T) {
     const k = e.key.toLowerCase();
     if (e.key === "Enter") { e.preventDefault(); checkTiles(); }
     else if (e.key === "Backspace") { e.preventDefault(); T.picked.pop(); drawTiles(); }
