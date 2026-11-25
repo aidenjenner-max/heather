@@ -1372,7 +1372,7 @@ const ML_ART = `<svg viewBox="0 0 120 96" aria-hidden="true">
 function memoryLaneCard(rec, plan) {
   if (plan.includes("trivia")) return "";   // an older saved plan already shows it
   const done = rec.trivia.done, circle = inCircle();
-  const waiting = circle ? familyQs().filter(q => q.shared && (S.famAns || {})[q.id] === undefined) : [];
+  const waiting = circle ? familyQs().filter(q => q.shared && !famPlayed(q.id)) : [];
   const who = [...new Set(waiting.map(q => q.from))];
   const whoLine = who.length === 1 ? who[0] : who.length === 2 ? `${who[0]} and ${who[1]}` : who.length ? `${who[0]}, ${who[1]} and others` : "";
   const fam = waiting.length
@@ -3243,10 +3243,12 @@ function names(list) { const n = [...new Set(list)]; return n.length <= 1 ? (n[0
 function circleNews() {
   if (!inCircle()) return null;
   const me = (S.circle.me || {}).id, since = S.circle.seenAt || 0, qs = circleQuestions();
-  const fresh = qs.filter(q => q.author_id !== me && new Date(q.created_at).getTime() > since);
+  const blocked = S.circle.blocked || [];
+  const fresh = qs.filter(q => q.author_id !== me && !blocked.includes(q.author_id) && new Date(q.created_at).getTime() > since && myAnswer(q) === undefined);
   const tries = qs.filter(q => q.author_id === me).flatMap(q => (q.answers || []).filter(a => new Date(a.at).getTime() > since).map(a => ({ ...a, q })));
   return { fresh, tries, count: fresh.length + tries.length };
 }
+function famPlayed(id) { const q = circleQuestions().find(x => x.id === id); return q ? myAnswer(q) !== undefined : (S.famAns || {})[id] !== undefined; }
 function myAnswer(q) {
   const me = (S.circle.me || {}).id, local = (S.famAns || {})[q.id];
   if (local !== undefined) return local;
@@ -3568,7 +3570,9 @@ function triviaMake(practice, players) {
   let qs = picks.map(i => { const [q, opts, fact] = TRIVIA[i]; return { q, answer: opts[0], opts: shuffle(opts, r), fact }; });
   const fam = familyQs();
   if (fam.length) {
-    const f = practice ? fam[Math.floor(r() * fam.length)] : fam[((dayIndex(dayKey()) % fam.length) + fam.length) % fam.length];
+    // Unplayed family memories come first (oldest first), so nothing new waits behind a repeat
+    const unplayed = fam.filter(q => !q.shared || !famPlayed(q.id)), pool = unplayed.length ? unplayed : fam;
+    const f = practice ? pool[Math.floor(r() * pool.length)] : unplayed.length ? unplayed[0] : fam[((dayIndex(dayKey()) % fam.length) + fam.length) % fam.length];
     qs[1] = { q: f.q, answer: f.answer, opts: shuffle([f.answer, ...f.wrong], r), fact: f.note || "A question from your family.", from: f.from || "your family", fid: f.shared ? f.id : null, aid: f.aid || null };
   }
   return { qs, i: 0, right: 0, picked: null, practice: practice || !!players, players: players || null, scores: players ? [0, 0] : null };
