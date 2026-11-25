@@ -4532,7 +4532,6 @@ function openInvite(kind = "friend", intro = "") {
       ${canShare ? `<button class="btn block" id="sh-native">${SHARE_ICON.share} Share…</button>` : ""}
       <a class="btn block ${canShare ? "secondary" : ""}" id="sh-text" href="#">${SHARE_ICON.text} Send a text message</a>
       ${I.fb ? `<a class="btn block fb" id="sh-fb" href="${fbShareUrl()}" target="_blank" rel="noopener">${ICON.fb} Share on Facebook</a>` : ""}
-      <button class="btn block secondary" id="sh-copy">${SHARE_ICON.copy} Copy the message</button>
     </div>
     ${I.tip ? `<p class="share-tip">${esc(typeof I.tip === "function" ? I.tip() : I.tip)}</p>` : ""}
     <button class="btn block quiet" data-close>Not now</button>`, o => {
@@ -4542,7 +4541,6 @@ function openInvite(kind = "friend", intro = "") {
       if (nat) nat.onclick = async () => { try { await navigator.share({ title: I.subject, text: msg() }); done("Thanks for sharing!"); o.remove(); } catch (e) { /* cancelled */ } };
       o.querySelector("#sh-text").onclick = e => { e.preventDefault(); location.href = "sms:?&body=" + encodeURIComponent(msg()); done(); };
       const fb = o.querySelector("#sh-fb"); if (fb) fb.addEventListener("click", () => done("Thanks for sharing!"));
-      o.querySelector("#sh-copy").onclick = () => { copyText(msg()); done(); };
     });
 }
 /* A gentle, one-off nudge: after 3 days in a row, at most once every 3 weeks */
