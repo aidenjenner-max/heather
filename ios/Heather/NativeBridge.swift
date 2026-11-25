@@ -14,6 +14,9 @@ final class NativeBridge {
             haptic(body["kind"] as? String ?? "light")
         case "share":
             share(title: body["title"] as? String ?? "", text: body["text"] as? String ?? "")
+        case "badge":
+            let count = max(0, body["count"] as? Int ?? 0)
+            Task { await setBadge(count) }
         case "reminder":
             let on = body["on"] as? Bool ?? false
             let hour = body["hour"] as? Int ?? 9
@@ -52,7 +55,7 @@ final class NativeBridge {
         let center = UNUserNotificationCenter.current()
         center.removePendingNotificationRequests(withIdentifiers: [Self.reminderID])
         guard on else { return }
-        let granted = (try? await center.requestAuthorization(options: [.alert, .sound])) ?? false
+        let granted = (try? await center.requestAuthorization(options: [.alert, .sound, .badge])) ?? false
         guard granted else { return reply(["type": "reminder", "granted": false]) }
 
         let content = UNMutableNotificationContent()
@@ -65,6 +68,17 @@ final class NativeBridge {
         let trigger = UNCalendarNotificationTrigger(dateMatching: time, repeats: true)
         try? await center.add(UNNotificationRequest(identifier: Self.reminderID, content: content, trigger: trigger))
         reply(["type": "reminder", "granted": true])
+    }
+
+    // MARK: App icon badge = new family memories
+    private func setBadge(_ count: Int) async {
+        let center = UNUserNotificationCenter.current()
+        let settings = await center.notificationSettings()
+        if settings.authorizationStatus == .notDetermined {
+            guard count > 0 else { return }   // only ask once there's something to show
+            _ = try? await center.requestAuthorization(options: [.badge, .alert, .sound])
+        }
+        try? await center.setBadgeCount(count)
     }
 
     private func reply(_ message: [String: Any]) {

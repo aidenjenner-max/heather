@@ -86,8 +86,8 @@ button, input, textarea { font: inherit; color: inherit; }
 .chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 999px; background: var(--surface); border: 2px solid var(--line); font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
 main { flex: 1; padding: 8px 16px 24px; display: flex; flex-direction: column; gap: 16px; }
 main:focus { outline: none; }
-.nav { position: sticky; bottom: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; padding: 8px 8px calc(8px + env(safe-area-inset-bottom)); background: var(--surface); border-top: 2px solid var(--line); z-index: 5; }
-.nav button { min-height: var(--tap); border: 0; background: transparent; border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-weight: 700; font-size: 0.78rem; color: var(--muted); cursor: pointer; padding: 4px; }
+.nav { position: sticky; bottom: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; padding: 8px 8px calc(8px + env(safe-area-inset-bottom)); background: var(--surface); border-top: 2px solid var(--line); z-index: 5; }
+.nav button { white-space: nowrap; min-height: var(--tap); border: 0; background: transparent; border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-weight: 700; font-size: 0.78rem; color: var(--muted); cursor: pointer; padding: 4px; }
 .nav button[aria-current="page"] { background: var(--accent-soft); color: var(--accent); }
 .nav svg { width: 28px; height: 28px; }
 
@@ -722,6 +722,8 @@ html.native input, html.native textarea { -webkit-user-select: text; user-select
 .am-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
 .am-opts span { border: 2px solid var(--line); border-radius: 12px; padding: 8px; text-align: center; font-weight: 600; }
 .am-opts span.right { border-color: #2E7A4B; background: #D6F0DA; color: #1D5E27; }
+.nav-ic { position: relative; display: inline-flex; }
+.nav-badge { position: absolute; top: -6px; right: -12px; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 999px; background: #E5484D; color: #fff; font-size: .8rem; font-weight: 800; line-height: 22px; text-align: center; border: 2px solid var(--surface); }
 .invited-banner { display: flex; gap: 14px; align-items: flex-start; background: var(--surface-tint, var(--accent-soft)); border: 2px solid var(--accent); border-radius: 20px; padding: 16px 18px; margin: 0 0 14px; }
 .invited-banner .mark-img { width: 34px; height: 50px; flex: none; }
 .invited-banner strong { font-family: "Fredoka", sans-serif; font-size: 1.25em; display: block; margin-bottom: 4px; }
@@ -1180,6 +1182,9 @@ function applySettings() {
   const tc = document.querySelector('meta[name="theme-color"]'); if (tc) tc.content = document.getElementById("boot") ? "#120127" : dark ? "#120127" : "#FFFBF5";
   if (typeof NATIVE !== "undefined" && NATIVE) nativeSend({ type: "theme", dark: !!(document.getElementById("boot") || dark) });
 }
+var lastBadge = -1;
+/* New memories from the rest of the family since this person last opened the Family page */
+function newMemoryCount() { try { const n = circleNews(); return n ? n.fresh.length : 0; } catch (e) { return 0; } }
 function renderChrome() {
   document.getElementById("topbar").innerHTML = `
     <div class="brand"><span class="mark-img" aria-hidden="true"></span><svg class="brand-word" viewBox="0 0 3566 736" role="img" aria-label="Heather"><path fill="currentColor" d="${WORDMARK_D}"/></svg></div>
@@ -1187,10 +1192,11 @@ function renderChrome() {
       <span class="chip" title="Days in a row">${ICON.flame}<span>${streak()}<span class="sr"> days in a row</span></span></span>
       <span class="chip" title="Stars earned">${ICON.star}<span>${totalStars()}<span class="sr"> stars</span></span></span>
     </div>`;
-  const tabs = [["home", "Today", ICON.home], ["garden", "Levels", ICON.garden], ["progress", "My Garden", ICON.flower], ["settings", "Settings", ICON.gear]];
-  const navView = view === "report" ? "progress" : ["garden", "progress", "settings"].includes(view) ? view : (["level", "loop"].includes(view) ? "garden" : "home");
-  const nav = document.getElementById("nav");
-  nav.innerHTML = tabs.map(([v, l, i]) => `<button data-go="${v}" ${navView === v ? 'aria-current="page"' : ""}>${i}<span>${l}</span></button>`).join("");
+  const tabs = [["home", "Today", ICON.home], ["garden", "Levels", ICON.garden], ["progress", "Garden", ICON.flower], ["family", "Family", ICON.heart], ["settings", "Settings", ICON.gear]];
+  const navView = view === "report" ? "progress" : ["garden", "progress", "settings", "family"].includes(view) ? view : (["level", "loop"].includes(view) ? "garden" : "home");
+  const nav = document.getElementById("nav"), fresh = newMemoryCount();
+  nav.innerHTML = tabs.map(([v, l, i]) => { const n = v === "family" ? fresh : 0; return `<button data-go="${v}" ${navView === v ? 'aria-current="page"' : ""} ${n ? `aria-label="${l}, ${n} new ${n === 1 ? "memory" : "memories"}"` : ""}><span class="nav-ic">${i}${n ? `<b class="nav-badge" aria-hidden="true">${n > 9 ? "9+" : n}</b>` : ""}</span><span>${l}</span></button>`; }).join("");
+  if (NATIVE && fresh !== lastBadge) { lastBadge = fresh; nativeSend({ type: "badge", count: fresh }); }
   nav.style.display = (view === "welcome") ? "none" : "";
   document.body.dataset.view = view;
   document.body.classList.toggle("playing", ["tiles", "memory", "level", "loop", "splash", "ws", "su", "odd", "trivia", "peek", "two", "walk", "names", "bee", "dbl", "vine"].includes(view));
@@ -1305,7 +1311,6 @@ function renderHome() {
       <div class="row between"><h3 id="wk2">This week</h3><span class="muted small">${streak()} day${streak() === 1 ? "" : "s"} in a row</span></div>
       <div class="week">${week.map(w => `<div class="d"><span>${w.lab}</span><span class="dot ${w.on ? "on" : ""} ${w.today ? "today" : ""}">${w.on ? "✓" : ""}</span></div>`).join("")}</div>
     </section>
-    ${familyHomeCard()}
     ${shareCardHTML()}`;
   setTimeout(showTrophyUnlocks, 600);
   maybeInviteNudge();
@@ -3186,12 +3191,6 @@ function renderFamily() {
     return;
   }
   const C = S.circle, me = C.me || {}, people = circleMembers(), qs = circleQuestions().slice().sort((a, b) => new Date(b.created_at) - new Date(a.created_at)), news = circleNews();
-  let line;
-  const tryLine = t => `${t.name} ${t.right ? "got your question right" : "had a go at your question"}: “${t.q.question}”`;
-  if (news.fresh.length) line = `${names(news.fresh.map(q => q.author_name || "Family"))} added ${news.fresh.length === 1 ? "a new memory" : `${news.fresh.length} new memories`}!${S.started ? ` Look out for ${news.fresh.length === 1 ? "it" : "them"} in Memory Lane.` : ""}${news.tries.length ? ` And ${tryLine(news.tries[news.tries.length - 1])}` : ""}`;
-  else if (news.tries.length) line = tryLine(news.tries[news.tries.length - 1]);
-  else if (!qs.length) line = "No memories yet. Add the first one, and the family will find it in Memory Lane!";
-  else line = `${qs.length} ${qs.length === 1 ? "memory" : "memories"} so far. Every one becomes a little quiz for the family.`;
   C.seenAtPrev = C.seenAt || 0; C.seenAt = Date.now(); save();
   document.getElementById("app").innerHTML = `
     ${gameBar("home", esc(C.family_name || "Family circle"), "Family circle")}
@@ -3199,7 +3198,6 @@ function renderFamily() {
       <div class="fam-avs">${people.slice(0, 8).map(m => famAvatar(m.id, m.name, "lg")).join("")}${people.length > 8 ? `<span class="fam-av lg more">+${people.length - 8}</span>` : ""}</div>
       <p class="fam-names">${esc(names(people.map(m => m.id === me.id ? "you" : m.name)))}</p>
     </section>
-    ${beanSays(esc(line), news.count ? "cheer" : "happy", 84)}
     <div class="fam-actions">
       <button class="btn big" id="fam-add">＋ Add a memory</button>
       <button class="btn secondary" data-invite="family">${SHARE_ICON.share} Invite family</button>
@@ -5117,8 +5115,8 @@ if (clubResult === "welcome") setTimeout(() => toast("Welcome to the Garden Club
   const code = joinCodeFromUrl();
   const whenReady = fn => { const t = () => (document.getElementById("boot") || document.querySelector(".overlay")) ? setTimeout(t, 300) : fn(); t(); };
   if (code) whenReady(() => openJoin(code));
-  circleSync(true).then(() => { if (document.activeElement.matches("input, textarea") || document.querySelector(".overlay")) return; if (view === "settings" || view === "family") circleRerender(); else if (view === "home" && familyHomeCard()) renderHome(); });
-  document.addEventListener("visibilitychange", () => { if (!document.hidden) circleSync(); });
+  circleSync(true).then(() => { renderChrome(); if (document.activeElement.matches("input, textarea") || document.querySelector(".overlay")) return; if (view === "settings" || view === "family") circleRerender(); });
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) circleSync().then(() => renderChrome()); });
 })();
 </script>
 </body>
