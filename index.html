@@ -3138,7 +3138,7 @@ function wireFamilyQuestions() {
    (answer hidden until you've played it), who got each one right, and adding a memory
    one step at a time. Hide/Remove/Leave live under "Manage circle". */
 const FAM_COLORS = ["#783EFD", "#E8456F", "#B046B1", "#E8781E", "#2E7A4B", "#3B82D6", "#B88600", "#8E4BD6"];
-function famColor(id) { const i = circleMembers().findIndex(m => m.id === id); return FAM_COLORS[(i < 0 ? 0 : i) % FAM_COLORS.length]; }
+function famColor(id) { const h = hashStr(String(id || "")); return FAM_COLORS[((h % FAM_COLORS.length) + FAM_COLORS.length) % FAM_COLORS.length]; }   /* fixed per person, so colours never shift when someone leaves */
 function famAvatar(id, name, size = "") { return `<span class="fam-av ${size}" style="--av:${famColor(id)}" aria-hidden="true">${esc((name || "?").trim().charAt(0).toUpperCase())}</span>`; }
 function circleRerender() { if (view === "family") renderFamily(); else if (view === "settings") renderSettings(); else if (view === "home") renderHome(); }
 function ago(iso) {
