@@ -654,11 +654,18 @@ body[data-contrast="high"] .wk-hedge { fill: #3E7A30; stroke: #000; }
 .club-price { margin: 4px 0 0; font-size: 1.2em; }
 .club-price span { font-family: "Fredoka", sans-serif; font-size: 2.6em; font-weight: 700; vertical-align: middle; }
 .club-cur { margin: 0 0 14px; }
-.club-offer { background: var(--surface-tint, var(--accent-soft)); border: 2px dashed var(--accent); border-radius: 18px; padding: 12px 14px; margin: 0 0 14px; }
-.club-offer p { margin: 0 0 10px; }
-.club-offer .btn.fb, .club .btn.fb { display: flex; align-items: center; justify-content: center; gap: 10px; }
-.club-offer-done { display: flex; gap: 10px; align-items: center; justify-content: center; margin: 0 0 14px; }
-.club-offer-done svg { width: 28px; height: 28px; flex: none; }
+.club-pick-h { font-size: 1.25em; margin: 0 0 10px; }
+.club-plans { display: grid; gap: 10px; margin: 0 0 16px; }
+.club-plan { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; font: inherit; color: inherit; background: var(--surface); border: 3px solid var(--line); border-radius: 18px; padding: 14px; cursor: pointer; min-height: 64px; }
+.club-plan.on { border-color: var(--accent); background: var(--accent-soft); }
+.club-dot { width: 26px; height: 26px; flex: none; border-radius: 50%; border: 3px solid var(--line); background: var(--surface); }
+.club-plan.on .club-dot { border-color: var(--accent); background: radial-gradient(circle, var(--accent) 0 45%, var(--surface) 50%); }
+.club-plan-txt { flex: 1; display: flex; flex-direction: column; gap: 2px; font-size: 1.05em; }
+.club-plan-txt .muted { font-size: .9em; }
+.club-best { display: inline-block; white-space: nowrap; font-style: normal; font-size: .75em; font-weight: 700; background: var(--accent); color: #fff; border-radius: 999px; padding: 2px 8px; margin-left: 4px; vertical-align: middle; }
+.club-plan-price { text-align: right; display: flex; flex-direction: column; }
+.club-plan-price b { font-family: "Fredoka", sans-serif; font-size: 1.45em; }
+.club-plan-price .muted { font-size: .85em; }
 .club-fine { margin: 10px 0 0; }
 .fq-acts { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
 .small-btn { display: block; margin: 0 auto 10px; font-size: 0.95rem; min-height: 44px; }
@@ -4070,38 +4077,42 @@ function fbShareUrl() { return "https://www.facebook.com/sharer/sharer.php?u=" +
 /* ---------- Garden Club: the payment page (built, not switched on) ----------
    Hidden until CLUB.on is true: nothing in the app links here yet. Preview it at
    heather-delta.vercel.app/?club . Payments go through Stripe Payment Links (no card
-   details ever touch Heather): paste the links below once they exist in Stripe.
-   In Stripe, set each link's "After payment" redirect to  https://heather-delta.vercel.app/?club=welcome  */
+   details ever touch Heather): paste each plan's link below once it exists in Stripe.
+   Every plan starts with a free week: in Stripe, tick "Include a free trial" (7 days) on each link.
+   Set each link's "After payment" redirect to  https://heather-delta.vercel.app/?club=welcome&plan=<plan id>
+   Family plan: for now it only unlocks the buyer's device. Sharing it with the Family circle
+   needs a Stripe webhook that tells the server who paid (to build before switching on). */
 const CLUB = {
   on: false,                       // true = show the Garden Club in Settings and in the "stuck" pop-up
-  price: "$19",                    // shown on the page
-  per: "a month",
   currency: "CAD",
-  links: {
-    monthly: "",                   // Stripe Payment Link: monthly plan
-    freeMonth: "",                 // Stripe Payment Link: same plan with a 30-day free trial (for Facebook sharers)
-    manage: ""                     // Stripe customer portal link (cancel / change card)
-  }
+  trialDays: 7,
+  plans: [
+    { id: "yearly",  name: "Yearly",  price: "$29.99", per: "a year",  note: "Just $2.50 a month", best: true, link: "" },
+    { id: "monthly", name: "Monthly", price: "$3.99",  per: "a month", note: "Stop any time", link: "" },
+    { id: "family",  name: "Family",  price: "$49.99", per: "a year",  note: "You and up to 4 people in your Family circle", link: "" }
+  ],
+  manage: ""                       // Stripe customer portal link (cancel / change card)
 };
+function clubPlan(id) { return CLUB.plans.find(p => p.id === id) || CLUB.plans[0]; }
 function clubFromUrl() {
   if (NATIVE) return null;   // App Store: no outside payment links in the iOS app
-  const v = new URLSearchParams(location.search).get("club");
+  const q = new URLSearchParams(location.search), v = q.get("club");
   if (v === null) return null;
-  try { const u = new URL(location.href); u.searchParams.delete("club"); history.replaceState(null, "", u.pathname + u.search + u.hash); } catch (e) { /* ignore */ }
-  if (v === "welcome") { S.member = true; S.memberSince = S.memberSince || dayKey(); save(); return "welcome"; }
+  try { const u = new URL(location.href); u.searchParams.delete("club"); u.searchParams.delete("plan"); history.replaceState(null, "", u.pathname + u.search + u.hash); } catch (e) { /* ignore */ }
+  if (v === "welcome") { S.member = true; S.memberSince = S.memberSince || dayKey(); S.memberPlan = clubPlan(q.get("plan")).id; save(); return "welcome"; }
   return "open";
 }
 const CLUB_TICK = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#D6F0DA" stroke="#2D6340" stroke-width="1.6"/><path d="m7 12.5 3.2 3.2L17 9" fill="none" stroke="#2D6340" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+let clubPick = "yearly";
 function renderClub() {
-  const shared = !!S.clubShared, member = !!S.member;
-  const join = shared ? (CLUB.links.freeMonth || CLUB.links.monthly) : CLUB.links.monthly;
+  const member = !!S.member, plan = clubPlan(clubPick), mine = member ? clubPlan(S.memberPlan) : null;
   document.getElementById("app").innerHTML = `
     ${gameBar("settings", "Garden Club", "", "")}
     <div class="club">
       <div class="club-hero">
         ${bean("cheer", 104)}
         <h1>${member ? `You're in the Garden Club, ${esc(S.name)}!` : "Join the Garden Club"}</h1>
-        <p class="welcome-lead">${member ? "Thank you for helping Heather grow." : "No videos, and help whenever you're stuck."}</p>
+        <p class="welcome-lead">${member ? "Thank you for helping Heather grow." : `Try it free for ${CLUB.trialDays === 7 ? "a week" : CLUB.trialDays + " days"}.`}</p>
       </div>
       <ul class="club-perks">
         <li>${CLUB_TICK}<span><strong>No videos, ever.</strong></span></li>
@@ -4110,27 +4121,28 @@ function renderClub() {
       </ul>
       ${member ? `
         <div class="card club-card">
-          <p>Your membership is active${S.memberSince ? ` since ${new Date(S.memberSince + "T12:00:00").toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" })}` : ""}.</p>
+          <p>Your ${esc(mine.name.toLowerCase())} membership is active${S.memberSince ? ` since ${new Date(S.memberSince + "T12:00:00").toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" })}` : ""}.</p>
           <button class="btn block secondary" id="club-manage">Change card or cancel</button>
         </div>` : `
         <div class="card club-card">
-          <p class="club-price"><span>${CLUB.price}</span> ${CLUB.per}</p>
-          <p class="muted small club-cur">${CLUB.currency} · cancel any time</p>
-          ${shared
-            ? `<p class="club-offer-done">${CLUB_TICK}<span>Thanks for sharing! <strong>Your first month is free.</strong></span></p>`
-            : `<div class="club-offer"><p><strong>Your first month free</strong> when you share Heather on Facebook.</p>
-                 <a class="btn block fb" id="club-fb" href="${fbShareUrl()}" target="_blank" rel="noopener">${ICON.fb} Share on Facebook</a></div>`}
-          <button class="btn block big" id="club-join">${shared ? "Start my free month" : `Join for ${CLUB.price} ${CLUB.per}`}</button>
-          <p class="muted small club-fine">${shared ? `Free for 30 days, then ${CLUB.price} ${CLUB.per}. ` : ""}You'll pay on Stripe's secure page. Heather never sees your card number.</p>
+          <h2 class="club-pick-h" id="club-pick-h">Choose a plan</h2>
+          <div class="club-plans" role="radiogroup" aria-labelledby="club-pick-h">
+            ${CLUB.plans.map(p => `<button class="club-plan${p.id === plan.id ? " on" : ""}" role="radio" aria-checked="${p.id === plan.id}" data-plan="${p.id}">
+                <span class="club-dot" aria-hidden="true"></span>
+                <span class="club-plan-txt"><span><strong>${p.name}</strong>${p.best ? ` <em class="club-best">Best value</em>` : ""}</span><span class="muted">${esc(p.note)}</span></span>
+                <span class="club-plan-price"><b>${p.price}</b><span class="muted">${p.per}</span></span>
+              </button>`).join("")}
+          </div>
+          <button class="btn block big" id="club-join">Start my free week</button>
+          <p class="muted small club-fine">Free for ${CLUB.trialDays} days, then ${plan.price} ${plan.per} (${CLUB.currency}). Cancel before then and you won't pay anything. You'll pay on Stripe's secure page; Heather never sees your card number.</p>
         </div>`}
       <p class="muted small" style="text-align:center"><a href="privacy" target="_blank" rel="noopener">Privacy</a></p>
     </div>`;
-  const fb = document.getElementById("club-fb");
-  if (fb) fb.addEventListener("click", () => setTimeout(() => { S.clubShared = dayKey(); save(); renderClub(); toast("Thanks for sharing! Your first month is free."); }, 500));
+  document.querySelectorAll("[data-plan]").forEach(b => b.onclick = () => { clubPick = b.dataset.plan; renderClub(); const f = document.querySelector(`[data-plan="${clubPick}"]`); if (f) f.focus(); });
   const j = document.getElementById("club-join");
-  if (j) j.onclick = () => { if (join) location.href = join; else toast("Payments aren't switched on yet. Check back soon!"); };
+  if (j) j.onclick = () => { if (plan.link) location.href = plan.link; else toast("Payments aren't switched on yet. Check back soon!"); };
   const m = document.getElementById("club-manage");
-  if (m) m.onclick = () => { if (CLUB.links.manage) window.open(CLUB.links.manage, "_blank", "noopener"); else toast("Membership settings are coming soon."); };
+  if (m) m.onclick = () => { if (CLUB.manage) window.open(CLUB.manage, "_blank", "noopener"); else toast("Membership settings are coming soon."); };
 }
 
 function offerRescue({ title, text, reward, grant, again, leave }) {
