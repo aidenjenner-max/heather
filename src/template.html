@@ -3342,7 +3342,7 @@ function openAddMemory() {
       else if (s === "wrong") body.innerHTML = `${dots()}<h2>Add two or three wrong answers</h2><p class="muted small">Make them believable, so it's a real little puzzle!</p>
         ${[0, 1, 2].map(i => `<input type="text" class="am-w" maxlength="80" value="${esc(M.w[i])}" placeholder="${["City Hall", "The old farm", "Optional third answer"][i]}">`).join("")}`;
       else body.innerHTML = `${dots()}<h2>Add a little note?</h2><p class="muted small">It shows after someone answers. You can skip this.</p>
-        <input type="text" id="am-in" maxlength="200" value="${esc(M.n)}" placeholder="What a day that was!">
+        <textarea id="am-in" maxlength="200" rows="2" placeholder="What a day that was!">${esc(M.n)}</textarea>
         <div class="mem-card preview" style="--av:${famColor((S.circle.me || {}).id)}"><p class="mem-q">${esc(M.q)}</p><div class="am-opts">${shuffle([M.a, ...M.w.filter(Boolean)]).map(x => `<span class="${x === M.a ? "right" : ""}">${esc(x)}</span>`).join("")}</div></div>`;
       body.insertAdjacentHTML("beforeend", `<p class="msg" id="am-msg" role="status" aria-live="polite"></p>
         <button class="btn block big" id="am-next">${s === "note" ? "Add to the circle" : "Next"}</button>
