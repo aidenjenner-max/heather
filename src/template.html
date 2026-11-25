@@ -378,6 +378,29 @@ body[data-view="splash"] { background: var(--splash-bg, var(--bg)); }
 .today-strip strong { font-family: var(--display); font-weight: 600; font-size: 1.05rem; display: block; }
 .today-strip .stage-dots span { width: 16px; height: 16px; border-width: 2.5px; }
 .gcards { display: flex; flex-direction: column; gap: 14px; }
+.ml-card { --ml-bg: #FFF4E2; --ml-edge: #E3C9A4; --ml-ink: #4A2E1C; --ml-soft: #7A5A3E; position: relative; background: var(--ml-bg); color: var(--ml-ink); border: 3px solid var(--ml-edge); border-radius: 24px; padding: 20px 18px 16px; display: grid; gap: 12px; box-shadow: 0 4px 0 rgba(74, 46, 28, 0.12); background-image: repeating-linear-gradient(0deg, transparent 0 27px, rgba(184, 148, 106, 0.10) 27px 28px); }
+:root[data-theme="dark"] .ml-card { --ml-bg: #2C2117; --ml-edge: #7A5B3A; --ml-ink: #FBEBD5; --ml-soft: #D9BE9B; box-shadow: none; }
+body[data-contrast="high"] .ml-card { --ml-bg: #FFFFFF; --ml-edge: #000000; --ml-ink: #000000; --ml-soft: #000000; background-image: none; }
+.ml-corner { position: absolute; width: 22px; height: 22px; border: 3px solid var(--ml-edge); }
+.ml-corner.tl { top: 8px; left: 8px; border-right: 0; border-bottom: 0; border-radius: 8px 0 0 0; }
+.ml-corner.br { bottom: 8px; right: 8px; border-left: 0; border-top: 0; border-radius: 0 0 8px 0; }
+.ml-top { display: flex; gap: 10px; align-items: flex-start; }
+.ml-words { flex: 1; }
+.ml-eyebrow { margin: 0; font-size: .82em; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ml-soft); }
+.ml-card h2 { font-family: var(--display); font-size: 1.9em; line-height: 1.1; margin: 2px 0 0; color: var(--ml-ink); }
+.ml-top { align-items: center; }
+.ml-line { margin: -4px 0 0; font-size: 1.08em; line-height: 1.45; }
+.ml-art svg { width: 116px; height: auto; display: block; }
+.ml-fam { display: flex; gap: 10px; align-items: center; margin: 0; background: rgba(249, 90, 119, 0.10); border-radius: 14px; padding: 10px 12px; font-size: 1.05em; }
+.ml-fam.quiet { background: transparent; padding: 0; color: var(--ml-soft); }
+.ml-fam svg { width: 28px !important; height: 28px !important; flex: none; color: var(--heart); fill: var(--heart); }
+.ml-fam .linkish { font: inherit; color: inherit; text-decoration: underline; }
+.ml-done { margin: 0; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 1.05em; }
+.ml-alt { background: transparent; border-color: var(--ml-edge); color: var(--ml-ink); }
+.ml-go { background: #8A5A3B; border-color: #8A5A3B; color: #FFFDF8; }
+:root[data-theme="dark"] .ml-go { background: #E3B985; border-color: #E3B985; color: #2C2117; }
+body[data-contrast="high"] .ml-go { background: #000; border-color: #000; color: #fff; }
+@media (max-width: 380px) { .ml-art svg { width: 88px; } }
 .gcard { display: grid; grid-template-columns: 1fr auto; grid-template-areas: "text art" "foot foot"; gap: 4px 12px; padding: 18px 18px 14px; border-radius: 24px; border: 0; background: var(--card); color: var(--card-ink); text-align: left; cursor: pointer; box-shadow: 0 4px 0 rgba(0, 0, 0, 0.09); width: 100%; }
 .gcard:active { transform: translateY(2px); box-shadow: 0 2px 0 rgba(0, 0, 0, 0.09); }
 .gcard h3 { font-size: 1.55rem; font-weight: 700; }
@@ -1321,9 +1344,10 @@ function renderHome() {
       ${S.plans && S.plans[k] ? `<p class="muted small plan-why">${ICON.bulb} Picked for you: ${esc(S.plans[k].why)}</p>` : ""}
       <div class="gcards">${plan.map(g => gameCard(g, rec, k)).join("")}</div>
     </section>
+    ${memoryLaneCard(rec, plan)}
     <section class="stack" aria-labelledby="moreh">
       <h2 id="moreh">More games</h2>
-      <div class="more-games">${Object.keys(GAMES).filter(g => !plan.includes(g) && !GAMES[g].hidden).sort((x, y) => NEW_GAMES.includes(y) - NEW_GAMES.includes(x)).map(g => `<button class="mgame" ${typeof GAMES[g].open === "function" ? GAMES[g].open() : GAMES[g].open} style="--card:${GAMES[g].color}">${NEW_GAMES.includes(g) ? `<span class="mg-new">New</span>` : ""}<span class="mg-art">${GAMES[g].art()}</span><span class="mg-name">${GAMES[g].name}</span><span class="mg-dom"><i class="dom-dot" style="background:${DOMAINS[GAMES[g].domain]}"></i>${GAMES[g].domain}${GAMES[g].done(rec) ? " · ✓ done" : ""}</span></button>`).join("")}</div>
+      <div class="more-games">${Object.keys(GAMES).filter(g => !plan.includes(g) && !GAMES[g].hidden && g !== "trivia").sort((x, y) => NEW_GAMES.includes(y) - NEW_GAMES.includes(x)).map(g => `<button class="mgame" ${typeof GAMES[g].open === "function" ? GAMES[g].open() : GAMES[g].open} style="--card:${GAMES[g].color}">${NEW_GAMES.includes(g) ? `<span class="mg-new">New</span>` : ""}<span class="mg-art">${GAMES[g].art()}</span><span class="mg-name">${GAMES[g].name}</span><span class="mg-dom"><i class="dom-dot" style="background:${DOMAINS[GAMES[g].domain]}"></i>${GAMES[g].domain}${GAMES[g].done(rec) ? " · ✓ done" : ""}</span></button>`).join("")}</div>
     </section>
     ${S.family ? `<div class="card family"><div class="who">${ICON.heart} A note from your family</div><p style="font-size:1.1rem">${esc(S.family)}</p></div>` : ""}
     <section class="card" aria-labelledby="wk2">
@@ -1331,8 +1355,46 @@ function renderHome() {
       <div class="week">${week.map(w => `<div class="d"><span>${w.lab}</span><span class="dot ${w.on ? "on" : ""} ${w.today ? "today" : ""}">${w.on ? "✓" : ""}</span></div>`).join("")}</div>
     </section>
     ${shareCardHTML()}`;
+  const mt = document.getElementById("ml-together"); if (mt) mt.onclick = startTogether;
   setTimeout(showTrophyUnlocks, 600);
   maybeInviteNudge();
+}
+
+/* Memory Lane gets its own photo-album card on the home screen, apart from the brain games */
+const ML_ART = `<svg viewBox="0 0 120 96" aria-hidden="true">
+  <g transform="rotate(-9 38 52)"><rect x="8" y="16" width="58" height="66" rx="3" fill="#FFFDF8" stroke="#B8946A" stroke-width="2"/><rect x="14" y="22" width="46" height="40" fill="#BFD9EA"/>
+    <circle cx="50" cy="31" r="5" fill="#F5C342"/><path d="M14 62 L28 46 L38 55 L46 48 L60 62Z" fill="#7DB37F"/><path d="M22 62 v-10 h12 v10" fill="#C96B4B"/><path d="M20 53 l8 -7 l8 7" fill="#8A4632"/></g>
+  <g transform="rotate(8 84 48)"><rect x="56" y="10" width="56" height="64" rx="3" fill="#FFFDF8" stroke="#B8946A" stroke-width="2"/><rect x="62" y="16" width="44" height="38" fill="#F3D9C8"/>
+    <circle cx="78" cy="31" r="7" fill="#8A5A3B"/><path d="M68 54 q10 -18 20 0Z" fill="#C55A86"/><circle cx="94" cy="34" r="5.5" fill="#5E3A8C"/><path d="M86 54 q8 -14 16 0Z" fill="#4E8A6A"/>
+    <path d="M78 64 h20" stroke="#B8946A" stroke-width="2" stroke-linecap="round"/></g>
+  <path d="M92 80 c-4 -6 -12 -4 -10 2 c1 4 10 9 10 9 s9 -5 10 -9 c2 -6 -6 -8 -10 -2Z" fill="#F95A77" stroke="#8A1F38" stroke-width="1.6"/>
+</svg>`;
+function memoryLaneCard(rec, plan) {
+  if (plan.includes("trivia")) return "";   // an older saved plan already shows it
+  const done = rec.trivia.done, circle = inCircle();
+  const waiting = circle ? familyQs().filter(q => q.shared && (S.famAns || {})[q.id] === undefined) : [];
+  const who = [...new Set(waiting.map(q => q.from))];
+  const whoLine = who.length === 1 ? who[0] : who.length === 2 ? `${who[0]} and ${who[1]}` : who.length ? `${who[0]}, ${who[1]} and others` : "";
+  const fam = waiting.length
+    ? `<p class="ml-fam">${ICON.heart}<span><strong>${waiting.length} family ${waiting.length === 1 ? "memory" : "memories"}</strong> waiting, from ${esc(whoLine)}</span></p>`
+    : circle ? "" : `<p class="ml-fam quiet">${ICON.heart}<span>Add your own family's memories in the <button class="linkish" data-go="family">Family</button> tab.</span></p>`;
+  return `<section class="ml-card" aria-labelledby="mlh">
+      <span class="ml-corner tl" aria-hidden="true"></span><span class="ml-corner br" aria-hidden="true"></span>
+      <div class="ml-top">
+        <div class="ml-words">
+          <p class="ml-eyebrow">A daily trip back</p>
+          <h2 id="mlh">Memory Lane</h2>
+        </div>
+        <span class="ml-art">${ML_ART}</span>
+      </div>
+      <p class="ml-line">Five questions about music, TV, Canada and everyday life from years gone by.</p>
+      ${fam}
+      ${done
+        ? `<p class="ml-done"><span class="pill done">✓ ${rec.trivia.right} of 5 today</span> Come back tomorrow for five more.</p>
+           <button class="btn block ml-alt" id="ml-together">Play together with someone</button>`
+        : `<button class="btn block big ml-go" data-go="splash" data-game="trivia">Take a stroll down Memory Lane</button>
+           <button class="btn block ml-alt" id="ml-together">Play together (2 players)</button>`}
+    </section>`;
 }
 
 /* ====================================================================
@@ -2820,7 +2882,7 @@ function checkBest(key, value, lowerIsBetter, text) {
 }
 
 /* --- Personalised daily plan: a word game + Quick Peek (speed has the best evidence) + the area that needs it most + Flower Match --- */
-const FOCUS_GAMES = { Language: ["vine", "ws", "tiles"], Memory: ["names", "walk", "trivia", "memory"], Attention: ["two", "odd"], Reasoning: ["bee", "dbl", "su"] };
+const FOCUS_GAMES = { Language: ["vine", "ws", "tiles"], Memory: ["names", "walk", "memory"], Attention: ["two", "odd"], Reasoning: ["bee", "dbl", "su"] };
 const LANG_GAMES = ["vine", "ws", "tiles"];
 function langGameFor(k, avoid) { const opts = LANG_GAMES.filter(g => !avoid.includes(g)), d = dayIndex(k); return opts[((d % opts.length) + opts.length) % opts.length]; }
 function planFor(k) {
@@ -2828,6 +2890,7 @@ function planFor(k) {
   if (S.plans[k]) {
     const P = S.plans[k];
     if (k === dayKey() && P.games.includes("word")) { P.games[P.games.indexOf("word")] = langGameFor(k, P.games); save(); }
+    if (k === dayKey() && P.games.includes("trivia") && !today().trivia.done) { P.games[P.games.indexOf("trivia")] = ["names", "walk", "memory"].find(g => !P.games.includes(g)); save(); }
     if (k === dayKey() && !P.games.includes("peek")) { const rec = today(), slot = P.games.length - 1; if (!GAMES[P.games[slot]].done(rec)) { P.games[slot] = "peek"; save(); } }
     return P.games;
   }
