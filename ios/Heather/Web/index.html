@@ -656,6 +656,10 @@ body[data-contrast="high"] .wk-hedge { fill: #3E7A30; stroke: #000; }
 .club-cur { margin: 0 0 14px; }
 .club-pick-h { font-size: 1.25em; margin: 0 0 10px; }
 .club-pass { margin-bottom: 14px; }
+.spot-step { display: flex; align-items: center; justify-content: center; gap: 16px; }
+.spot-btn { width: 64px; height: 64px; border-radius: 50%; font-size: 2em; padding: 0; line-height: 1; }
+.spot-n { font-size: 1.35em; font-weight: 700; min-width: 8ch; text-align: center; }
+.spot-total { text-align: center; font-size: 1.15em; margin: 0; }
 .club-pass h2 { font-size: 1.3em; margin: 0 0 6px; }
 .club-seats { font-size: 1.1em; margin: 6px 0 10px; }
 .club-pass-list { list-style: none; padding: 0; margin: 0 0 14px; display: grid; gap: 8px; text-align: left; }
@@ -741,6 +745,8 @@ html.native input, html.native textarea { -webkit-user-select: text; user-select
 .invited-banner .mark-img { width: 34px; height: 50px; flex: none; }
 .invited-banner strong { font-family: "Fredoka", sans-serif; font-size: 1.25em; display: block; margin-bottom: 4px; }
 .invited-banner p { margin: 0; }
+#pass-share { display: flex; align-items: center; justify-content: center; gap: 12px; }
+#pass-share svg { width: 28px; height: 28px; flex: none; }
 #circle-card .btn svg, .share-card .share-btns .btn svg { width: 26px; height: 26px; flex: none; }
 .share-msg { width: 100%; min-height: 9.5em; font-size: 1.05rem; line-height: 1.45; padding: 12px 14px; border-radius: 14px; border: 2px solid var(--control, var(--line)); background: var(--bg); color: var(--ink); resize: vertical; }
 .share-opts { display: grid; gap: 10px; }
@@ -2893,6 +2899,9 @@ const CIRCLE_ERRORS = {
   pass_inactive: "This family pass has ended.",
   pass_exists: "This purchase already has a family pass.",
   bad_device: "Something went wrong. Please try again.",
+  bad_count: "Something went wrong. Please try again.",
+  too_many_seats: "That's more spots than a family pass can have.",
+  seats_added_already: "Those spots were already added.",
   not_a_member: "You're no longer in this family circle.",
   bad_code: "That invite link or code didn't work. Ask for a fresh one.",
   family_full: "This family circle is full.",
@@ -4090,8 +4099,9 @@ function fbShareUrl() { return "https://www.facebook.com/sharer/sharer.php?u=" +
    details ever touch Heather): paste each plan's link below once it exists in Stripe.
    Every plan starts with a free week: in Stripe, tick "Include a free trial" (7 days) on each link.
    Set each link's "After payment" redirect to  https://heather-delta.vercel.app/?club=welcome&plan=<plan id>&session={CHECKOUT_SESSION_ID}
-   Family plan: the buyer gets a family pass link (database: club_passes). Up to 4 people who open it
-   get the Club free. Before switching on, add a Stripe webhook that sets club_passes.active = false
+   Family plan: the buyer gets a family pass link (database: club_passes). Up to 5 people who open it
+   get the Club free; more spots cost CLUB.extraSpot.price each. Extra-spot link redirect:
+   https://heather-delta.vercel.app/?club=spots&session={CHECKOUT_SESSION_ID} Before switching on, add a Stripe webhook that sets club_passes.active = false
    when a Family subscription is cancelled (and checks the session id is real). */
 const CLUB = {
   on: false,                       // true = show the Garden Club in Settings and in the "stuck" pop-up
@@ -4100,8 +4110,9 @@ const CLUB = {
   plans: [
     { id: "yearly",  name: "Yearly",  price: "$29.99", per: "a year",  note: "Just $2.50 a month", best: true, link: "" },
     { id: "monthly", name: "Monthly", price: "$3.99",  per: "a month", note: "Stop any time", link: "" },
-    { id: "family",  name: "Family",  price: "$49.99", per: "a year",  note: "You and up to 4 people in your Family circle", link: "" }
+    { id: "family",  name: "Family",  price: "$49.99", per: "a year",  note: "You and up to 5 people, with more spots if you need them", link: "" }
   ],
+  extraSpot: { price: 7.99, per: "a year", max: 15, link: "" },   // Stripe Payment Link for 1 extra family pass spot (yearly, quantity adjustable)
   manage: ""                       // Stripe customer portal link (cancel / change card)
 };
 function clubPlan(id) { return CLUB.plans.find(p => p.id === id) || CLUB.plans[0]; }
@@ -4110,6 +4121,7 @@ function clubFromUrl() {
   const q = new URLSearchParams(location.search), v = q.get("club");
   if (v === null) return null;
   try { const u = new URL(location.href); u.searchParams.delete("club"); u.searchParams.delete("plan"); u.searchParams.delete("session"); history.replaceState(null, "", u.pathname + u.search + u.hash); } catch (e) { /* ignore */ }
+  if (v === "spots") { S.spotsSession = (q.get("session") || "").slice(0, 200) || null; save(); return "spots"; }
   if (v === "welcome") { S.member = true; S.memberSince = S.memberSince || dayKey(); S.memberPlan = clubPlan(q.get("plan")).id; if (q.get("session")) S.passSession = q.get("session").slice(0, 200); save(); return "welcome"; }
   return "open";
 }
@@ -4195,14 +4207,15 @@ function familyPassCard() {
   if (!P || !P.code) return `<div class="card club-card club-pass"><h2>Your family pass</h2>
       <p class="msg" role="status">${passErr ? esc(passErr) : "Getting your family pass ready…"}</p>
       ${passErr ? `<button class="btn block secondary" id="pass-retry">Try again</button>` : ""}</div>`;
-  const ms = P.members || [], seats = P.seats || 4, left = Math.max(0, seats - ms.length);
+  const ms = P.members || [], seats = P.seats || 5, left = Math.max(0, seats - ms.length), canAdd = seats < CLUB.extraSpot.max;
   return `<div class="card club-card club-pass">
       <h2>Your family pass</h2>
       <p>Send this link to up to ${seats} people. When they open it, they get the Garden Club free, as part of your plan.</p>
       <p class="club-seats"><strong>${ms.length} of ${seats}</strong> spots used${left ? ` · ${left} left` : ""}</p>
       ${ms.length ? `<ul class="club-pass-list">${ms.map(m => `<li><span>${esc(m.name)}</span><button class="btn quiet" data-passrem="${esc(m.id)}" data-passname="${esc(m.name)}" aria-label="Take ${esc(m.name)} off your family pass">Remove</button></li>`).join("")}</ul>` : ""}
-      ${left ? `<button class="btn block big" id="pass-share">${SHARE_ICON.share} Share the family pass</button>`
-             : `<p class="muted">Your pass is full. Remove someone to free a spot.</p>`}
+      ${left ? `<button class="btn block big" id="pass-share">${SHARE_ICON.share} Share the pass</button>`
+             : `<p class="muted">Your pass is full. ${canAdd ? "Add more spots, or remove someone to free one." : "Remove someone to free a spot."}</p>`}
+      ${canAdd ? `<button class="btn block ${left ? "quiet" : "big"}" id="pass-more">${left ? "Need more spots?" : "Add more spots"}</button>` : ""}
       ${passErr ? `<p class="msg" role="status">${esc(passErr)}</p>` : ""}
     </div>`;
 }
@@ -4211,6 +4224,7 @@ function wireFamilyPass() {
   if (S.member && S.memberPlan === "family" && !passBusy && Date.now() - passSyncedAt > 30000) loadFamilyPass();
   const rt = document.getElementById("pass-retry"); if (rt) rt.onclick = () => { passErr = ""; renderClub(); loadFamilyPass(); };
   const sh = document.getElementById("pass-share"); if (sh) sh.onclick = () => openInvite("pass");
+  const mo = document.getElementById("pass-more"); if (mo) mo.onclick = openAddSpots;
   document.querySelectorAll("[data-passrem]").forEach(b => b.onclick = () => {
     const nm = b.dataset.passname;
     dialog(`<h2>Take ${esc(nm)} off your family pass?</h2><p>${esc(nm)} will go back to the free version of Heather, and the spot will be free for someone else.</p>
@@ -4229,6 +4243,49 @@ function wireFamilyPass() {
         endGuestPass(); o.remove(); toast("You've left the family pass."); go("settings");
       };
     });
+}
+function money(n) { return "$" + n.toFixed(2); }
+function openAddSpots() {
+  const P = S.familyPass || {}, X = CLUB.extraSpot, room = Math.max(0, X.max - (P.seats || 5));
+  if (!room) { toast("Your pass has the most spots it can have."); return; }
+  let n = 1;
+  dialog(`<div class="center">${bean("cheer", 84)}</div>
+    <h2 style="text-align:center">Add more spots</h2>
+    <p style="text-align:center">Each extra person is <strong>${money(X.price)} ${X.per}</strong>, added to your Family plan.</p>
+    <div class="spot-step" role="group" aria-label="How many extra spots">
+      <button class="btn secondary spot-btn" id="sp-minus" aria-label="One fewer spot">−</button>
+      <span class="spot-n" id="sp-n" aria-live="polite"></span>
+      <button class="btn secondary spot-btn" id="sp-plus" aria-label="One more spot">+</button>
+    </div>
+    <p class="spot-total" id="sp-total"></p>
+    <button class="btn block big" id="sp-go">Continue to payment</button>
+    <p class="muted small" style="text-align:center">You'll pay on Stripe's secure page.</p>
+    <button class="btn block quiet" data-close>Not now</button>`, o => {
+    const draw = () => {
+      o.querySelector("#sp-n").textContent = `${n} more ${n === 1 ? "spot" : "spots"}`;
+      o.querySelector("#sp-total").innerHTML = `<strong>${money(X.price * n)}</strong> ${X.per} · ${(P.seats || 5) + n} spots in all`;
+      o.querySelector("#sp-minus").disabled = n <= 1; o.querySelector("#sp-plus").disabled = n >= room;
+    };
+    o.querySelector("#sp-minus").onclick = () => { if (n > 1) { n--; draw(); } };
+    o.querySelector("#sp-plus").onclick = () => { if (n < room) { n++; draw(); } };
+    o.querySelector("#sp-go").onclick = () => {
+      if (!X.link) { toast("Payments aren't switched on yet. Check back soon!"); return; }
+      S.pendingSpots = n; save();
+      location.href = X.link + (X.link.includes("?") ? "&" : "?") + "client_reference_id=" + encodeURIComponent(P.code || "");
+    };
+    draw();
+  });
+}
+async function finishAddSpots() {
+  const n = S.pendingSpots, sess = S.spotsSession;
+  S.pendingSpots = null; S.spotsSession = null; save();
+  if (!n || !(S.familyPass && S.familyPass.owner)) return;
+  try {
+    const r = await circleCall("add_pass_seats", { p_owner: S.familyPass.owner, p_count: n, p_session: sess });
+    S.familyPass.seats = r.seats; save(); passSyncedAt = 0;
+    toast(`Added ${n} ${n === 1 ? "spot" : "spots"}. Your pass now has ${r.seats}.`);
+  } catch (e) { toast(e.message); }
+  if (view === "club") renderClub();
 }
 function endGuestPass() { S.member = false; S.memberPlan = null; S.passCode = null; S.passOwner = null; S.memberSince = null; save(); }
 async function openPassClaim(code) {
@@ -4886,7 +4943,7 @@ const INVITES = {
   },
   pass: {
     title: "Share your family pass",
-    bean: "Send this to the people you want to cover. The first 4 who open it get the Garden Club free.",
+    bean: "Send this to the people you want to cover. Each person who opens it takes one of your free spots.",
     subject: "I got you the Garden Club on Heather",
     msg: () => `Hello! I've got the Heather Garden Club family plan, and there's a spot for you. Tap this link and you can play Heather's daily brain games with no videos, free:\n${passLink(S.familyPass ? S.familyPass.code : "")}\n\nLove, ${myName()}`
   }
@@ -5220,6 +5277,7 @@ const authResult = authFromUrl();
 if (authResult === "signed_in" && !S.started) welcomeStep = "name";
 const clubResult = clubFromUrl();
 go(clubResult ? "club" : S.started ? "home" : "welcome");
+if (clubResult === "spots") finishAddSpots();
 if (clubResult === "welcome") setTimeout(() => toast("Welcome to the Garden Club! No more videos."), 3200);
 (function accountStartup() {
   if (authResult === "error") return setTimeout(() => toast("Facebook sign-in didn't finish. You can try again, or play without signing up."), 3200);
