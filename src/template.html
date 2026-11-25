@@ -401,6 +401,85 @@ body[data-contrast="high"] .ml-card { --ml-bg: #FFFFFF; --ml-edge: #000000; --ml
 :root[data-theme="dark"] .ml-go { background: #E3B985; border-color: #E3B985; color: #2C2117; }
 body[data-contrast="high"] .ml-go { background: #000; border-color: #000; color: #fff; }
 @media (max-width: 380px) { .ml-art svg { width: 88px; } }
+.yr-entry { display: flex; gap: 14px; align-items: center; width: 100%; text-align: left; font: inherit; cursor: pointer; margin: 0 0 18px; padding: 14px 16px; border-radius: 22px; background: #FFF4E2; color: #4A2E1C; border: 3px solid #E3C9A4; }
+.yr-entry.ready { border-color: #8A5A3B; box-shadow: 0 4px 0 rgba(74, 46, 28, 0.15); }
+.yr-entry-art svg { width: 86px; height: auto; display: block; }
+.yr-entry > span:last-child { display: flex; flex-direction: column; gap: 2px; }
+.yr-entry-eye { font-size: .8em; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #7A5A3E; }
+.yr-entry strong { font-family: var(--display); font-size: 1.3em; }
+.yr-entry-sub { font-size: .98em; }
+:root[data-theme="dark"] .yr-entry { background: #2C2117; color: #FBEBD5; border-color: #7A5B3A; }
+:root[data-theme="dark"] .yr-entry-eye { color: #D9BE9B; }
+body[data-contrast="high"] .yr-entry { background: #fff; color: #000; border-color: #000; }
+.yr { --ml-bg: #FFF4E2; --ml-edge: #E3C9A4; --ml-ink: #4A2E1C; --ml-soft: #7A5A3E; display: grid; gap: 16px; max-width: 620px; margin: 0 auto; }
+:root[data-theme="dark"] .yr { --ml-bg: #2C2117; --ml-edge: #7A5B3A; --ml-ink: #FBEBD5; --ml-soft: #D9BE9B; }
+body[data-contrast="high"] .yr { --ml-bg: #fff; --ml-edge: #000; --ml-ink: #000; --ml-soft: #000; }
+.yr-card { position: relative; background: var(--ml-bg); color: var(--ml-ink); border: 3px solid var(--ml-edge); border-radius: 24px; padding: 20px 18px; }
+.yr-card h2 { font-family: var(--display); font-size: 1.45em; margin: 2px 0 12px; color: var(--ml-ink); }
+.yr-eye { margin: 0; font-size: .82em; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ml-soft); }
+.yr-cover { text-align: center; padding: 30px 18px 24px; background-image: repeating-linear-gradient(0deg, transparent 0 27px, rgba(184, 148, 106, 0.10) 27px 28px); }
+.yr-cover h1 { font-family: var(--display); font-size: 2.1em; line-height: 1.1; margin: 6px 0 14px; color: var(--ml-ink); }
+.yr-year { display: block; font-size: 1.9em; color: #8A5A3B; }
+:root[data-theme="dark"] .yr-year { color: #E3B985; }
+.yr-cover .fam-avs { justify-content: center; margin-bottom: 12px; }
+.yr-line { margin: 0; font-size: 1.08em; line-height: 1.45; }
+.yr-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; margin-top: 10px; text-align: center; }
+.yr-stats div { background: rgba(255, 255, 255, 0.6); border: 2px solid var(--ml-edge); border-radius: 18px; padding: 12px 6px; display: flex; flex-direction: column; }
+:root[data-theme="dark"] .yr-stats div { background: rgba(0, 0, 0, 0.18); }
+.yr-stats b { font-family: var(--display); font-size: 1.9em; line-height: 1.1; }
+.yr-stats span { font-size: .88em; line-height: 1.25; }
+.yr-stats div { padding: 12px 4px !important; min-width: 0; }
+.yr-podium { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.yr-podium li { display: flex; align-items: center; gap: 10px; font-size: 1.1em; padding: 8px 10px; border-radius: 16px; background: rgba(255, 255, 255, 0.55); }
+:root[data-theme="dark"] .yr-podium li { background: rgba(0, 0, 0, 0.18); }
+.yr-podium li:first-child { background: #F9E3B0; }
+:root[data-theme="dark"] .yr-podium li:first-child { background: #4A3A1A; }
+.yr-rank { font-family: var(--display); font-weight: 700; width: 1.4em; text-align: center; }
+.yr-pname { flex: 1; font-weight: 700; min-width: 0; }
+.yr-avs { display: flex; flex: none; }
+.yr-podium li.many { flex-wrap: wrap; }
+.yr-podium li.many .yr-avs { flex: 1; }
+.yr-podium li.many .yr-pn { white-space: normal; }
+.yr-podium li.many .yr-pname { order: 3; flex-basis: 100%; padding-left: calc(1.4em + 10px); }
+.yr-avs .fam-av + .fam-av { margin-left: -10px; }
+.yr-pn { text-align: right; white-space: nowrap; }
+.yr-pn { color: var(--ml-soft); font-weight: 600; }
+.yr-big-q { font-family: var(--display); font-size: 1.4em; line-height: 1.25; margin: 8px 0 4px; }
+.yr-month { font-family: var(--display); font-size: 1.25em; margin: 18px 0 8px; padding-bottom: 4px; border-bottom: 2px dashed var(--ml-edge); color: var(--ml-ink); }
+.yr-month:first-of-type { margin-top: 8px; }
+.yr-mems { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.yr-mem { background: rgba(255, 255, 255, 0.65); border: 2px solid var(--ml-edge); border-radius: 16px; padding: 12px 14px; }
+:root[data-theme="dark"] .yr-mem { background: rgba(0, 0, 0, 0.18); }
+.yr-mem p { margin: 0; }
+.yr-mem-by { display: flex; align-items: center; gap: 8px; color: var(--ml-soft); font-weight: 600; font-size: .95em; }
+.yr-mem-q { font-weight: 700; font-size: 1.12em; margin: 6px 0 2px !important; }
+.yr-mem-a { font-family: var(--display); font-size: 1.25em; color: #2E7A4C; margin: 0 0 4px; }
+:root[data-theme="dark"] .yr-mem-a { color: #7FD99B; }
+body[data-contrast="high"] .yr-mem-a { color: #000; }
+.yr-mem-note { font-style: italic; color: var(--ml-soft); }
+.yr-mem-who { font-size: .95em; margin-top: 4px !important; }
+.yr-soon { display: flex; gap: 14px; align-items: center; border-style: dashed; }
+.yr-soon-art svg { width: 96px; height: auto; display: block; }
+.yr-soon p:last-child { margin: 4px 0 0; }
+.yr-soon h2 { margin-bottom: 0; }
+.yr-actions { display: grid; gap: 10px; }
+.print-only { display: none; }
+.yr-foot { text-align: center; color: var(--ml-soft); }
+@media print {
+  .nav, .topbar, .game-bar, .gamebar, header.bar, .no-print, .toast, .app-head { display: none !important; }
+  body, html { background: #fff !important; }
+  .yr { max-width: none; gap: 12px; }
+  .yr-card { break-inside: avoid; box-shadow: none; }
+  .yr-mem { break-inside: avoid; }
+  .print-only { display: block; }
+  #app, main, .app, body > div { max-width: none !important; }
+  #app { padding: 0 !important; }
+  .yr { font-size: 12pt; }
+  .yr-card.yr-all { break-inside: auto; break-before: page; }
+  .yr-mems { grid-template-columns: 1fr 1fr; }
+  .yr-month { break-after: avoid; }
+  .yr-cover { padding: 40px 18px; }
+}
 .gcard { display: grid; grid-template-columns: 1fr auto; grid-template-areas: "text art" "foot foot"; gap: 4px 12px; padding: 18px 18px 14px; border-radius: 24px; border: 0; background: var(--card); color: var(--card-ink); text-align: left; cursor: pointer; box-shadow: 0 4px 0 rgba(0, 0, 0, 0.09); width: 100%; }
 .gcard:active { transform: translateY(2px); box-shadow: 0 2px 0 rgba(0, 0, 0, 0.09); }
 .gcard h3 { font-size: 1.55rem; font-weight: 700; }
@@ -1247,7 +1326,7 @@ function go(v, opts = {}) {
   if (view === "level" && v !== "level") stopLevel();
   if (view === "loop" && v !== "loop") stopLoop();
   view = v;
-  ({ report: renderReport, ws: renderWS, su: renderSU, odd: renderOdd, peek: renderPeek, two: renderTwo, walk: renderWalk, names: renderNames, bee: renderBee, dbl: renderDbl, vine: renderVine, club: renderClub, family: renderFamily, trivia: renderTrivia, splash: renderSplash, loop: renderLoop, home: renderHome, garden: renderGarden, level: renderLevel, tiles: renderTiles, memory: renderMemory, progress: renderProgress, settings: renderSettings, welcome: renderWelcome, results: renderResults }[v])(opts);
+  ({ report: renderReport, ws: renderWS, su: renderSU, odd: renderOdd, peek: renderPeek, two: renderTwo, walk: renderWalk, names: renderNames, bee: renderBee, dbl: renderDbl, vine: renderVine, club: renderClub, family: renderFamily, year: renderYear, trivia: renderTrivia, splash: renderSplash, loop: renderLoop, home: renderHome, garden: renderGarden, level: renderLevel, tiles: renderTiles, memory: renderMemory, progress: renderProgress, settings: renderSettings, welcome: renderWelcome, results: renderResults }[v])(opts);
   renderChrome();
   window.scrollTo(0, 0);
   document.getElementById("app").focus({ preventScroll: true });
@@ -3248,6 +3327,109 @@ function circleNews() {
   const tries = qs.filter(q => q.author_id === me).flatMap(q => (q.answers || []).filter(a => new Date(a.at).getTime() > since).map(a => ({ ...a, q })));
   return { fresh, tries, count: fresh.length + tries.length };
 }
+/* ---------- Family year in review ---------- */
+function reviewYear() { const d = new Date(); return d.getMonth() === 0 ? d.getFullYear() - 1 : d.getFullYear(); }   // in January, look back at last year
+function reviewDone(y) { const d = new Date(); return d.getFullYear() > y || d.getMonth() === 11; }                  // December onwards: the year is "in review"
+function yearQs(y) { return circleQuestions().filter(q => new Date(q.created_at).getFullYear() === y); }
+function yearEntryCard() {
+  const y = reviewYear(), qs = yearQs(y);
+  if (!qs.length) return "";
+  const done = reviewDone(y), fam = (S.circle && S.circle.family_name) || "Our family";
+  return `<button class="yr-entry ${done ? "ready" : ""}" data-go="year">
+      <span class="yr-entry-art" aria-hidden="true">${ML_ART}</span>
+      <span><span class="yr-entry-eye">${done ? "Your year in review is ready" : "Year in review"}</span>
+      <strong>${esc(fam)}: ${y}${done ? "" : " so far"}</strong>
+      <span class="yr-entry-sub">${qs.length} ${qs.length === 1 ? "memory" : "memories"} shared this year. Tap to look back.</span></span>
+    </button>`;
+}
+function yearStats(y) {
+  const qs = yearQs(y), people = circleMembers(), me = (S.circle.me || {}).id;
+  const nameOf = id => { const m = people.find(p => p.id === id); return m ? m.name : null; };
+  const tries = qs.flatMap(q => (q.answers || []).map(a => ({ ...a, q })));
+  const right = tries.filter(t => t.right).length;
+  const tally = (list, key) => { const t = {}; list.forEach(x => { const k = key(x); if (k) t[k] = (t[k] || 0) + 1; }); return Object.entries(t).sort((a, b) => b[1] - a[1]); };
+  // Group people with the same score so ties share a place; keep the top 3 places
+  const places = list => { const g = []; list.forEach(p => { const last = g[g.length - 1]; if (last && last.n === p.n) last.people.push(p); else g.push({ n: p.n, people: [p] }); }); return g.slice(0, 3); };
+  const keepers = places(tally(qs, q => q.author_id).map(([id, n]) => ({ id, name: nameOf(id) || qs.find(q => q.author_id === id).author_name || "Family", me: id === me, n })));
+  const sharp = places(tally(tries.filter(t => t.right), t => t.member_id).map(([id, n]) => ({ id, name: nameOf(id) || tries.find(t => t.member_id === id).name || "Family", me: id === me, n })));
+  const scored = qs.filter(q => (q.answers || []).length >= 2).map(q => ({ q, pct: q.answers.filter(a => a.right).length / q.answers.length, n: q.answers.length }));
+  const best = scored.slice().sort((a, b) => b.pct - a.pct || b.n - a.n)[0] || null;
+  const tough = scored.filter(x => x.pct < 1).sort((a, b) => a.pct - b.pct || b.n - a.n)[0] || null;
+  const months = {}; qs.forEach(q => { const m = new Date(q.created_at).getMonth(); (months[m] = months[m] || []).push(q); });
+  const days = Object.keys(S.days || {}).filter(k => k.startsWith(y + "-") && played(S.days[k]));
+  let streakBest = 0, run = 0, prev = null;
+  days.slice().sort().forEach(k => { const t = new Date(k + "T12:00:00").getTime(); run = prev !== null && Math.round((t - prev) / 864e5) === 1 ? run + 1 : 1; prev = t; streakBest = Math.max(streakBest, run); });
+  return { qs, tries: tries.length, right, keepers, sharp, best, tough: tough && best && tough.q === best.q ? null : tough, months, days: days.length, streakBest };
+}
+function yrMemory(q) {
+  const tries = q.answers || [];
+  return `<li class="yr-mem">
+      <p class="yr-mem-by">${famAvatar(q.author_id, q.author_name, "xs")}<span>${esc(q.author_name || "Family")} asked</span></p>
+      <p class="yr-mem-q">${esc(q.question)}</p>
+      <p class="yr-mem-a">${esc(q.answer)}</p>
+      ${q.note ? `<p class="yr-mem-note">“${esc(q.note)}”</p>` : ""}
+      ${tries.length ? `<p class="yr-mem-who">${tries.filter(a => a.right).length ? `Remembered by ${esc(names(tries.filter(a => a.right).map(a => a.name)))}` : "Nobody got this one!"}</p>` : ""}
+    </li>`;
+}
+function renderYear() {
+  if (!inCircle()) return go("family");
+  const y = reviewYear(), done = reviewDone(y), st = yearStats(y), C = S.circle, fam = C.family_name || "Our family", people = circleMembers();
+  const pct = st.tries ? Math.round(st.right / st.tries * 100) : 0;
+  const MONTHS = [...Array(12)].map((_, i) => new Date(2000, i, 1).toLocaleDateString(undefined, { month: "long" }));
+  const who = ps => ps.length > 2 && ps.length === people.length ? "Everyone" : names(ps.map(p => p.me ? "you" : p.name)).replace(/^you/, "You");
+  const podium = (groups, unit) => `<ol class="yr-podium">${groups.map((g, i) => `<li class="${g.people.length > 1 ? "many" : ""}"><span class="yr-rank">${i + 1}</span><span class="yr-avs">${g.people.slice(0, 3).map(p => famAvatar(p.id, p.name)).join("")}${g.people.length > 3 ? `<span class="fam-av more">+${g.people.length - 3}</span>` : ""}</span>${g.people.length > 1 ? `<span class="yr-pname">${esc(who(g.people))} <span class="yr-pn">· ${g.n} ${unit(g)} each</span></span>` : `<span class="yr-pname">${esc(who(g.people))}</span><span class="yr-pn">${g.n} ${unit(g)}</span>`}</li>`).join("")}</ol>`;
+  const spot = (x, title, line) => x ? `<section class="yr-card">
+      <p class="yr-eye">${title}</p>
+      <p class="yr-big-q">${esc(x.q.question)}</p>
+      <p class="yr-mem-a">${esc(x.q.answer)}</p>
+      <p class="yr-line">${line(x)}</p></section>` : "";
+  document.getElementById("app").innerHTML = `
+    ${gameBar("family", "Year in review", esc(fam))}
+    <div class="yr">
+      <section class="yr-card yr-cover">
+        <span class="ml-corner tl" aria-hidden="true"></span><span class="ml-corner br" aria-hidden="true"></span>
+        <p class="yr-eye">${done ? "Year in review" : "Our year so far"}</p>
+        <h1>${esc(fam)}<span class="yr-year">${y}</span></h1>
+        <div class="fam-avs">${people.slice(0, 8).map(m => famAvatar(m.id, m.name, "lg")).join("")}</div>
+        <p class="yr-line">A year of memories, shared and remembered by ${esc(names(people.map(m => m.name)))}.</p>
+      </section>
+
+      <section class="yr-card">
+        <p class="yr-eye">By the numbers</p>
+        <div class="yr-stats">
+          <div><b>${st.qs.length}</b><span>${st.qs.length === 1 ? "memory" : "memories"} shared</span></div>
+          <div><b>${st.tries}</b><span>times played</span></div>
+          <div><b>${pct}%</b><span>remembered</span></div>
+        </div>
+      </section>
+
+      ${st.keepers.length ? `<section class="yr-card"><p class="yr-eye">Memory keepers</p><h2>Who shared the most</h2>${podium(st.keepers, g => g.n === 1 ? "memory" : "memories")}</section>` : ""}
+      ${st.sharp.length ? `<section class="yr-card"><p class="yr-eye">Sharpest memories</p><h2>Who remembered the most</h2>${podium(st.sharp, g => "right")}</section>` : ""}
+      ${spot(st.best, "The one everyone remembered", x => x.pct === 1 ? `All ${x.n} who tried got it right.` : `${Math.round(x.pct * 100)}% of the family got it right.`)}
+      ${spot(st.tough, "The one that stumped the family", x => `Only ${x.q.answers.filter(a => a.right).length} of ${x.n} got it.${x.q.note ? ` <em>“${esc(x.q.note)}”</em>` : ""}`)}
+
+      <section class="yr-card yr-all">
+        <p class="yr-eye">Every memory from ${y}</p>
+        ${Object.keys(st.months).sort((a, b) => a - b).map(m => `<h3 class="yr-month">${MONTHS[m]}</h3><ul class="yr-mems">${st.months[m].map(yrMemory).join("")}</ul>`).join("")}
+      </section>
+
+      ${st.days ? `<section class="yr-card"><p class="yr-eye">Your year in Heather</p>
+        <div class="yr-stats"><div><b>${st.days}</b><span>${st.days === 1 ? "day" : "days"} played</span></div><div><b>${st.streakBest}</b><span>${st.streakBest === 1 ? "day" : "days"} in a row, at best</span></div></div></section>` : ""}
+
+      <section class="yr-card yr-soon no-print">
+        <span class="yr-soon-art" aria-hidden="true">${ML_ART}</span>
+        <div><p class="yr-eye">Coming later</p><h2>Add photos and make it a gift</h2>
+        <p>Soon you'll be able to add a photo to each memory, and turn your family's year into a printed keepsake book.</p></div>
+      </section>
+
+      <div class="yr-actions no-print">
+        <button class="btn block big" id="yr-print">Print or save as a keepsake</button>
+        <button class="btn block secondary" data-go="family">Back to the family</button>
+      </div>
+      <p class="yr-foot print-only">Made with Heather · ${esc(fam)} · ${y}</p>
+    </div>`;
+  document.getElementById("yr-print").onclick = () => { if (NATIVE) nativeSend({ type: "print", title: `${fam} ${y}` }); else window.print(); };
+}
 function famPlayed(id) { const q = circleQuestions().find(x => x.id === id); return q ? myAnswer(q) !== undefined : (S.famAns || {})[id] !== undefined; }
 function myAnswer(q) {
   const me = (S.circle.me || {}).id, local = (S.famAns || {})[q.id];
@@ -3296,6 +3478,7 @@ function renderFamily() {
       <button class="btn big" id="fam-add">＋ Add a memory</button>
       <button class="btn secondary" data-invite="family">${SHARE_ICON.share} Invite family</button>
     </div>
+    ${yearEntryCard()}
     <h2 class="fam-h">The family's memories</h2>
     <div class="mem-list">${qs.length ? qs.map(memoryCard).join("") : `<div class="card center muted">Memories you all add will appear here.</div>`}</div>
     <details class="card fam-manage" ${famManageOpen ? "open" : ""}>

@@ -14,6 +14,8 @@ final class NativeBridge {
             haptic(body["kind"] as? String ?? "light")
         case "share":
             share(title: body["title"] as? String ?? "", text: body["text"] as? String ?? "")
+        case "print":
+            printPage(title: body["title"] as? String ?? "Heather")
         case "badge":
             let count = max(0, body["count"] as? Int ?? 0)
             Task { await setBadge(count) }
@@ -48,6 +50,18 @@ final class NativeBridge {
             pop.permittedArrowDirections = []
         }
         top.present(sheet, animated: true)
+    }
+
+    // MARK: Print / save as PDF (Year in review keepsake)
+    private func printPage(title: String) {
+        guard let webView else { return }
+        let info = UIPrintInfo(dictionary: nil)
+        info.outputType = .general
+        info.jobName = title
+        let controller = UIPrintInteractionController.shared
+        controller.printInfo = info
+        controller.printFormatter = webView.viewPrintFormatter()
+        controller.present(animated: true)
     }
 
     // MARK: Daily reminder (a local notification; nothing is sent to a server)
