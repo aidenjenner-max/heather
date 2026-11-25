@@ -3416,11 +3416,11 @@ function renderYear() {
       ${st.days ? `<section class="yr-card"><p class="yr-eye">Your year in Heather</p>
         <div class="yr-stats"><div><b>${st.days}</b><span>${st.days === 1 ? "day" : "days"} played</span></div><div><b>${st.streakBest}</b><span>${st.streakBest === 1 ? "day" : "days"} in a row, at best</span></div></div></section>` : ""}
 
-      <section class="yr-card yr-soon no-print">
+      ${NATIVE ? "" : `<section class="yr-card yr-soon no-print">
         <span class="yr-soon-art" aria-hidden="true">${ML_ART}</span>
         <div><p class="yr-eye">Coming later</p><h2>Add photos and make it a gift</h2>
         <p>Soon you'll be able to add a photo to each memory, and turn your family's year into a printed keepsake book.</p></div>
-      </section>
+      </section>`}
 
       <div class="yr-actions no-print">
         <button class="btn block big" id="yr-print">Print or save as a keepsake</button>
