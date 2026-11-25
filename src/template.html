@@ -655,6 +655,11 @@ body[data-contrast="high"] .wk-hedge { fill: #3E7A30; stroke: #000; }
 .club-price span { font-family: "Fredoka", sans-serif; font-size: 2.6em; font-weight: 700; vertical-align: middle; }
 .club-cur { margin: 0 0 14px; }
 .club-pick-h { font-size: 1.25em; margin: 0 0 10px; }
+.club-pass { margin-bottom: 14px; }
+.club-pass h2 { font-size: 1.3em; margin: 0 0 6px; }
+.club-seats { font-size: 1.1em; margin: 6px 0 10px; }
+.club-pass-list { list-style: none; padding: 0; margin: 0 0 14px; display: grid; gap: 8px; text-align: left; }
+.club-pass-list li { display: flex; align-items: center; justify-content: space-between; gap: 10px; border: 2px solid var(--line); border-radius: 14px; padding: 8px 8px 8px 14px; font-size: 1.1em; font-weight: 600; }
 .club-plans { display: grid; gap: 10px; margin: 0 0 16px; }
 .club-plan { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; font: inherit; color: inherit; background: var(--surface); border: 3px solid var(--line); border-radius: 18px; padding: 14px; cursor: pointer; min-height: 64px; }
 .club-plan.on { border-color: var(--accent); background: var(--accent-soft); }
@@ -2883,6 +2888,11 @@ function inviteLink(code) { return `${appLink()}?join=${encodeURIComponent(code)
 function friendLink() { return `${appLink()}?from=${encodeURIComponent(myName())}`; }
 function myName() { return (S.circle && S.circle.me && S.circle.me.name) || S.name || ""; }
 const CIRCLE_ERRORS = {
+  bad_pass: "That family pass link didn't work. Ask for the link again.",
+  pass_full: "This family pass is full. Ask the person who shared it to free up a spot.",
+  pass_inactive: "This family pass has ended.",
+  pass_exists: "This purchase already has a family pass.",
+  bad_device: "Something went wrong. Please try again.",
   not_a_member: "You're no longer in this family circle.",
   bad_code: "That invite link or code didn't work. Ask for a fresh one.",
   family_full: "This family circle is full.",
@@ -4079,9 +4089,10 @@ function fbShareUrl() { return "https://www.facebook.com/sharer/sharer.php?u=" +
    heather-delta.vercel.app/?club . Payments go through Stripe Payment Links (no card
    details ever touch Heather): paste each plan's link below once it exists in Stripe.
    Every plan starts with a free week: in Stripe, tick "Include a free trial" (7 days) on each link.
-   Set each link's "After payment" redirect to  https://heather-delta.vercel.app/?club=welcome&plan=<plan id>
-   Family plan: for now it only unlocks the buyer's device. Sharing it with the Family circle
-   needs a Stripe webhook that tells the server who paid (to build before switching on). */
+   Set each link's "After payment" redirect to  https://heather-delta.vercel.app/?club=welcome&plan=<plan id>&session={CHECKOUT_SESSION_ID}
+   Family plan: the buyer gets a family pass link (database: club_passes). Up to 4 people who open it
+   get the Club free. Before switching on, add a Stripe webhook that sets club_passes.active = false
+   when a Family subscription is cancelled (and checks the session id is real). */
 const CLUB = {
   on: false,                       // true = show the Garden Club in Settings and in the "stuck" pop-up
   currency: "CAD",
@@ -4098,8 +4109,8 @@ function clubFromUrl() {
   if (NATIVE) return null;   // App Store: no outside payment links in the iOS app
   const q = new URLSearchParams(location.search), v = q.get("club");
   if (v === null) return null;
-  try { const u = new URL(location.href); u.searchParams.delete("club"); u.searchParams.delete("plan"); history.replaceState(null, "", u.pathname + u.search + u.hash); } catch (e) { /* ignore */ }
-  if (v === "welcome") { S.member = true; S.memberSince = S.memberSince || dayKey(); S.memberPlan = clubPlan(q.get("plan")).id; save(); return "welcome"; }
+  try { const u = new URL(location.href); u.searchParams.delete("club"); u.searchParams.delete("plan"); u.searchParams.delete("session"); history.replaceState(null, "", u.pathname + u.search + u.hash); } catch (e) { /* ignore */ }
+  if (v === "welcome") { S.member = true; S.memberSince = S.memberSince || dayKey(); S.memberPlan = clubPlan(q.get("plan")).id; if (q.get("session")) S.passSession = q.get("session").slice(0, 200); save(); return "welcome"; }
   return "open";
 }
 const CLUB_TICK = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#D6F0DA" stroke="#2D6340" stroke-width="1.6"/><path d="m7 12.5 3.2 3.2L17 9" fill="none" stroke="#2D6340" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -4120,9 +4131,13 @@ function renderClub() {
         <li>${CLUB_TICK}<span><strong>Helps Heather grow.</strong> New games and puzzles keep coming.</span></li>
       </ul>
       ${member ? `
+        ${S.memberPlan === "family" ? familyPassCard() : ""}
         <div class="card club-card">
-          <p>Your ${esc(mine.name.toLowerCase())} membership is active${S.memberSince ? ` since ${new Date(S.memberSince + "T12:00:00").toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" })}` : ""}.</p>
-          <button class="btn block secondary" id="club-manage">Change card or cancel</button>
+          ${S.memberPlan === "guest"
+            ? `<p>You're on <strong>${esc(S.passOwner || "your family")}</strong>'s family pass${S.memberSince ? ` since ${new Date(S.memberSince + "T12:00:00").toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" })}` : ""}. It's free for you.</p>
+               <button class="btn block quiet" id="pass-leave">Leave the family pass</button>`
+            : `<p>Your ${esc(mine.name.toLowerCase())} membership is active${S.memberSince ? ` since ${new Date(S.memberSince + "T12:00:00").toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" })}` : ""}.</p>
+               <button class="btn block secondary" id="club-manage">Change card or cancel</button>`}
         </div>` : `
         <div class="card club-card">
           <h2 class="club-pick-h" id="club-pick-h">Choose a plan</h2>
@@ -4143,6 +4158,111 @@ function renderClub() {
   if (j) j.onclick = () => { if (plan.link) location.href = plan.link; else toast("Payments aren't switched on yet. Check back soon!"); };
   const m = document.getElementById("club-manage");
   if (m) m.onclick = () => { if (CLUB.manage) window.open(CLUB.manage, "_blank", "noopener"); else toast("Membership settings are coming soon."); };
+  wireFamilyPass();
+}
+
+/* ---------- Family pass: the Family plan buyer shares a link; up to 4 people get the Club free ---------- */
+function deviceId() {
+  if (!S.deviceId) {
+    const r = crypto.getRandomValues(new Uint8Array(18));
+    S.deviceId = Array.from(r, b => b.toString(16).padStart(2, "0")).join(""); save();
+  }
+  return S.deviceId;
+}
+function passLink(code) { return `${appLink()}?pass=${encodeURIComponent(code)}&from=${encodeURIComponent(myName())}`; }
+function passCodeFromUrl() { return (new URLSearchParams(location.search).get("pass") || "").replace(/[^A-Za-z0-9]/g, "").toUpperCase(); }
+function clearPassFromUrl() { try { const u = new URL(location.href); u.searchParams.delete("pass"); history.replaceState(null, "", u.pathname + u.search + u.hash); } catch (e) { /* ignore */ } }
+let passBusy = null, passErr = "", passSyncedAt = 0;
+function loadFamilyPass() {
+  if (passBusy) return passBusy;
+  passBusy = (async () => {
+    try {
+      if (!(S.familyPass && S.familyPass.owner)) {
+        const r = await circleCall("create_family_pass", { p_owner_name: myName() || "Your family", p_session: S.passSession || null });
+        S.familyPass = { code: r.code, owner: r.owner_token, seats: r.seats, members: [] }; save();
+      }
+      const g = await circleCall("get_family_pass", { p_owner: S.familyPass.owner });
+      Object.assign(S.familyPass, { code: g.code, seats: g.seats, active: g.active, members: g.members || [] }); save();
+      passErr = ""; passSyncedAt = Date.now();
+    } catch (e) { passErr = e.code === "pass_exists" ? "This purchase already has a family pass on another device. Open the Garden Club there to share it." : e.message; }
+    finally { passBusy = null; }
+    if (view === "club") renderClub();
+  })();
+  return passBusy;
+}
+function familyPassCard() {
+  const P = S.familyPass;
+  if (!P || !P.code) return `<div class="card club-card club-pass"><h2>Your family pass</h2>
+      <p class="msg" role="status">${passErr ? esc(passErr) : "Getting your family pass ready…"}</p>
+      ${passErr ? `<button class="btn block secondary" id="pass-retry">Try again</button>` : ""}</div>`;
+  const ms = P.members || [], seats = P.seats || 4, left = Math.max(0, seats - ms.length);
+  return `<div class="card club-card club-pass">
+      <h2>Your family pass</h2>
+      <p>Send this link to up to ${seats} people. When they open it, they get the Garden Club free, as part of your plan.</p>
+      <p class="club-seats"><strong>${ms.length} of ${seats}</strong> spots used${left ? ` · ${left} left` : ""}</p>
+      ${ms.length ? `<ul class="club-pass-list">${ms.map(m => `<li><span>${esc(m.name)}</span><button class="btn quiet" data-passrem="${esc(m.id)}" data-passname="${esc(m.name)}" aria-label="Take ${esc(m.name)} off your family pass">Remove</button></li>`).join("")}</ul>` : ""}
+      ${left ? `<button class="btn block big" id="pass-share">${SHARE_ICON.share} Share the family pass</button>`
+             : `<p class="muted">Your pass is full. Remove someone to free a spot.</p>`}
+      ${passErr ? `<p class="msg" role="status">${esc(passErr)}</p>` : ""}
+    </div>`;
+}
+function wireFamilyPass() {
+  if (view !== "club") return;
+  if (S.member && S.memberPlan === "family" && !passBusy && Date.now() - passSyncedAt > 30000) loadFamilyPass();
+  const rt = document.getElementById("pass-retry"); if (rt) rt.onclick = () => { passErr = ""; renderClub(); loadFamilyPass(); };
+  const sh = document.getElementById("pass-share"); if (sh) sh.onclick = () => openInvite("pass");
+  document.querySelectorAll("[data-passrem]").forEach(b => b.onclick = () => {
+    const nm = b.dataset.passname;
+    dialog(`<h2>Take ${esc(nm)} off your family pass?</h2><p>${esc(nm)} will go back to the free version of Heather, and the spot will be free for someone else.</p>
+      <button class="btn block" id="pr-yes">Remove ${esc(nm)}</button><button class="btn block quiet" data-close>Keep ${esc(nm)}</button>`, o => {
+      o.querySelector("#pr-yes").onclick = async () => {
+        try { await circleCall("remove_from_pass", { p_owner: S.familyPass.owner, p_member_id: b.dataset.passrem }); o.remove(); toast(`${nm} is off your family pass.`); passSyncedAt = 0; loadFamilyPass(); }
+        catch (e) { o.remove(); toast(e.message); }
+      };
+    });
+  });
+  const lv = document.getElementById("pass-leave");
+  if (lv) lv.onclick = () => dialog(`<h2>Leave the family pass?</h2><p>You'll go back to the free version of Heather, and ${esc(S.passOwner || "your family member")} gets the spot back.</p>
+      <button class="btn block" id="pl-yes">Leave the pass</button><button class="btn block quiet" data-close>Stay</button>`, o => {
+      o.querySelector("#pl-yes").onclick = async () => {
+        try { await circleCall("leave_pass", { p_code: S.passCode, p_device: deviceId() }); } catch (e) { /* still leave on this device */ }
+        endGuestPass(); o.remove(); toast("You've left the family pass."); go("settings");
+      };
+    });
+}
+function endGuestPass() { S.member = false; S.memberPlan = null; S.passCode = null; S.passOwner = null; S.memberSince = null; save(); }
+async function openPassClaim(code) {
+  clearPassFromUrl();
+  if (NATIVE || !code) return;
+  if (S.familyPass && S.familyPass.code === code) { toast("That's your own family pass. Share it with your family!"); return; }
+  if (S.memberPlan === "guest" && S.passCode === code) { toast(`You're already on ${S.passOwner || "this"} family pass.`); return; }
+  if (S.member && S.memberPlan !== "guest") { toast("You're already in the Garden Club."); return; }
+  let pv;
+  try { pv = await circleCall("pass_preview", { p_code: code }); }
+  catch (e) { dialog(`<h2>Family pass</h2><p>${esc(e.message)}</p><button class="btn block" data-close>OK</button>`); return; }
+  if (!pv.active) { dialog(`<h2>Family pass</h2><p>${esc(CIRCLE_ERRORS.pass_inactive)}</p><button class="btn block" data-close>OK</button>`); return; }
+  const owner = pv.owner_name;
+  dialog(`<div class="center">${bean("cheer", 84)}</div>
+    <h2 style="text-align:center">${esc(owner)} shared the Garden Club with you</h2>
+    <p style="text-align:center">Join ${esc(owner)}'s family pass and play Heather with no videos. It's free for you.</p>
+    ${pv.seats_left > 0 ? "" : `<p class="share-tip">This pass looks full. If you were on it before, you can still join.</p>`}
+    <label class="lab" for="pc-me">Your name</label><input type="text" id="pc-me" maxlength="40" value="${S.started ? esc(S.name) : ""}" placeholder="Sarah">
+    <p class="msg" id="pc-msg" role="status" aria-live="polite"></p>
+    <button class="btn block big" id="pc-go">Join for free</button>
+    <button class="btn block quiet" data-close>Not now</button>`, o => {
+    o.querySelector("#pc-go").onclick = async () => {
+      const me = o.querySelector("#pc-me").value.trim(), b = o.querySelector("#pc-go"), m = o.querySelector("#pc-msg");
+      if (!me) { m.textContent = CIRCLE_ERRORS.name_required; return; }
+      b.disabled = true; b.textContent = "Joining…"; m.textContent = "";
+      try {
+        await circleCall("claim_family_pass", { p_code: code, p_device: deviceId(), p_name: me });
+        Object.assign(S, { member: true, memberPlan: "guest", passCode: code, passOwner: owner, memberSince: dayKey(), passChecked: Date.now() });
+        if (!S.started && !S.name) S.name = me;
+        save(); o.remove(); toast(`Welcome to the Garden Club! ${owner} has you covered.`);
+        if (view === "club" || view === "settings") go(view);
+      } catch (e) { m.textContent = e.message; b.disabled = false; b.textContent = "Join for free"; }
+    };
+  });
 }
 
 function offerRescue({ title, text, reward, grant, again, leave }) {
@@ -4763,6 +4883,12 @@ const INVITES = {
     subject: "Join our family circle on Heather",
     msg: () => `Hello! Join ${S.circle ? S.circle.family_name : "our family"} on Heather. Tap the link, type your name, and add a memory question about our family for everyone to try in Memory Lane. You can play the free daily brain games too:\n${inviteLink(S.circle ? S.circle.invite_code : "")}\n\nLove, ${S.circle && S.circle.me ? S.circle.me.name : S.name}`,
     tip: () => `Or they can open Heather and type the code ${S.circle ? S.circle.invite_code : ""} under Settings.`
+  },
+  pass: {
+    title: "Share your family pass",
+    bean: "Send this to the people you want to cover. The first 4 who open it get the Garden Club free.",
+    subject: "I got you the Garden Club on Heather",
+    msg: () => `Hello! I've got the Heather Garden Club family plan, and there's a spot for you. Tap this link and you can play Heather's daily brain games with no videos, free:\n${passLink(S.familyPass ? S.familyPass.code : "")}\n\nLove, ${myName()}`
   }
 };
 function shareCardHTML() {
@@ -4790,7 +4916,7 @@ function openInvite(kind = "friend", intro = "") {
     ${I.tip ? `<p class="share-tip">${esc(typeof I.tip === "function" ? I.tip() : I.tip)}</p>` : ""}
     <button class="btn block quiet" data-close>Not now</button>`, o => {
       const msg = () => I.msg();
-      const done = how => { S.shares = (S.shares || 0) + 1; if (S.shares === 1) noteWin(smallWin(kind === "friend" ? "Shared Heather with a friend" : "Invited family to the circle")); save(); if (how) toast(how); };
+      const done = how => { S.shares = (S.shares || 0) + 1; if (S.shares === 1) noteWin(smallWin(kind === "friend" ? "Shared Heather with a friend" : kind === "pass" ? "Shared your family pass" : "Invited family to the circle")); save(); if (how) toast(how); };
       const nat = o.querySelector("#sh-native");
       if (nat) nat.onclick = async () => { try { await navigator.share({ title: I.subject, text: msg() }); done("Thanks for sharing!"); o.remove(); } catch (e) { /* cancelled */ } };
       o.querySelector("#sh-text").onclick = e => { e.preventDefault(); location.href = "sms:?&body=" + encodeURIComponent(msg()); done(); };
@@ -5124,6 +5250,20 @@ if (clubResult === "welcome") setTimeout(() => toast("Welcome to the Garden Club
   // Logo fades in, holds, and starts fading out at 2.3 s so it is gone by 3 s (the word list loads meanwhile); a tap skips ahead
   const wait = () => setTimeout(hide, Math.max(0, 2300 - performance.now()));
   Promise.race([dictPromise, sleep(2300)]).then(wait);
+})();
+/* Family pass: open a pass link, and check once a day that a guest still has a spot */
+(function passStartup() {
+  const code = passCodeFromUrl();
+  const whenReady = fn => { const t = () => (document.getElementById("boot") || document.querySelector(".overlay")) ? setTimeout(t, 300) : fn(); t(); };
+  if (code && !joinCodeFromUrl()) whenReady(() => openPassClaim(code));
+  if (S.member && S.memberPlan === "guest" && S.passCode && Date.now() - (S.passChecked || 0) > 864e5) {
+    circleCall("pass_status", { p_code: S.passCode, p_device: deviceId() }).then(ok => {
+      if (ok) { S.passChecked = Date.now(); save(); return; }
+      const who = S.passOwner; endGuestPass();
+      toast(`${who ? who + "'s" : "Your"} family pass has ended, so you're back on the free version.`);
+      if (view === "club" || view === "settings") go(view);
+    }).catch(() => { /* offline: check again next time */ });
+  }
 })();
 /* Family circle: open an invite link, and keep the family's memories fresh */
 (function circleStartup() {
