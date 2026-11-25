@@ -331,6 +331,7 @@ label.lab { font-weight: 700; display: block; margin-bottom: 6px; }
 .overlay { position: fixed; inset: 0; background: rgba(20, 12, 28, 0.55); display: grid; place-items: center; padding: 16px; z-index: 10; }
 .dialog { background: var(--surface); border-radius: 22px; padding: 22px; max-width: 520px; width: 100%; max-height: 90%; overflow: auto; display: flex; flex-direction: column; gap: 14px; border: 3px solid var(--accent); }
 .dialog ul { margin: 0; padding-left: 1.2em; display: flex; flex-direction: column; gap: 8px; }
+.dialog > * { flex-shrink: 0; }
 .dialog .center { text-align: center; display: grid; place-items: center; gap: 8px; }
 .toast { position: fixed; left: 50%; bottom: 110px; transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 14px 22px; border-radius: 16px; font-weight: 700; z-index: 20; max-width: calc(100% - 32px); text-align: center; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -2885,6 +2886,8 @@ const CIRCLE_ERRORS = {
   not_allowed_words: "Please keep it friendly. Some of those words aren't allowed in family circles.",
   not_found: "That question isn't there any more."
 };
+const LIVE_HOSTS = ["heather-delta.vercel.app"];
+function isPreviewHost() { const h = location.hostname; return !NATIVE && !!h && !LIVE_HOSTS.includes(h) && !/^(localhost|127\.0\.0\.1)$/.test(h) && !/\.vercel\.app$/.test(h); }
 async function circleCall(fn, args) {
   const ctl = new AbortController(), timer = setTimeout(() => ctl.abort(), 12000);
   try {
@@ -2894,7 +2897,7 @@ async function circleCall(fn, args) {
     return body;
   } catch (e) {
     if (e.code) throw e;
-    const err = new Error("Couldn't reach the family circle. Check the internet connection and try again."); err.code = "offline"; throw err;
+    const err = new Error(isPreviewHost() ? "Family circles only work on the real Heather site, not in this preview. Open heather-delta.vercel.app to start one." : "Couldn't reach the family circle. Check the internet connection and try again."); err.code = "offline"; throw err;
   } finally { clearTimeout(timer); }
 }
 function inCircle() { return !!(S.circle && S.circle.token); }
