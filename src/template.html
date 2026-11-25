@@ -669,6 +669,59 @@ html.native input, html.native textarea { -webkit-user-select: text; user-select
 .help-links .btn { text-decoration: none; flex: 1 1 160px; text-align: center; }
 .theme-row { display: flex; justify-content: center; gap: 6px; margin: 4px 0 8px; }
 .theme-row svg { width: 40px; height: 40px; }
+.fam-av { width: 40px; height: 40px; border-radius: 50%; background: var(--av); color: #fff; font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 1.2rem; display: inline-flex; align-items: center; justify-content: center; border: 3px solid var(--bg); flex: none; }
+.fam-av.lg { width: 58px; height: 58px; font-size: 1.6rem; margin-left: -10px; }
+.fam-av.lg:first-child { margin-left: 0; }
+.fam-av.xs { width: 26px; height: 26px; font-size: .85rem; border-width: 2px; }
+.fam-av.more { background: var(--surface); color: var(--ink); border-color: var(--line); }
+.fam-hero { text-align: center; margin: 4px 0 6px; }
+.fam-avs { display: flex; justify-content: center; flex-wrap: wrap; }
+.fam-avs.small { justify-content: flex-start; gap: 2px; }
+.fam-avs.small .fam-av { width: 34px; height: 34px; font-size: 1rem; margin-left: -6px; }
+.fam-avs.small .fam-av:first-child { margin-left: 0; }
+.fam-names { margin: 6px 0 0; font-weight: 700; }
+.fam-actions { display: grid; grid-template-columns: 1fr; gap: 10px; margin: 12px 0 18px; }
+.fam-actions .btn { display: flex; align-items: center; justify-content: center; gap: 10px; }
+.fam-actions .btn svg { width: 24px; height: 24px; }
+.fam-h { margin: 6px 0 10px; }
+.mem-list { display: grid; gap: 14px; }
+.mem-card { background: var(--surface); border: 2px solid var(--line); border-left: 8px solid var(--av); border-radius: 18px; padding: 14px 16px; }
+.mem-card header { display: flex; align-items: center; gap: 10px; }
+.mem-by { flex: 1; font-size: .95rem; color: var(--muted); }
+.mem-by strong { color: var(--ink); }
+.mem-new { background: #F95A77; color: #fff; font-weight: 800; font-size: .8rem; padding: 3px 10px; border-radius: 999px; }
+.mem-more { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--line); background: transparent; color: var(--ink); font-size: 1.3rem; cursor: pointer; }
+.mem-q { font-family: "Fredoka", sans-serif; font-size: 1.35rem; font-weight: 600; line-height: 1.25; margin: 10px 0 6px; }
+.mem-a { margin: 0 0 4px; font-size: 1.1rem; }
+.mem-note { margin: 0 0 4px; font-style: italic; color: var(--muted); }
+.mem-wait { margin: 0 0 4px; color: var(--muted); }
+.linkish { background: none; border: none; color: var(--accent); font: inherit; font-weight: 700; text-decoration: underline; cursor: pointer; padding: 6px 2px; min-height: 44px; }
+.mem-tries { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.mem-try { display: inline-flex; align-items: center; gap: 6px; padding: 3px 12px 3px 3px; border-radius: 999px; font-weight: 700; font-size: .95rem; }
+.mem-try.ok { background: #D6F0DA; color: #1D5E27; }
+.mem-try.no { background: var(--surface-tint, #F3EEFA); color: var(--ink); }
+.fam-manage summary { font-weight: 700; cursor: pointer; min-height: 44px; display: flex; align-items: center; }
+.fam-person { display: flex; align-items: center; gap: 10px; }
+.fam-empty { text-align: center; max-width: 520px; margin: 0 auto; }
+.fam-empty > :first-child { margin: 0 auto; }
+.fam-summary .fam-avs { margin: 4px 0 2px; }
+.fam-home { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; background: #FFF1BF; border: 2px solid #B88600; border-radius: 20px; padding: 14px 16px; margin: 0 0 16px; font: inherit; color: #120127; cursor: pointer; }
+.fam-home .fam-avs { flex: none; }
+.fam-home > span:nth-child(2) { flex: 1; }
+.fam-home-go { font-size: 2rem; font-weight: 700; }
+.am-dots { display: flex; justify-content: center; gap: 8px; margin-bottom: 8px; }
+.am-dots i { width: 12px; height: 12px; border-radius: 50%; background: var(--line); }
+.am-dots i.on { background: var(--accent); }
+#am-body h2 { text-align: center; }
+#am-body textarea, #am-body input { width: 100%; margin: 4px 0 8px; }
+.am-ideas-h { margin: 6px 0 6px; font-weight: 700; }
+.am-ideas { display: flex; flex-wrap: wrap; gap: 8px; }
+.am-ideas .chip { text-align: left; white-space: normal; line-height: 1.25; padding: 8px 12px; min-height: 44px; }
+.am-echo { text-align: center; font-style: italic; color: var(--muted); }
+.mem-card.preview { margin-top: 8px; }
+.am-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.am-opts span { border: 2px solid var(--line); border-radius: 12px; padding: 8px; text-align: center; font-weight: 600; }
+.am-opts span.right { border-color: #2E7A4B; background: #D6F0DA; color: #1D5E27; }
 .invited-banner { display: flex; gap: 14px; align-items: flex-start; background: var(--surface-tint, var(--accent-soft)); border: 2px solid var(--accent); border-radius: 20px; padding: 16px 18px; margin: 0 0 14px; }
 .invited-banner .mark-img { width: 34px; height: 50px; flex: none; }
 .invited-banner strong { font-family: "Fredoka", sans-serif; font-size: 1.25em; display: block; margin-bottom: 4px; }
@@ -1146,7 +1199,7 @@ function go(v, opts = {}) {
   if (view === "level" && v !== "level") stopLevel();
   if (view === "loop" && v !== "loop") stopLoop();
   view = v;
-  ({ report: renderReport, ws: renderWS, su: renderSU, odd: renderOdd, peek: renderPeek, two: renderTwo, walk: renderWalk, names: renderNames, bee: renderBee, dbl: renderDbl, vine: renderVine, club: renderClub, trivia: renderTrivia, splash: renderSplash, loop: renderLoop, home: renderHome, garden: renderGarden, level: renderLevel, tiles: renderTiles, memory: renderMemory, progress: renderProgress, settings: renderSettings, welcome: renderWelcome, results: renderResults }[v])(opts);
+  ({ report: renderReport, ws: renderWS, su: renderSU, odd: renderOdd, peek: renderPeek, two: renderTwo, walk: renderWalk, names: renderNames, bee: renderBee, dbl: renderDbl, vine: renderVine, club: renderClub, family: renderFamily, trivia: renderTrivia, splash: renderSplash, loop: renderLoop, home: renderHome, garden: renderGarden, level: renderLevel, tiles: renderTiles, memory: renderMemory, progress: renderProgress, settings: renderSettings, welcome: renderWelcome, results: renderResults }[v])(opts);
   renderChrome();
   window.scrollTo(0, 0);
   document.getElementById("app").focus({ preventScroll: true });
@@ -1252,6 +1305,7 @@ function renderHome() {
       <div class="row between"><h3 id="wk2">This week</h3><span class="muted small">${streak()} day${streak() === 1 ? "" : "s"} in a row</span></div>
       <div class="week">${week.map(w => `<div class="d"><span>${w.lab}</span><span class="dot ${w.on ? "on" : ""} ${w.today ? "today" : ""}">${w.on ? "✓" : ""}</span></div>`).join("")}</div>
     </section>
+    ${familyHomeCard()}
     ${shareCardHTML()}`;
   setTimeout(showTrophyUnlocks, 600);
   maybeInviteNudge();
@@ -1613,6 +1667,10 @@ function triviaPick(o) {
   if (TQ.picked !== null) return;
   TQ.picked = o; const Q = TQ.qs[TQ.i];
   if (o === Q.answer) { TQ.right++; if (TQ.scores) TQ.scores[TQ.i % 2]++; sfx.good(); } else sfx.soft();
+  if (Q.fid && inCircle() && !TQ.players && (S.famAns || {})[Q.fid] === undefined) {
+    S.famAns = Object.assign(S.famAns || {}, { [Q.fid]: o === Q.answer }); save();
+    circleCall("record_answer", { p_token: S.circle.token, p_id: Q.fid, p_right: o === Q.answer }).catch(() => {});
+  }
   drawTrivia();
 }
 function triviaNext() {
@@ -2893,7 +2951,7 @@ function openStartCircle(after) {
         const fam = o.querySelector("#fc-fam").value.trim(), me = o.querySelector("#fc-me").value.trim(), b = o.querySelector("#fc-go"), m = o.querySelector("#fc-msg");
         if (!fam || !me) { m.textContent = CIRCLE_ERRORS.name_required; return; }
         b.disabled = true; b.textContent = "Starting…"; m.textContent = "";
-        try { await circleStart(fam, me); o.remove(); smallWin(`Started the ${S.circle.family_name} circle`); if (view === "settings") renderSettings(); if (view === "home") renderHome(); (after || (() => openInvite("family")))(); }
+        try { await circleStart(fam, me); o.remove(); smallWin(`Started the ${S.circle.family_name} circle`); circleRerender(); (after || (() => openInvite("family")))(); }
         catch (e) { m.textContent = e.message; b.disabled = false; b.textContent = "Start our circle"; }
       };
     });
@@ -2952,7 +3010,7 @@ async function openJoin(code) {
     }, false);
 }
 function goAddMemory() {
-  go("settings"); setTimeout(() => { const f = document.getElementById("fq-q"); if (f) { f.scrollIntoView({ block: "center" }); f.focus(); } }, 300);
+  go("family"); setTimeout(() => openAddMemory(), 350);
 }
 function joinedNext() {
   if (S.started) { toast(`Welcome to ${S.circle.family_name}!`); return goAddMemory(); }
@@ -2995,7 +3053,7 @@ function familyContentMenu(qid, authorId, who) {
     ${authorId ? `<button class="btn block secondary" id="rp-block">Hide everything from ${esc(who || "this person")}</button>` : ""}
     <button class="btn block quiet" data-close>Cancel</button>
     <p class="muted small" style="text-align:center">Something serious? Contact us from the <a href="support" target="_blank" rel="noopener">Help page</a>.</p>`, o => {
-      const run = (btn, fn, args, msg) => async () => { btn.disabled = true; try { await circleCall(fn, Object.assign({ p_token: S.circle.token }, typeof args === "function" ? args() : args)); await circleSync(true); o.remove(); toast(msg); if (view === "settings") renderSettings(); } catch (e) { btn.disabled = false; toast(e.message); } };
+      const run = (btn, fn, args, msg) => async () => { btn.disabled = true; try { await circleCall(fn, Object.assign({ p_token: S.circle.token }, typeof args === "function" ? args() : args)); await circleSync(true); o.remove(); toast(msg); circleRerender(); } catch (e) { btn.disabled = false; toast(e.message); } };
       const g = o.querySelector("#rp-go");
       g.onclick = run(g, "report_question", () => ({ p_id: qid, p_reason: o.querySelector("#rp-why").value.trim() || null }), "Thanks for telling us. It's hidden for you now.");
       const bl = o.querySelector("#rp-block"); if (bl) bl.onclick = run(bl, "block_member", { p_member_id: authorId }, `You won't see questions from ${who || "them"} any more.`);
@@ -3004,6 +3062,7 @@ function familyContentMenu(qid, authorId, who) {
 
 /* ---- Settings card ---- */
 function familyQuestionCard() {
+  if (inCircle()) return circleSummaryCard();
   if (!inCircle()) {
     const local = S.familyQs || [];
     return `<div class="card family" id="circle-card">
@@ -3040,33 +3099,215 @@ function wireFamilyQuestions() {
     return;
   }
   const busy = async (btn, fn) => { if (btn) btn.disabled = true; try { await fn(); } catch (e) { toast(e.message); } finally { if (btn) btn.disabled = false; } };
-  $("fq-add").onclick = () => busy($("fq-add"), async () => {
+  if ($("fq-add")) $("fq-add").onclick = () => busy($("fq-add"), async () => {
     const v = id => $(id).value.trim();
     const wrong = v("fq-w").split("\n").map(s => s.trim()).filter(Boolean).slice(0, 3);
     if (!v("fq-q") || !v("fq-a") || wrong.length < 2) { $("fq-msg").textContent = CIRCLE_ERRORS.incomplete; return; }
     await circleCall("add_question", { p_token: S.circle.token, p_question: v("fq-q"), p_answer: v("fq-a"), p_wrong: wrong, p_note: v("fq-n") || null });
     await circleSync(true);
     S.memAdded = (S.memAdded || 0) + 1; if (S.memAdded === 1) smallWin("Added a first memory to the family circle");
-    save(); renderSettings();
+    save(); circleRerender();
     if (!S.started && !S.playNudged) maybePlayNudge(); else toast("Added! Everyone else will see it in Memory Lane.");
   });
-  document.querySelectorAll("[data-fqdel]").forEach(b => b.onclick = () => busy(b, async () => { await circleCall("delete_question", { p_token: S.circle.token, p_id: b.dataset.fqdel }); await circleSync(true); renderSettings(); }));
+  document.querySelectorAll("[data-fqdel]").forEach(b => b.onclick = () => busy(b, async () => { await circleCall("delete_question", { p_token: S.circle.token, p_id: b.dataset.fqdel }); await circleSync(true); circleRerender(); }));
   document.querySelectorAll("[data-cmrem]").forEach(b => b.onclick = () => dialog(`<h2>Remove from the circle?</h2><p>They won't see new memories any more. Their questions stay unless you remove them too.</p><button class="btn block" id="cm-yes">Remove</button><button class="btn block quiet" data-close>Cancel</button>`, o => {
-    o.querySelector("#cm-yes").onclick = () => busy(o.querySelector("#cm-yes"), async () => { await circleCall("remove_member", { p_token: S.circle.token, p_member_id: b.dataset.cmrem }); o.remove(); await circleSync(true); renderSettings(); });
+    o.querySelector("#cm-yes").onclick = () => busy(o.querySelector("#cm-yes"), async () => { await circleCall("remove_member", { p_token: S.circle.token, p_member_id: b.dataset.cmrem }); o.remove(); await circleSync(true); circleRerender(); });
   }));
   if ($("fc-newcode")) $("fc-newcode").onclick = () => dialog(`<h2>Make a new invite link?</h2><p>The old link will stop working. People already in the circle stay in it.</p><button class="btn block" id="nc-yes">Make a new link</button><button class="btn block quiet" data-close>Cancel</button>`, o => {
-    o.querySelector("#nc-yes").onclick = () => busy(o.querySelector("#nc-yes"), async () => { const c = await circleCall("new_invite_code", { p_token: S.circle.token }); S.circle.invite_code = c; save(); o.remove(); toast("New invite link ready."); renderSettings(); });
+    o.querySelector("#nc-yes").onclick = () => busy(o.querySelector("#nc-yes"), async () => { const c = await circleCall("new_invite_code", { p_token: S.circle.token }); S.circle.invite_code = c; save(); o.remove(); toast("New invite link ready."); circleRerender(); });
   });
-  $("fc-leave").onclick = () => dialog(`<h2>Leave ${esc(S.circle.family_name)}?</h2><p>You can keep your questions for the family to enjoy, or delete everything you added. You can join again with a new invite.</p><button class="btn block" id="lv-yes">Leave, keep my questions</button><button class="btn block secondary" id="lv-del">Leave and delete my questions</button><button class="btn block quiet" data-close>Stay</button>`, o => {
-    const go2 = fn => async () => { try { await circleCall(fn, { p_token: S.circle.token }); } catch (e) { if (e.code !== "not_a_member") throw e; } S.circle = null; save(); o.remove(); toast(fn === "delete_me" ? "You've left, and your questions are deleted." : "You've left the circle."); renderSettings(); };
+  if ($("fc-leave")) $("fc-leave").onclick = () => dialog(`<h2>Leave ${esc(S.circle.family_name)}?</h2><p>You can keep your questions for the family to enjoy, or delete everything you added. You can join again with a new invite.</p><button class="btn block" id="lv-yes">Leave, keep my questions</button><button class="btn block secondary" id="lv-del">Leave and delete my questions</button><button class="btn block quiet" data-close>Stay</button>`, o => {
+    const go2 = fn => async () => { try { await circleCall(fn, { p_token: S.circle.token }); } catch (e) { if (e.code !== "not_a_member") throw e; } S.circle = null; save(); o.remove(); toast(fn === "delete_me" ? "You've left, and your questions are deleted." : "You've left the circle."); circleRerender(); };
     o.querySelector("#lv-yes").onclick = () => busy(o.querySelector("#lv-yes"), go2("leave_family"));
     o.querySelector("#lv-del").onclick = () => busy(o.querySelector("#lv-del"), go2("delete_me"));
   });
   document.querySelectorAll("[data-fqrep]").forEach(b => b.onclick = () => familyContentMenu(b.dataset.fqrep, b.dataset.fqaid || null, b.dataset.fqwho || "family"));
-  document.querySelectorAll("[data-cmhide]").forEach(b => b.onclick = () => busy(b, async () => { await circleCall("block_member", { p_token: S.circle.token, p_member_id: b.dataset.cmhide }); await circleSync(true); toast("You won't see their questions any more."); renderSettings(); }));
-  document.querySelectorAll("[data-cmshow]").forEach(b => b.onclick = () => busy(b, async () => { await circleCall("unblock_member", { p_token: S.circle.token, p_member_id: b.dataset.cmshow }); await circleSync(true); renderSettings(); }));
+  document.querySelectorAll("[data-cmhide]").forEach(b => b.onclick = () => busy(b, async () => { await circleCall("block_member", { p_token: S.circle.token, p_member_id: b.dataset.cmhide }); await circleSync(true); toast("You won't see their questions any more."); circleRerender(); }));
+  document.querySelectorAll("[data-cmshow]").forEach(b => b.onclick = () => busy(b, async () => { await circleCall("unblock_member", { p_token: S.circle.token, p_member_id: b.dataset.cmshow }); await circleSync(true); circleRerender(); }));
 }
 
+
+
+/* ---------- The family circle page ----------
+   A warm page of its own: everyone's initials, Bean saying what's new, memories as cards
+   (answer hidden until you've played it), who got each one right, and adding a memory
+   one step at a time. Hide/Remove/Leave live under "Manage circle". */
+const FAM_COLORS = ["#783EFD", "#E8456F", "#B046B1", "#E8781E", "#2E7A4B", "#3B82D6", "#B88600", "#8E4BD6"];
+function famColor(id) { const i = circleMembers().findIndex(m => m.id === id); return FAM_COLORS[(i < 0 ? 0 : i) % FAM_COLORS.length]; }
+function famAvatar(id, name, size = "") { return `<span class="fam-av ${size}" style="--av:${famColor(id)}" aria-hidden="true">${esc((name || "?").trim().charAt(0).toUpperCase())}</span>`; }
+function circleRerender() { if (view === "family") renderFamily(); else if (view === "settings") renderSettings(); else if (view === "home") renderHome(); }
+function ago(iso) {
+  if (!iso) return "";
+  const d = (Date.now() - new Date(iso).getTime()) / 864e5;
+  return d < 1 ? "today" : d < 2 ? "yesterday" : d < 7 ? `${Math.floor(d)} days ago` : new Date(iso).toLocaleDateString(undefined, { month: "short", day: "numeric" });
+}
+function names(list) { const n = [...new Set(list)]; return n.length <= 1 ? (n[0] || "") : n.slice(0, -1).join(", ") + " and " + n[n.length - 1]; }
+/* What's new since this person last looked at the family page */
+function circleNews() {
+  if (!inCircle()) return null;
+  const me = (S.circle.me || {}).id, since = S.circle.seenAt || 0, qs = circleQuestions();
+  const fresh = qs.filter(q => q.author_id !== me && new Date(q.created_at).getTime() > since);
+  const tries = qs.filter(q => q.author_id === me).flatMap(q => (q.answers || []).filter(a => new Date(a.at).getTime() > since).map(a => ({ ...a, q })));
+  return { fresh, tries, count: fresh.length + tries.length };
+}
+function myAnswer(q) {
+  const me = (S.circle.me || {}).id, local = (S.famAns || {})[q.id];
+  if (local !== undefined) return local;
+  const a = (q.answers || []).find(x => x.member_id === me);
+  return a ? a.right : undefined;
+}
+function memoryCard(q) {
+  const me = S.circle.me || {}, mine = q.author_id === me.id, played = myAnswer(q);
+  const showAns = mine || played !== undefined || (S.famPeek || {})[q.id];
+  const fresh = !mine && new Date(q.created_at).getTime() > (S.circle.seenAtPrev || 0);
+  const tries = (q.answers || []);
+  return `<article class="mem-card" style="--av:${famColor(q.author_id)}">
+    <header>${famAvatar(q.author_id, q.author_name)}<span class="mem-by"><strong>${mine ? "You" : esc(q.author_name || "Family")}</strong> asked · ${ago(q.created_at)}</span>${fresh ? `<span class="mem-new">New</span>` : ""}
+      <button class="mem-more" data-memmenu="${esc(q.id)}" aria-label="More options for this memory">⋯</button></header>
+    <p class="mem-q">${esc(q.question)}</p>
+    ${showAns ? `<p class="mem-a">${played === true ? "✓ You got it: " : played === false ? "The answer: " : "Answer: "}<strong>${esc(q.answer)}</strong></p>${q.note ? `<p class="mem-note">“${esc(q.note)}”</p>` : ""}`
+      : `<p class="mem-wait">${S.started ? "Coming up in your Memory Lane." : "Not played yet."} <button class="linkish" data-mempeek="${esc(q.id)}">Show the answer</button></p>`}
+    <div class="mem-tries">${tries.length ? tries.map(a => `<span class="mem-try ${a.right ? "ok" : "no"}">${famAvatar(a.member_id, a.name, "xs")}${a.member_id === me.id ? "You" : esc(a.name)} ${a.right ? "✓ got it" : "had a go"}</span>`).join("") : `<span class="muted small">${mine ? "Nobody has tried it yet." : ""}</span>`}</div>
+  </article>`;
+}
+var famManageOpen = false;
+function renderFamily() {
+  if (!inCircle()) {
+    document.getElementById("app").innerHTML = `
+      ${gameBar("home", "Family circle", "")}
+      <div class="fam-empty">
+        ${bean("cheer", 110)}
+        <h1>Bring the family into Heather</h1>
+        <p class="welcome-lead">Everyone adds memories about your family's life. They turn into quiz questions in Memory Lane, and you can see who remembers what.</p>
+        <button class="btn block big" id="fc-start">Start a family circle</button>
+        <button class="btn block secondary" id="fc-joincode">I have an invite code</button>
+      </div>`;
+    wireFamilyQuestions();
+    return;
+  }
+  const C = S.circle, me = C.me || {}, people = circleMembers(), qs = circleQuestions().slice().sort((a, b) => new Date(b.created_at) - new Date(a.created_at)), news = circleNews();
+  let line;
+  const tryLine = t => `${t.name} ${t.right ? "got your question right" : "had a go at your question"}: “${t.q.question}”`;
+  if (news.fresh.length) line = `${names(news.fresh.map(q => q.author_name || "Family"))} added ${news.fresh.length === 1 ? "a new memory" : `${news.fresh.length} new memories`}!${S.started ? ` Look out for ${news.fresh.length === 1 ? "it" : "them"} in Memory Lane.` : ""}${news.tries.length ? ` And ${tryLine(news.tries[news.tries.length - 1])}` : ""}`;
+  else if (news.tries.length) line = tryLine(news.tries[news.tries.length - 1]);
+  else if (!qs.length) line = "No memories yet. Add the first one, and the family will find it in Memory Lane!";
+  else line = `${qs.length} ${qs.length === 1 ? "memory" : "memories"} so far. Every one becomes a little quiz for the family.`;
+  C.seenAtPrev = C.seenAt || 0; C.seenAt = Date.now(); save();
+  document.getElementById("app").innerHTML = `
+    ${gameBar("home", esc(C.family_name || "Family circle"), "Family circle")}
+    <section class="fam-hero">
+      <div class="fam-avs">${people.slice(0, 8).map(m => famAvatar(m.id, m.name, "lg")).join("")}${people.length > 8 ? `<span class="fam-av lg more">+${people.length - 8}</span>` : ""}</div>
+      <p class="fam-names">${esc(names(people.map(m => m.id === me.id ? "you" : m.name)))}</p>
+    </section>
+    ${beanSays(esc(line), news.count ? "cheer" : "happy", 84)}
+    <div class="fam-actions">
+      <button class="btn big" id="fam-add">＋ Add a memory</button>
+      <button class="btn secondary" data-invite="family">${SHARE_ICON.share} Invite family</button>
+    </div>
+    <h2 class="fam-h">The family's memories</h2>
+    <div class="mem-list">${qs.length ? qs.map(memoryCard).join("") : `<div class="card center muted">Memories you all add will appear here.</div>`}</div>
+    <details class="card fam-manage" ${famManageOpen ? "open" : ""}>
+      <summary>Manage circle</summary>
+      <ul class="fq-list circle-people">${people.map(m => { const hidden = (C.blocked || []).includes(m.id); return `<li><span class="fam-person">${famAvatar(m.id, m.name)}<span><strong>${esc(m.name)}</strong>${m.id === me.id ? " (you)" : ""}${m.is_founder ? ` <span class="muted small">· started the circle</span>` : ""}${hidden ? ` <span class="muted small">· hidden</span>` : ""}</span></span>${m.id !== me.id ? `<span class="fq-acts">${hidden ? `<button class="btn quiet" data-cmshow="${esc(m.id)}">Show again</button>` : `<button class="btn quiet" data-cmhide="${esc(m.id)}" aria-label="Hide questions from ${esc(m.name)}">Hide</button>`}${me.is_founder ? `<button class="btn quiet" data-cmrem="${esc(m.id)}" aria-label="Remove ${esc(m.name)} from the circle">Remove</button>` : ""}</span>` : ""}</li>`; }).join("")}</ul>
+      <p class="muted small">Invite code: <strong>${esc(C.invite_code || "")}</strong></p>
+      <div class="row">${me.is_founder ? `<button class="btn quiet" id="fc-newcode">Make a new invite link</button>` : ""}<button class="btn quiet" id="fc-leave">Leave the circle</button></div>
+    </details>`;
+  document.getElementById("fam-add").onclick = () => openAddMemory();
+  document.querySelector(".fam-manage").addEventListener("toggle", e => { famManageOpen = e.target.open; });
+  document.querySelectorAll("[data-mempeek]").forEach(b => b.onclick = () => { S.famPeek = Object.assign(S.famPeek || {}, { [b.dataset.mempeek]: true }); save(); renderFamily(); });
+  document.querySelectorAll("[data-memmenu]").forEach(b => b.onclick = () => memoryMenu(b.dataset.memmenu));
+  wireFamilyQuestions();
+}
+function memoryMenu(qid) {
+  const q = circleQuestions().find(x => x.id === qid); if (!q) return;
+  const me = S.circle.me || {}, mine = q.author_id === me.id;
+  dialog(`<h2 style="text-align:center">${esc(q.question)}</h2>
+    ${mine || me.is_founder ? `<button class="btn block secondary" id="mm-del">Remove this memory</button>` : ""}
+    ${!mine ? `<button class="btn block secondary" id="mm-rep">Report or hide</button>` : ""}
+    <button class="btn block quiet" data-close>Close</button>`, o => {
+      const d = o.querySelector("#mm-del"), r = o.querySelector("#mm-rep");
+      if (d) d.onclick = async () => { d.disabled = true; try { await circleCall("delete_question", { p_token: S.circle.token, p_id: qid }); await circleSync(true); o.remove(); toast("Memory removed."); circleRerender(); } catch (e) { d.disabled = false; toast(e.message); } };
+      if (r) r.onclick = () => { o.remove(); familyContentMenu(qid, q.author_id, q.author_name); };
+    });
+}
+/* ---- Add a memory, one step at a time ---- */
+const MEMORY_IDEAS = ["What was the name of our first dog?", "Where did you and Grandpa get married?", "What street did you grow up on?", "What was your very first job?", "Where did we go on holiday every summer?", "What song did you dance to at your wedding?", "What colour was our first car?", "What was your favourite thing to bake for us?"];
+function openAddMemory() {
+  const M = { q: "", a: "", w: ["", "", ""], n: "", step: 0 };
+  const steps = ["question", "answer", "wrong", "note"];
+  dialog(`<div id="am-body"></div>`, o => {
+    const body = o.querySelector("#am-body");
+    const dots = () => `<div class="am-dots" aria-hidden="true">${steps.map((_, i) => `<i class="${i <= M.step ? "on" : ""}"></i>`).join("")}</div>`;
+    const draw = () => {
+      const s = steps[M.step];
+      if (s === "question") body.innerHTML = `${dots()}<h2>What would you like to ask?</h2>
+        <p class="muted small">Something about your family's life that others might remember.</p>
+        <textarea id="am-in" maxlength="200" rows="2" placeholder="Where did you and Grandpa get married?">${esc(M.q)}</textarea>
+        <p class="am-ideas-h">Need an idea? Tap one:</p>
+        <div class="am-ideas">${shuffle(MEMORY_IDEAS).slice(0, 4).map(t => `<button class="chip" data-idea="${esc(t)}">${esc(t)}</button>`).join("")}</div>`;
+      else if (s === "answer") body.innerHTML = `${dots()}<h2>What's the right answer?</h2><p class="am-echo">“${esc(M.q)}”</p>
+        <input type="text" id="am-in" maxlength="80" value="${esc(M.a)}" placeholder="St. Mary's Church">`;
+      else if (s === "wrong") body.innerHTML = `${dots()}<h2>Add two or three wrong answers</h2><p class="muted small">Make them believable, so it's a real little puzzle!</p>
+        ${[0, 1, 2].map(i => `<input type="text" class="am-w" maxlength="80" value="${esc(M.w[i])}" placeholder="${["City Hall", "The old farm", "Optional third answer"][i]}">`).join("")}`;
+      else body.innerHTML = `${dots()}<h2>Add a little note?</h2><p class="muted small">It shows after someone answers. You can skip this.</p>
+        <input type="text" id="am-in" maxlength="200" value="${esc(M.n)}" placeholder="What a day that was!">
+        <div class="mem-card preview" style="--av:${famColor((S.circle.me || {}).id)}"><p class="mem-q">${esc(M.q)}</p><div class="am-opts">${shuffle([M.a, ...M.w.filter(Boolean)]).map(x => `<span class="${x === M.a ? "right" : ""}">${esc(x)}</span>`).join("")}</div></div>`;
+      body.insertAdjacentHTML("beforeend", `<p class="msg" id="am-msg" role="status" aria-live="polite"></p>
+        <button class="btn block big" id="am-next">${s === "note" ? "Add to the circle" : "Next"}</button>
+        <button class="btn block quiet" id="am-back">${M.step ? "Back" : "Cancel"}</button>`);
+      const inp = body.querySelector("#am-in"); if (inp) setTimeout(() => inp.focus(), 50);
+      body.querySelectorAll("[data-idea]").forEach(b => b.onclick = () => { body.querySelector("#am-in").value = b.dataset.idea; });
+      body.querySelector("#am-back").onclick = () => { if (!M.step) return o.remove(); keep(); M.step--; draw(); };
+      body.querySelector("#am-next").onclick = next;
+    };
+    const keep = () => {
+      const s = steps[M.step], v = (body.querySelector("#am-in") || {}).value;
+      if (s === "question") M.q = (v || "").trim(); else if (s === "answer") M.a = (v || "").trim(); else if (s === "note") M.n = (v || "").trim();
+      else M.w = [...body.querySelectorAll(".am-w")].map(x => x.value.trim());
+    };
+    const next = async () => {
+      keep();
+      const s = steps[M.step], msg = body.querySelector("#am-msg");
+      if (s === "question" && M.q.length < 3) return msg.textContent = "Please type a question.";
+      if (s === "answer" && !M.a) return msg.textContent = "Please type the right answer.";
+      if (s === "wrong") { const w = M.w.filter(Boolean); if (w.length < 2) return msg.textContent = "Please add at least two wrong answers."; if (w.some(x => x.toLowerCase() === M.a.toLowerCase())) return msg.textContent = "One of these is the same as the right answer."; }
+      if (s !== "note") { M.step++; return draw(); }
+      const btn = body.querySelector("#am-next"); btn.disabled = true; btn.textContent = "Adding…";
+      try {
+        await circleCall("add_question", { p_token: S.circle.token, p_question: M.q, p_answer: M.a, p_wrong: M.w.filter(Boolean), p_note: M.n || null });
+        await circleSync(true);
+        S.memAdded = (S.memAdded || 0) + 1; if (S.memAdded === 1) smallWin("Added a first memory to the family circle"); save();
+        sfx.win();
+        body.innerHTML = `<div class="center">${bean("cheer", 96)}</div><h2 style="text-align:center">Memory added!</h2>
+          <p style="text-align:center">Everyone else in ${esc(S.circle.family_name || "the circle")} will find it in Memory Lane. You'll see here who gets it right.</p>
+          <button class="btn block big" id="am-more">Add another</button><button class="btn block quiet" id="am-done">Done</button>`;
+        body.querySelector("#am-more").onclick = () => { Object.assign(M, { q: "", a: "", w: ["", "", ""], n: "", step: 0 }); draw(); };
+        body.querySelector("#am-done").onclick = () => { o.remove(); circleRerender(); if (!S.started && !S.playNudged) maybePlayNudge(); };
+      } catch (e) { btn.disabled = false; btn.textContent = "Add to the circle"; msg.textContent = e.message; }
+    };
+    draw();
+  }, false);
+}
+/* ---- Settings: a short summary that opens the page ---- */
+function circleSummaryCard() {
+  const C = S.circle, people = circleMembers(), n = circleQuestions().length, news = circleNews();
+  return `<div class="card family fam-summary" id="circle-card">
+    <h3>${esc(C.family_name || "Family circle")}</h3>
+    <div class="fam-avs small">${people.slice(0, 6).map(m => famAvatar(m.id, m.name)).join("")}</div>
+    <p class="muted small">${people.length} ${people.length === 1 ? "person" : "people"} · ${n} ${n === 1 ? "memory" : "memories"}${news && news.count ? ` · <strong>${news.count} new</strong>` : ""}</p>
+    <button class="btn block" data-go="family">Open the family circle</button>
+  </div>`;
+}
+/* ---- Home: a card when there's something new from the family ---- */
+function familyHomeCard() {
+  const news = circleNews(); if (!news || !news.count) return "";
+  const who = news.fresh.length ? news.fresh.map(q => ({ id: q.author_id, name: q.author_name })) : news.tries.map(t => ({ id: t.member_id, name: t.name }));
+  const line = news.fresh.length ? `${names(news.fresh.map(q => q.author_name || "Family"))} added ${news.fresh.length === 1 ? "a new memory" : `${news.fresh.length} new memories`}` : `${names(news.tries.map(t => t.name))} tried your ${news.tries.length === 1 ? "question" : "questions"}`;
+  return `<button class="fam-home" data-go="family">
+    <span class="fam-avs small">${who.slice(0, 3).map(w => famAvatar(w.id, w.name)).join("")}</span>
+    <span><strong>From your family</strong><br>${esc(line)}</span><span class="fam-home-go" aria-hidden="true">›</span>
+  </button>`;
+}
 
 /* ---------- Accounts: sign in with Facebook (Supabase Auth); the garden is saved to the account ----------
    Facebook sends people back with tokens in the address (#access_token=…). We keep the session in
@@ -4518,7 +4759,7 @@ function shareCardHTML() {
     <p>Invite a friend to play, or bring your family into a circle where everyone adds memories to Memory Lane.</p>
     <div class="share-btns">
       <button class="btn block" data-invite="friend">${SHARE_ICON.share} Invite a friend</button>
-      <button class="btn block secondary" data-invite="family">${ICON.heart} ${inCircle() ? "Invite family" : "Start a family circle"}</button>
+      ${inCircle() ? `<button class="btn block secondary" data-go="family">${ICON.heart} Our family circle</button>` : `<button class="btn block secondary" data-invite="family">${ICON.heart} Start a family circle</button>`}
     </div>
   </section>`;
 }
@@ -4876,7 +5117,7 @@ if (clubResult === "welcome") setTimeout(() => toast("Welcome to the Garden Club
   const code = joinCodeFromUrl();
   const whenReady = fn => { const t = () => (document.getElementById("boot") || document.querySelector(".overlay")) ? setTimeout(t, 300) : fn(); t(); };
   if (code) whenReady(() => openJoin(code));
-  circleSync(true).then(() => { if (view === "settings" && !document.activeElement.matches("input, textarea")) renderSettings(); });
+  circleSync(true).then(() => { if (document.activeElement.matches("input, textarea") || document.querySelector(".overlay")) return; if (view === "settings" || view === "family") circleRerender(); else if (view === "home" && familyHomeCard()) renderHome(); });
   document.addEventListener("visibilitychange", () => { if (!document.hidden) circleSync(); });
 })();
 </script>
