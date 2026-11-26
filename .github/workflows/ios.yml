@@ -1,0 +1,53 @@
+name: iOS build
+# Builds the Heather iPhone app on a GitHub Mac (no Mac of our own needed),
+# runs it in the iPhone simulator, and saves the log + screenshots to the ci-results branch.
+on:
+  push:
+    branches: [main]
+    paths: ['ios/**', '.github/workflows/ios.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: ios-build
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: macos-26
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tools
+        run: |
+          mkdir -p ci
+          { xcodebuild -version; sw_vers; xcodebuild -list -project ios/Heather.xcodeproj; } 2>&1 | tee ci/tools.txt
+      - name: Build for the iPhone simulator
+        run: |
+          set -o pipefail
+          xcodebuild -project ios/Heather.xcodeproj -scheme Heather -configuration Debug \
+            -destination 'generic/platform=iOS Simulator' -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO build 2>&1 | tee ci/build.log | grep -E "error:|warning:|BUILD (SUCCEEDED|FAILED)" | head -200
+      - name: Run in the simulator and take screenshots
+        run: |
+          set -x
+          APP=$(find build/Build/Products -name 'Heather.app' -maxdepth 3 | head -1)
+          RT=$(xcrun simctl list runtimes -j | python3 -c "import json,sys;r=[x for x in json.load(sys.stdin)['runtimes'] if x['platform']=='iOS' and x['isAvailable']];print(r[-1]['identifier'])")
+          TYPE=$(xcrun simctl list devicetypes -j | python3 -c "import json,sys;t=[x['identifier'] for x in json.load(sys.stdin)['devicetypes'] if 'Pro-Max' in x['identifier']];print(t[-1])")
+          DEV=$(xcrun simctl create HeatherPhone "$TYPE" "$RT")
+          xcrun simctl boot "$DEV"; xcrun simctl bootstatus "$DEV" -b
+          xcrun simctl install "$DEV" "$APP"
+          xcrun simctl launch "$DEV" com.aidenjenner.heather | tee ci/launch.txt
+          sleep 6;  xcrun simctl io "$DEV" screenshot ci/1-launch.png
+          sleep 10; xcrun simctl io "$DEV" screenshot ci/2-after-15s.png
+          xcrun simctl spawn "$DEV" log show --last 2m --predicate 'process == "Heather"' --style compact > ci/app-log.txt 2>&1 || true
+          echo "$TYPE / $RT" > ci/device.txt
+      - name: Save results to the ci-results branch
+        if: always()
+        run: |
+          echo "$GITHUB_SHA ${{ job.status }}" > ci/commit.txt
+          git config user.name "heather-ci"; git config user.email "heather-ci@users.noreply.github.com"
+          git checkout --orphan ci-results
+          git rm -rf --cached . > /dev/null
+          git add -f ci
+          git commit -m "iOS build results for $GITHUB_SHA" > /dev/null
+          git push -f origin ci-results
