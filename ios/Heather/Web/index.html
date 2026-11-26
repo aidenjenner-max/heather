@@ -1445,7 +1445,6 @@ function renderHome() {
       <div class="week">${week.map(w => `<div class="d"><span>${w.lab}</span><span class="dot ${w.on ? "on" : ""} ${w.today ? "today" : ""}">${w.on ? "✓" : ""}</span></div>`).join("")}</div>
     </section>
     ${shareCardHTML()}`;
-  const mt = document.getElementById("ml-together"); if (mt) mt.onclick = startTogether;
   setTimeout(showTrophyUnlocks, 600);
   maybeInviteNudge();
 }
@@ -1481,9 +1480,8 @@ function memoryLaneCard(rec, plan) {
       ${fam}
       ${done
         ? `<p class="ml-done"><span class="pill done">✓ ${rec.trivia.right} of 5 today</span> Come back tomorrow for five more.</p>
-           <button class="btn block ml-alt" id="ml-together">Play together with someone</button>`
-        : `<button class="btn block big ml-go" data-go="splash" data-game="trivia">Take a stroll down Memory Lane</button>
-           <button class="btn block ml-alt" id="ml-together">Play together (2 players)</button>`}
+`
+        : `<button class="btn block big ml-go" data-go="splash" data-game="trivia">Take a stroll down Memory Lane</button>`}
     </section>`;
 }
 
@@ -1822,7 +1820,7 @@ function howToTrivia() {
   dialog(`<h2>How to play Memory Lane</h2><ul>
     <li>Five questions each day about music, TV, Canada and everyday life from years gone by.</li>
     <li>Tap the answer you think is right. Then read a little fact about it.</li>
-    <li>Fun to play together: ask the family what they remember!</li></ul>
+    <li>Family members can add their own memory questions on the Family tab.</li></ul>
     <button class="btn block" data-close>Let's play</button>`);
 }
 function drawTrivia() {
@@ -3023,7 +3021,7 @@ function renderReport() {
     </section>
     ${wins.length ? `<section class="card"><h3>Small wins to celebrate</h3><ul class="wins">${wins.map(w => `<li><strong>${new Date(w.k + "T12:00:00").toLocaleDateString(undefined, { month: "short", day: "numeric" })}:</strong> ${esc(w.text)}</li>`).join("")}</ul></section>` : ""}
     <section class="card"><h3>Ideas for the coming week</h3><ul class="wins">${needs.length ? needs.map(x => `<li>Encourage a few games of ${(FOCUS_GAMES[x.dom] || ["peek"]).map(g => GAMES[g].name).join(" or ")} for ${x.dom.toLowerCase()}. The daily plan already leans that way.</li>`).join("") : "<li>Everything is ticking along. Keep up the daily plan!</li>"}
-      <li>Play Memory Lane together and add a few questions about family history in Settings.</li></ul></section>
+      <li>Add a few memory questions about family history on the Family tab.</li></ul></section>
     <p class="muted small">Scores run from 0 to 100 and come from how each game went (tries, hints, mistakes; for Quick Peek, how short a flash she can catch). This report shows practice and progress in these games. It is not a medical test.</p>
     <button class="btn block" id="rp-copy">Copy this report to send to family</button>`;
   document.getElementById("rp-copy").onclick = () => copyText([`${S.name}'s brain workout report (${from} to ${to})`, `Days played: ${active} of 28. Current streak: ${streak()} days. Games finished: ${finished}.`, ...trends.map(x => `${x.dom}: ${x.label}. ${sentence(x)}`), peekReportLine(), twoReportLine(), wins.length ? `Small wins: ${wins.map(w => w.text).join("; ")}` : "", "(Practice and progress in the Heather app's games, not a medical test.)"].filter(Boolean).join("\n"));
@@ -3646,14 +3644,6 @@ function triviaMake(practice, players) {
   }
   return { qs, i: 0, right: 0, picked: null, practice: practice || !!players, players: players || null, scores: players ? [0, 0] : null };
 }
-function startTogether() {
-  dialog(`<h2>Play Memory Lane together</h2><p>Take turns answering. Each player gets 3 questions. Play as a team or see who remembers more!</p>
-    <label class="lab" for="p1">First player</label><input type="text" id="p1" value="${esc(S.name)}">
-    <label class="lab" for="p2">Second player</label><input type="text" id="p2" placeholder="Sarah">
-    <button class="btn block big" id="p-go">Start</button><button class="btn block quiet" data-close>Cancel</button>`, o => {
-      o.querySelector("#p-go").onclick = () => { const a = o.querySelector("#p1").value.trim() || S.name, b = o.querySelector("#p2").value.trim() || "Guest"; o.remove(); go("trivia", { players: [a, b] }); };
-    });
-}
 
 const PLAY_TRI = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.6-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z" fill="currentColor"/></svg>';
 function gameCard(g, rec, k) {
@@ -3713,7 +3703,6 @@ function renderSplash(opts = {}) {
     const doneLine = { ws: () => `You found all of today's words${d.hints ? "" : " without a hint"}.`, su: () => `You solved today's puzzle${d.mistakes ? "" : " without a mistake"}.`, odd: () => `You spotted all 8 today${d.misses ? "" : " without a miss"}.`, peek: () => `You got ${d.right} of 15 today, with a ${d.thr} ms flash time.`, two: () => `Doing both at once: plant watered ${d.steer}% of the time, ${d.signs}% of sunflowers caught.`, walk: () => `You remembered ${d.route} of ${d.of} turns and ${d.lm} of ${d.lmOf} places today.`, bee: () => `You flew today's Bee Line${d.hints ? "" : " without a hint"}.`, dbl: () => `You joined everything into ${d.final}${d.hints ? "" : " without a hint"}.`, vine: () => `You found every word in today's vines${d.hints ? "" : " without a hint"}.`, names: () => `You remembered ${d.names} of ${d.of} names today. Bean will ask about them tomorrow!`, trivia: () => `You got ${d.right} of 5 right today.` }[g];
     if (d.done) { status = doneLine(); btns = `<button class="btn block play" data-go="${g}" data-practice="1">Play a practice round</button>`; }
     else btns = `<button class="btn block play" data-go="${g}">${g === "ws" && d.found && d.found.length ? "Continue" : "Play"}</button>${how}`;
-    if (g === "trivia") btns += `<button class="btn block out" id="sp-together">Play together (2 players)</button>`;
     if (g === "two") status += `${status ? " " : ""}<span class="muted" style="font-weight:400">Plant speed and sign time each adjust after every round.</span>`;
     else if (g === "peek") status += `${status ? " " : ""}<span class="muted" style="font-weight:400">Stage ${peekState().stage} of 3 · flash time ${Math.round(peekDur(peekState().stage))} ms. It adjusts after every peek.</span>`;
     else if (g !== "trivia") status += `${status ? " " : ""}<span class="muted" style="font-weight:400">Difficulty: ${LEVEL_WORD[adaptLevel(g)]}. It adjusts to how you're doing.</span>`;
@@ -3728,7 +3717,6 @@ function renderSplash(opts = {}) {
       <div class="btns">${btns}</div>
       <p class="meta"><strong>${date}</strong>${{ tiles: "Today's letters", memory: "Today's cards", ws: "Today's theme: " + wsThemeFor(k, () => 0, false), su: "Today's puzzle", odd: "Today's rounds", peek: "15 quick peeks", two: "4 short rounds", walk: "Today's walk", names: "Today's neighbours", bee: "Today's garden", dbl: "Today's numbers", vine: "Today's vines", trivia: "Today's questions" }[g]} · ${GAMES[g].domain}</p>
     </section>`;
-  const tg = document.getElementById("sp-together"); if (tg) tg.onclick = startTogether;
   const h = document.getElementById("sp-how");
   if (h) h.onclick = () => ({ tiles: howToTiles, memory: howToMemory, ws: howToWS, su: howToSU, odd: howToOdd, peek: howToPeek, two: howToTwo, walk: howToWalk, names: howToNames, bee: howToBee, dbl: howToDbl, vine: howToVine, trivia: howToTrivia }[g])();
 }
