@@ -27,20 +27,25 @@ jobs:
           xcodebuild -project ios/Heather.xcodeproj -scheme Heather -configuration Debug \
             -destination 'generic/platform=iOS Simulator' -derivedDataPath build \
             CODE_SIGNING_ALLOWED=NO build 2>&1 | tee ci/build.log | grep -E "error:|warning:|BUILD (SUCCEEDED|FAILED)" | head -200
-      - name: Run in the simulator and take screenshots
+      - name: Run on iPhone and iPad simulators and take screenshots
         run: |
           set -x
           APP=$(find build/Build/Products -name 'Heather.app' -maxdepth 3 | head -1)
           RT=$(xcrun simctl list runtimes -j | python3 -c "import json,sys;r=[x for x in json.load(sys.stdin)['runtimes'] if x['platform']=='iOS' and x['isAvailable']];print(r[-1]['identifier'])")
-          TYPE=$(xcrun simctl list devicetypes -j | python3 -c "import json,sys;t=[x['identifier'] for x in json.load(sys.stdin)['devicetypes'] if 'Pro-Max' in x['identifier']];print(t[-1])")
-          DEV=$(xcrun simctl create HeatherPhone "$TYPE" "$RT")
-          xcrun simctl boot "$DEV"; xcrun simctl bootstatus "$DEV" -b
-          xcrun simctl install "$DEV" "$APP"
-          xcrun simctl launch "$DEV" com.aidenjenner.heather | tee ci/launch.txt
-          sleep 6;  xcrun simctl io "$DEV" screenshot ci/1-launch.png
-          sleep 10; xcrun simctl io "$DEV" screenshot ci/2-after-15s.png
-          xcrun simctl spawn "$DEV" log show --last 2m --predicate 'process == "Heather"' --style compact > ci/app-log.txt 2>&1 || true
-          echo "$TYPE / $RT" > ci/device.txt
+          pick() { xcrun simctl list devicetypes -j | python3 -c "import json,sys,re;t=[x['identifier'] for x in json.load(sys.stdin)['devicetypes']];c=[i for p in sys.argv[1:] for i in t if re.search(p,i)];print(c[0] if c else '')" "$@"; }
+          PHONE=$(pick 'iPhone-17-Pro-Max' 'iPhone-16-Pro-Max' 'Pro-Max')
+          PAD=$(pick 'iPad-Pro-13-inch' 'iPad-Pro-12-9-inch')
+          for KIND in phone pad; do
+            TYPE=$PHONE; [ "$KIND" = pad ] && TYPE=$PAD
+            DEV=$(xcrun simctl create "Heather-$KIND" "$TYPE" "$RT")
+            xcrun simctl boot "$DEV"; xcrun simctl bootstatus "$DEV" -b
+            xcrun simctl install "$DEV" "$APP"
+            xcrun simctl launch "$DEV" com.aidenjenner.heather | tee "ci/launch-$KIND.txt"
+            sleep 16; xcrun simctl io "$DEV" screenshot "ci/$KIND.png"
+            xcrun simctl spawn "$DEV" log show --last 2m --predicate 'process == "Heather"' --style compact > "ci/app-log-$KIND.txt" 2>&1 || true
+            echo "$KIND: $TYPE / $RT" >> ci/device.txt
+            xcrun simctl shutdown "$DEV" || true
+          done
       - name: Save results to the ci-results branch
         if: always()
         run: |

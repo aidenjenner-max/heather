@@ -332,6 +332,8 @@ label.lab { font-weight: 700; display: block; margin-bottom: 6px; }
 .dialog { background: var(--surface); border-radius: 22px; padding: 22px; max-width: 520px; width: 100%; max-height: 90%; overflow: auto; display: flex; flex-direction: column; gap: 14px; border: 3px solid var(--accent); }
 .dialog ul { margin: 0; padding-left: 1.2em; display: flex; flex-direction: column; gap: 8px; }
 .dialog > * { flex-shrink: 0; }
+.agree { display: flex; gap: 12px; align-items: flex-start; font-size: 1rem; line-height: 1.4; padding: 12px; border: 2px solid var(--line); border-radius: 14px; cursor: pointer; }
+.agree input { width: 28px; height: 28px; flex: none; margin: 0; accent-color: var(--accent); }
 .dialog .center { text-align: center; display: grid; place-items: center; gap: 8px; }
 .toast { position: fixed; left: 50%; bottom: 110px; transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 14px 22px; border-radius: 16px; font-weight: 700; z-index: 20; max-width: calc(100% - 32px); text-align: center; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -1356,7 +1358,7 @@ function renderWelcome() {
       <button class="btn block big fb" id="w-fb">${ICON.fb} Continue with Facebook</button>
       <p class="muted small welcome-note">Keeps your garden safe on any phone or tablet. We never post for you.</p>
       <button class="btn block quiet" id="w-guest">Play without signing up</button>
-      <p class="muted small welcome-note"><a href="privacy" target="_blank" rel="noopener">Privacy</a></p>
+      <p class="muted small welcome-note"><a href="privacy" target="_blank" rel="noopener">Privacy</a> · <a href="terms" target="_blank" rel="noopener">Terms</a></p>
     </div>`;
     document.getElementById("w-fb").onclick = e => signInWithFacebook(e.currentTarget);
     document.getElementById("w-guest").onclick = () => { welcomeStep = "name"; renderWelcome(); };
@@ -3113,6 +3115,33 @@ function familyQs() {
   return shared.concat(S.familyQs || []);
 }
 
+/* ---- Family circle rules: everyone ticks "I agree" once (App Store 1.2) ---- */
+function circleRulesHTML(id) {
+  if (S.termsAgreed) return "";
+  return `<label class="agree" for="${id}"><input type="checkbox" id="${id}"><span>I agree to the <a href="terms#circle-rules" target="_blank" rel="noopener">family circle rules</a>: be kind, and share nothing hurtful, rude or private about anyone. Anything abusive is removed, along with the person who posted it.</span></label>`;
+}
+function circleRulesOk(o, id, msgEl) {
+  if (S.termsAgreed) return true;
+  const box = o.querySelector("#" + id);
+  if (box && box.checked) return true;
+  msgEl.textContent = "Please tick the box to agree to the family circle rules.";
+  if (box) box.focus();
+  return false;
+}
+function circleRulesAgreed() { if (!S.termsAgreed) { S.termsAgreed = dayKey(); save(); } }
+function requireCircleRules(next) {
+  if (S.termsAgreed) return next();
+  dialog(`<div class="center">${bean("calm", 84)}</div>
+    <h2 style="text-align:center">Our family circle rules</h2>
+    <p>Family circles are for kind, happy memories. Before you add one, please agree to the rules.</p>
+    ${circleRulesHTML("cr-ok")}
+    <p class="msg" id="cr-msg" role="status" aria-live="polite"></p>
+    <button class="btn block big" id="cr-go">Continue</button>
+    <button class="btn block quiet" data-close>Not now</button>`, o => {
+      o.querySelector("#cr-go").onclick = () => { if (!circleRulesOk(o, "cr-ok", o.querySelector("#cr-msg"))) return; circleRulesAgreed(); o.remove(); next(); };
+    });
+}
+
 /* ---- Start a circle ---- */
 function openStartCircle(after) {
   dialog(`<div class="center">${bean("cheer", 84)}</div>
@@ -3120,14 +3149,16 @@ function openStartCircle(after) {
     <p>Invite your family with a link. Anyone in the circle can add a memory question, like "What was the name of our first dog?", and everyone else gets to try it in Memory Lane.</p>
     <label class="lab" for="fc-fam">Family name</label><input type="text" id="fc-fam" maxlength="60" value="${esc(possessive(S.name))} family">
     <label class="lab" for="fc-me">Your name</label><input type="text" id="fc-me" maxlength="40" value="${esc(S.name)}">
+    ${circleRulesHTML("fc-ok")}
     <p class="msg" id="fc-msg" role="status" aria-live="polite"></p>
     <button class="btn block big" id="fc-go">Start our circle</button>
     <button class="btn block quiet" data-close>Not now</button>`, o => {
       o.querySelector("#fc-go").onclick = async () => {
         const fam = o.querySelector("#fc-fam").value.trim(), me = o.querySelector("#fc-me").value.trim(), b = o.querySelector("#fc-go"), m = o.querySelector("#fc-msg");
         if (!fam || !me) { m.textContent = CIRCLE_ERRORS.name_required; return; }
+        if (!circleRulesOk(o, "fc-ok", m)) return;
         b.disabled = true; b.textContent = "Starting…"; m.textContent = "";
-        try { await circleStart(fam, me); o.remove(); smallWin(`Started the ${S.circle.family_name} circle`); circleRerender(); (after || (() => openInvite("family")))(); }
+        try { await circleStart(fam, me); circleRulesAgreed(); o.remove(); smallWin(`Started the ${S.circle.family_name} circle`); circleRerender(); (after || (() => openInvite("family")))(); }
         catch (e) { m.textContent = e.message; b.disabled = false; b.textContent = "Start our circle"; }
       };
     });
@@ -3167,6 +3198,7 @@ async function openJoin(code) {
     <p style="text-align:center">You've been invited to a family circle on Heather. Add memories about your family, and try the ones everyone else adds in Memory Lane.</p>
     ${switching ? `<p class="share-tip">You're in ${esc(S.circle.family_name)} on this device now. Joining will move you to ${esc(preview.family_name)}.</p>` : ""}
     <label class="lab" for="fj-me">Your name</label><input type="text" id="fj-me" maxlength="40" value="${S.started ? esc(S.name) : ""}" placeholder="Sarah">
+    ${circleRulesHTML("fj-ok")}
     <p class="msg" id="fj-msg" role="status" aria-live="polite"></p>
     <button class="btn block big" id="fj-go">Join the circle</button>
     <button class="btn block quiet" data-close id="fj-no">Not now</button>`, o => {
@@ -3174,10 +3206,11 @@ async function openJoin(code) {
       o.querySelector("#fj-go").onclick = async () => {
         const me = o.querySelector("#fj-me").value.trim(), b = o.querySelector("#fj-go"), m = o.querySelector("#fj-msg");
         if (!me) { m.textContent = CIRCLE_ERRORS.name_required; return; }
+        if (!circleRulesOk(o, "fj-ok", m)) return;
         b.disabled = true; b.textContent = "Joining…"; m.textContent = "";
         try {
           if (switching) { try { await circleCall("leave_family", { p_token: S.circle.token }); } catch (e) { /* already gone */ } S.circle = null; }
-          await circleJoin(code, me);
+          await circleJoin(code, me); circleRulesAgreed();
           if (!S.started) S.name = me;
           save(); clearJoinFromUrl(); o.remove();
           joinedNext();
@@ -3507,7 +3540,8 @@ function memoryMenu(qid) {
 }
 /* ---- Add a memory, one step at a time ---- */
 const MEMORY_IDEAS = ["What was the name of our first dog?", "Where did you and Grandpa get married?", "What street did you grow up on?", "What was your very first job?", "Where did we go on holiday every summer?", "What song did you dance to at your wedding?", "What colour was our first car?", "What was your favourite thing to bake for us?"];
-function openAddMemory() {
+function openAddMemory() { requireCircleRules(openAddMemoryNow); }
+function openAddMemoryNow() {
   const M = { q: "", a: "", w: ["", "", ""], n: "", step: 0 };
   const steps = ["question", "answer", "wrong", "note"];
   dialog(`<div id="am-body"></div>`, o => {
@@ -3584,6 +3618,7 @@ function familyHomeCard() {
   </button>`;
 }
 
+/* @web-only:start accounts */
 /* ---------- Accounts: sign in with Facebook (Supabase Auth); the garden is saved to the account ----------
    Facebook sends people back with tokens in the address (#access_token=…). We keep the session in
    localStorage ("heather-auth"), save the whole garden (S) to public.profiles (each person can only
@@ -3742,6 +3777,7 @@ function wireAccountCard() {
   if ($("acc-del")) $("acc-del").onclick = deleteAccount;
 }
 
+/* @web-only:end accounts */
 /* --- Memory Lane with interests, family questions and a two-player mode --- */
 function triviaMake(practice, players) {
   const r = gameRng("trivia", practice), n = players ? 6 : 5;
@@ -4343,6 +4379,7 @@ const SHARE_URL = APP_URL;
 const AD_SECONDS = 15;
 function fbShareUrl() { return "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(friendLink()); }
 
+/* @web-only:start club */
 /* ---------- Garden Club: the payment page (built, not switched on) ----------
    Hidden until CLUB.on is true: nothing in the app links here yet. Preview it at
    heather-delta.vercel.app/?club . Payments go through Stripe Payment Links (no card
@@ -4572,6 +4609,7 @@ async function openPassClaim(code) {
   });
 }
 
+/* @web-only:end club */
 function offerRescue({ title, text, reward, grant, again, leave }) {
   const give = () => { S.rescues = (S.rescues || 0) + 1; save(); grant(); };
   dialog(`<div class="center">${bean("calm", 84)}<h2>${title}</h2><p>${text}</p>
@@ -4591,6 +4629,7 @@ function offerRescue({ title, text, reward, grant, again, leave }) {
       o.querySelector("#rs-leave").onclick = () => { o.remove(); leave(); };
     }, false);
 }
+/* @web-only:start video */
 function playVideo(reward, done) {
   let left = AD_SECONDS, timer = null;
   dialog(`<div class="ad-box" aria-live="polite">
@@ -4611,6 +4650,8 @@ function playVideo(reward, done) {
     }, false);
 }
 
+/* @web-only:end video */
+/* @web-only:start loop1 */
 /* ---------- Garden Loop: wheelbarrow yard + flower pot queue ----------
    Pots wait in one long line on the winding garden path. Wheelbarrows are jammed in the
    yard; each points one way and can only roll out if nothing is in its way. A barrow that
@@ -4749,6 +4790,7 @@ function loopGoal(spec) {
   return `Load all ${spec.queue.length} flower pots into the ${spec.yard.length} wheelbarrows. Only ${spec.spots} barrows fit at the potting bench. If it's full and the next pot has no barrow, you lose.`;
 }
 
+/* @web-only:end loop1 */
 /* --- drawing helpers --- */
 function barrowSVG(b, scale = 1) {
   const c = KIND_COLORS[b.kind];
@@ -4760,6 +4802,7 @@ function barrowSVG(b, scale = 1) {
     <g transform="translate(-17,-46) scale(0.34)">${KIND_ART[b.kind]}</g>
   </g>`;
 }
+/* @web-only:start loop2 */
 function potSVG(k, x, y, s = 1) {
   return `<g transform="translate(${x},${y}) scale(${s})"><path d="M-12 4 L12 4 L9 20 L-9 20 Z" fill="#C46A3A" stroke="#7A3A18" stroke-width="2"/><rect x="-14" y="0" width="28" height="6" rx="2" fill="#D98250" stroke="#7A3A18" stroke-width="2"/><g transform="translate(-17,-32) scale(0.34)">${KIND_ART[k]}</g></g>`;
 }
@@ -4975,6 +5018,7 @@ function winLoop() {
     }, false);
 }
 
+/* @web-only:end loop2 */
 /* ---------- Word Tiles ---------- */
 let T = null;
 function tilesGame(practice) {
@@ -5471,7 +5515,7 @@ function renderSettings() {
     <div class="card help-links">
       <h3>Help</h3>
       <p class="muted small">How to play, family circle safety and how to contact us.</p>
-      <div class="row"><a class="btn secondary" href="support" target="_blank" rel="noopener">Help and contact</a><a class="btn quiet" href="privacy" target="_blank" rel="noopener">Privacy</a></div>
+      <div class="row"><a class="btn secondary" href="support" target="_blank" rel="noopener">Help and contact</a><a class="btn quiet" href="privacy" target="_blank" rel="noopener">Privacy</a><a class="btn quiet" href="terms" target="_blank" rel="noopener">Terms</a></div>
     </div>`;
   wireFamilyQuestions();
   if (ACCOUNTS_ON) wireAccountCard();

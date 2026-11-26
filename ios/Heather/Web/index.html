@@ -332,6 +332,8 @@ label.lab { font-weight: 700; display: block; margin-bottom: 6px; }
 .dialog { background: var(--surface); border-radius: 22px; padding: 22px; max-width: 520px; width: 100%; max-height: 90%; overflow: auto; display: flex; flex-direction: column; gap: 14px; border: 3px solid var(--accent); }
 .dialog ul { margin: 0; padding-left: 1.2em; display: flex; flex-direction: column; gap: 8px; }
 .dialog > * { flex-shrink: 0; }
+.agree { display: flex; gap: 12px; align-items: flex-start; font-size: 1rem; line-height: 1.4; padding: 12px; border: 2px solid var(--line); border-radius: 14px; cursor: pointer; }
+.agree input { width: 28px; height: 28px; flex: none; margin: 0; accent-color: var(--accent); }
 .dialog .center { text-align: center; display: grid; place-items: center; gap: 8px; }
 .toast { position: fixed; left: 50%; bottom: 110px; transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 14px 22px; border-radius: 16px; font-weight: 700; z-index: 20; max-width: calc(100% - 32px); text-align: center; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -1356,7 +1358,7 @@ function renderWelcome() {
       <button class="btn block big fb" id="w-fb">${ICON.fb} Continue with Facebook</button>
       <p class="muted small welcome-note">Keeps your garden safe on any phone or tablet. We never post for you.</p>
       <button class="btn block quiet" id="w-guest">Play without signing up</button>
-      <p class="muted small welcome-note"><a href="privacy" target="_blank" rel="noopener">Privacy</a></p>
+      <p class="muted small welcome-note"><a href="privacy" target="_blank" rel="noopener">Privacy</a> · <a href="terms" target="_blank" rel="noopener">Terms</a></p>
     </div>`;
     document.getElementById("w-fb").onclick = e => signInWithFacebook(e.currentTarget);
     document.getElementById("w-guest").onclick = () => { welcomeStep = "name"; renderWelcome(); };
@@ -3113,6 +3115,33 @@ function familyQs() {
   return shared.concat(S.familyQs || []);
 }
 
+/* ---- Family circle rules: everyone ticks "I agree" once (App Store 1.2) ---- */
+function circleRulesHTML(id) {
+  if (S.termsAgreed) return "";
+  return `<label class="agree" for="${id}"><input type="checkbox" id="${id}"><span>I agree to the <a href="terms#circle-rules" target="_blank" rel="noopener">family circle rules</a>: be kind, and share nothing hurtful, rude or private about anyone. Anything abusive is removed, along with the person who posted it.</span></label>`;
+}
+function circleRulesOk(o, id, msgEl) {
+  if (S.termsAgreed) return true;
+  const box = o.querySelector("#" + id);
+  if (box && box.checked) return true;
+  msgEl.textContent = "Please tick the box to agree to the family circle rules.";
+  if (box) box.focus();
+  return false;
+}
+function circleRulesAgreed() { if (!S.termsAgreed) { S.termsAgreed = dayKey(); save(); } }
+function requireCircleRules(next) {
+  if (S.termsAgreed) return next();
+  dialog(`<div class="center">${bean("calm", 84)}</div>
+    <h2 style="text-align:center">Our family circle rules</h2>
+    <p>Family circles are for kind, happy memories. Before you add one, please agree to the rules.</p>
+    ${circleRulesHTML("cr-ok")}
+    <p class="msg" id="cr-msg" role="status" aria-live="polite"></p>
+    <button class="btn block big" id="cr-go">Continue</button>
+    <button class="btn block quiet" data-close>Not now</button>`, o => {
+      o.querySelector("#cr-go").onclick = () => { if (!circleRulesOk(o, "cr-ok", o.querySelector("#cr-msg"))) return; circleRulesAgreed(); o.remove(); next(); };
+    });
+}
+
 /* ---- Start a circle ---- */
 function openStartCircle(after) {
   dialog(`<div class="center">${bean("cheer", 84)}</div>
@@ -3120,14 +3149,16 @@ function openStartCircle(after) {
     <p>Invite your family with a link. Anyone in the circle can add a memory question, like "What was the name of our first dog?", and everyone else gets to try it in Memory Lane.</p>
     <label class="lab" for="fc-fam">Family name</label><input type="text" id="fc-fam" maxlength="60" value="${esc(possessive(S.name))} family">
     <label class="lab" for="fc-me">Your name</label><input type="text" id="fc-me" maxlength="40" value="${esc(S.name)}">
+    ${circleRulesHTML("fc-ok")}
     <p class="msg" id="fc-msg" role="status" aria-live="polite"></p>
     <button class="btn block big" id="fc-go">Start our circle</button>
     <button class="btn block quiet" data-close>Not now</button>`, o => {
       o.querySelector("#fc-go").onclick = async () => {
         const fam = o.querySelector("#fc-fam").value.trim(), me = o.querySelector("#fc-me").value.trim(), b = o.querySelector("#fc-go"), m = o.querySelector("#fc-msg");
         if (!fam || !me) { m.textContent = CIRCLE_ERRORS.name_required; return; }
+        if (!circleRulesOk(o, "fc-ok", m)) return;
         b.disabled = true; b.textContent = "Starting…"; m.textContent = "";
-        try { await circleStart(fam, me); o.remove(); smallWin(`Started the ${S.circle.family_name} circle`); circleRerender(); (after || (() => openInvite("family")))(); }
+        try { await circleStart(fam, me); circleRulesAgreed(); o.remove(); smallWin(`Started the ${S.circle.family_name} circle`); circleRerender(); (after || (() => openInvite("family")))(); }
         catch (e) { m.textContent = e.message; b.disabled = false; b.textContent = "Start our circle"; }
       };
     });
@@ -3167,6 +3198,7 @@ async function openJoin(code) {
     <p style="text-align:center">You've been invited to a family circle on Heather. Add memories about your family, and try the ones everyone else adds in Memory Lane.</p>
     ${switching ? `<p class="share-tip">You're in ${esc(S.circle.family_name)} on this device now. Joining will move you to ${esc(preview.family_name)}.</p>` : ""}
     <label class="lab" for="fj-me">Your name</label><input type="text" id="fj-me" maxlength="40" value="${S.started ? esc(S.name) : ""}" placeholder="Sarah">
+    ${circleRulesHTML("fj-ok")}
     <p class="msg" id="fj-msg" role="status" aria-live="polite"></p>
     <button class="btn block big" id="fj-go">Join the circle</button>
     <button class="btn block quiet" data-close id="fj-no">Not now</button>`, o => {
@@ -3174,10 +3206,11 @@ async function openJoin(code) {
       o.querySelector("#fj-go").onclick = async () => {
         const me = o.querySelector("#fj-me").value.trim(), b = o.querySelector("#fj-go"), m = o.querySelector("#fj-msg");
         if (!me) { m.textContent = CIRCLE_ERRORS.name_required; return; }
+        if (!circleRulesOk(o, "fj-ok", m)) return;
         b.disabled = true; b.textContent = "Joining…"; m.textContent = "";
         try {
           if (switching) { try { await circleCall("leave_family", { p_token: S.circle.token }); } catch (e) { /* already gone */ } S.circle = null; }
-          await circleJoin(code, me);
+          await circleJoin(code, me); circleRulesAgreed();
           if (!S.started) S.name = me;
           save(); clearJoinFromUrl(); o.remove();
           joinedNext();
@@ -3507,7 +3540,8 @@ function memoryMenu(qid) {
 }
 /* ---- Add a memory, one step at a time ---- */
 const MEMORY_IDEAS = ["What was the name of our first dog?", "Where did you and Grandpa get married?", "What street did you grow up on?", "What was your very first job?", "Where did we go on holiday every summer?", "What song did you dance to at your wedding?", "What colour was our first car?", "What was your favourite thing to bake for us?"];
-function openAddMemory() {
+function openAddMemory() { requireCircleRules(openAddMemoryNow); }
+function openAddMemoryNow() {
   const M = { q: "", a: "", w: ["", "", ""], n: "", step: 0 };
   const steps = ["question", "answer", "wrong", "note"];
   dialog(`<div id="am-body"></div>`, o => {
@@ -3584,164 +3618,7 @@ function familyHomeCard() {
   </button>`;
 }
 
-/* ---------- Accounts: sign in with Facebook (Supabase Auth); the garden is saved to the account ----------
-   Facebook sends people back with tokens in the address (#access_token=…). We keep the session in
-   localStorage ("heather-auth"), save the whole garden (S) to public.profiles (each person can only
-   read and write their own row) and pull it back on any device they sign in on. */
-var AUTH = null, cloudTimer = null, cloudBusy = false;
-const AUTH_KEY = "heather-auth";
-try { AUTH = JSON.parse(localStorage.getItem(AUTH_KEY) || "null"); } catch (e) { AUTH = null; }
-function authSave() { try { AUTH ? localStorage.setItem(AUTH_KEY, JSON.stringify(AUTH)) : localStorage.removeItem(AUTH_KEY); } catch (e) { /* ignore */ } }
-function signedIn() { return !!(AUTH && AUTH.access_token); }
-function firstName(full) { return String(full || "").trim().split(/\s+/)[0].slice(0, 40); }
-
-async function facebookReady() {
-  try {
-    const r = await fetch(`${SUPA_URL}/auth/v1/settings`, { headers: { apikey: SUPA_KEY } });
-    const d = await r.json();
-    return !!(d.external && d.external.facebook);
-  } catch (e) { return null; }   // null = couldn't check (offline)
-}
-async function signInWithFacebook(btn) {
-  if (btn) { btn.disabled = true; btn.dataset.label = btn.innerHTML; btn.textContent = "Opening Facebook…"; }
-  const ok = await facebookReady();
-  if (ok !== true) {
-    if (btn) { btn.disabled = false; btn.innerHTML = btn.dataset.label; }
-    toast(ok === false ? "Facebook sign-in is almost ready. You can play now and save your garden to Facebook later in Settings." : "Couldn't reach Facebook. Check the internet connection and try again.");
-    return false;
-  }
-  S.signupPending = true; save();
-  location.href = `${SUPA_URL}/auth/v1/authorize?provider=facebook&scopes=${encodeURIComponent("email public_profile")}&redirect_to=${encodeURIComponent(appLink())}`;
-  return true;
-}
-/* Called once at start-up, before the first screen draws */
-function authFromUrl() {
-  const h = new URLSearchParams(location.hash.replace(/^#/, "")), q = new URLSearchParams(location.search);
-  const clear = () => { try { const u = new URL(location.href); ["error", "error_code", "error_description"].forEach(k => u.searchParams.delete(k)); history.replaceState(null, "", u.pathname + u.search); } catch (e) { /* ignore */ } };
-  if (h.get("access_token")) {
-    AUTH = { access_token: h.get("access_token"), refresh_token: h.get("refresh_token"), expires_at: Math.floor(Date.now() / 1000) + Number(h.get("expires_in") || 3600) };
-    authSave(); clear(); return "signed_in";
-  }
-  const err = h.get("error_description") || q.get("error_description") || h.get("error") || q.get("error");
-  if (err) { clear(); S.signupPending = false; save(); return "error"; }
-  return null;
-}
-async function authToken() {
-  if (!signedIn()) return null;
-  if ((AUTH.expires_at || 0) - 60 > Date.now() / 1000) return AUTH.access_token;
-  const r = await fetch(`${SUPA_URL}/auth/v1/token?grant_type=refresh_token`, { method: "POST", headers: { apikey: SUPA_KEY, "Content-Type": "application/json" }, body: JSON.stringify({ refresh_token: AUTH.refresh_token }) });
-  if (r.status === 400 || r.status === 401 || r.status === 403) { AUTH = null; authSave(); return null; }
-  if (!r.ok) throw new Error("offline");
-  const d = await r.json();
-  AUTH = Object.assign(AUTH, { access_token: d.access_token, refresh_token: d.refresh_token, expires_at: d.expires_at || Math.floor(Date.now() / 1000) + (d.expires_in || 3600) });
-  authSave(); return AUTH.access_token;
-}
-async function authFetch(path, opts = {}) {
-  const tok = await authToken();
-  if (!tok) { const e = new Error("signed_out"); e.code = "signed_out"; throw e; }
-  return fetch(SUPA_URL + path, Object.assign({}, opts, { headers: Object.assign({ apikey: SUPA_KEY, Authorization: "Bearer " + tok, "Content-Type": "application/json" }, opts.headers || {}) }));
-}
-function normalizeState(o) {
-  const s = Object.assign(freshState(), o || {});
-  s.settings = Object.assign(freshState().settings, s.settings || {});
-  s.garden = Object.assign(freshState().garden, s.garden || {});
-  s.word = Object.assign(freshState().word, s.word || {});
-  s.loop = Object.assign(freshState().loop, s.loop || {});
-  s.days = s.days || {}; for (const [k, r] of Object.entries(s.days)) r.k = k;
-  s.trophies = s.trophies || {};
-  return s;
-}
-function cloudState() { const c = JSON.parse(JSON.stringify(S)); delete c.signupPending; return c; }
-function daysPlayed(s) { return s && s.started ? Object.keys(s.days || {}).length : -1; }
-
-/* After Facebook sends someone back: learn who they are, then use whichever garden has more in it */
-async function cloudSignInFinish() {
-  const ur = await authFetch("/auth/v1/user");
-  if (!ur.ok) throw new Error("user");
-  const u = await ur.json(), md = u.user_metadata || {};
-  AUTH.user = { id: u.id, email: u.email || md.email || null, first: firstName(md.full_name || md.name), provider: (u.app_metadata && u.app_metadata.provider) || "facebook" };
-  authSave();
-  const pr = await authFetch(`/rest/v1/profiles?id=eq.${encodeURIComponent(u.id)}&select=state`);
-  const rows = pr.ok ? await pr.json() : [];
-  const remote = rows[0] && rows[0].state;
-  let result = "new";
-  if (remote && daysPlayed(remote) >= daysPlayed(S) && remote.started) {
-    const keepInvite = S.invitedBy, keepCircle = S.circle;
-    S = normalizeState(remote);
-    if (!S.invitedBy && keepInvite) S.invitedBy = keepInvite;
-    if (!S.circle && keepCircle) S.circle = keepCircle;
-    result = "restored";
-  }
-  if (!S.name && AUTH.user.first) S.name = AUTH.user.first;
-  S.signupPending = false;
-  try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* ignore */ }
-  await cloudPush();
-  return result;
-}
-function cloudPushSoon() {
-  if (!signedIn() || !AUTH.user) return;
-  clearTimeout(cloudTimer);
-  cloudTimer = setTimeout(cloudPush, 4000);
-}
-async function cloudPush(keepalive) {
-  if (!signedIn() || !AUTH.user || cloudBusy) return;
-  clearTimeout(cloudTimer); cloudBusy = true;
-  try {
-    await authFetch("/rest/v1/profiles?on_conflict=id", {
-      method: "POST", keepalive: !!keepalive,
-      headers: { Prefer: "resolution=merge-duplicates,return=minimal" },
-      body: JSON.stringify({ id: AUTH.user.id, name: (S.name || AUTH.user.first || "").slice(0, 60) || null, email: AUTH.user.email, provider: AUTH.user.provider, invited_by: S.invitedBy || null, state: cloudState(), updated_at: new Date().toISOString() })
-    });
-  } catch (e) { /* offline: the next save tries again */ }
-  finally { cloudBusy = false; }
-}
-document.addEventListener("visibilitychange", () => { if (document.hidden) cloudPush(true); });
-
-function signOut() {
-  dialog(`<h2>Sign out?</h2><p>Your garden stays on this device and in your account. Sign in with Facebook again any time to pick up where you left off.</p>
-    <button class="btn block" id="so-yes">Sign out</button><button class="btn block quiet" data-close>Cancel</button>`, o => {
-      o.querySelector("#so-yes").onclick = async () => { await cloudPush(); AUTH = null; authSave(); o.remove(); toast("Signed out."); renderSettings(); };
-    });
-}
-function deleteAccount() {
-  dialog(`<h2>Delete your account?</h2><p>This deletes your account and the garden saved to it. You'll also leave your family circle. It can't be undone.</p>
-    <button class="btn block" style="background:var(--heart);border-color:var(--heart)" id="da-yes">Delete my account</button><button class="btn block quiet" data-close>Keep my account</button>`, o => {
-      o.querySelector("#da-yes").onclick = async () => {
-        const b = o.querySelector("#da-yes"); b.disabled = true; b.textContent = "Deleting…";
-        try {
-          if (inCircle()) { try { await circleCall("leave_family", { p_token: S.circle.token }); } catch (e) { /* already gone */ } }
-          const r = await authFetch("/rest/v1/rpc/delete_my_account", { method: "POST", body: "{}" });
-          if (!r.ok) throw new Error("failed");
-          AUTH = null; authSave();
-          S = freshState(); try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* ignore */ }
-          o.remove(); applySettings(); go("welcome"); toast("Your account has been deleted.");
-        } catch (e) { b.disabled = false; b.textContent = "Delete my account"; toast("Couldn't delete right now. Check the internet connection and try again."); }
-      };
-    });
-}
-function accountCard() {
-  if (signedIn() && AUTH.user) {
-    return `<div class="card" id="account-card">
-      <h3>Your account</h3>
-      <p>Signed in with Facebook as <strong>${esc(AUTH.user.first || S.name)}</strong>. Your garden is saved to your account, so you can pick up on any phone or tablet.</p>
-      <div class="row"><button class="btn quiet" id="acc-out">Sign out</button><button class="btn quiet" id="acc-del">Delete my account</button></div>
-      <p class="muted small"><a href="privacy" target="_blank" rel="noopener">Privacy</a></p>
-    </div>`;
-  }
-  return `<div class="card" id="account-card">
-    <h3>Save your garden</h3>
-    <p>Right now your garden lives only in this browser. Sign in with Facebook to keep it safe and play on any device.</p>
-    <button class="btn block fb" id="acc-fb">${ICON.fb} Continue with Facebook</button>
-    <p class="muted small"><a href="privacy" target="_blank" rel="noopener">Privacy</a> · We only get your name and email. We never post for you.</p>
-  </div>`;
-}
-function wireAccountCard() {
-  const $ = id => document.getElementById(id);
-  if ($("acc-fb")) $("acc-fb").onclick = () => signInWithFacebook($("acc-fb"));
-  if ($("acc-out")) $("acc-out").onclick = signOut;
-  if ($("acc-del")) $("acc-del").onclick = deleteAccount;
-}
-
+/* accounts: website only */ var AUTH = null; function signedIn() { return false; } function signInWithFacebook() {} function authFromUrl() { return null; } function cloudSignInFinish() { return Promise.resolve(null); } function cloudPushSoon() {} function cloudPush() { return Promise.resolve(); } function accountCard() { return ""; } function wireAccountCard() {}
 /* --- Memory Lane with interests, family questions and a two-player mode --- */
 function triviaMake(practice, players) {
   const r = gameRng("trivia", practice), n = players ? 6 : 5;
@@ -4343,235 +4220,7 @@ const SHARE_URL = APP_URL;
 const AD_SECONDS = 15;
 function fbShareUrl() { return "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(friendLink()); }
 
-/* ---------- Garden Club: the payment page (built, not switched on) ----------
-   Hidden until CLUB.on is true: nothing in the app links here yet. Preview it at
-   heather-delta.vercel.app/?club . Payments go through Stripe Payment Links (no card
-   details ever touch Heather): paste each plan's link below once it exists in Stripe.
-   Every plan starts with a free week: in Stripe, tick "Include a free trial" (7 days) on each link.
-   Set each link's "After payment" redirect to  https://heather-delta.vercel.app/?club=welcome&plan=<plan id>&session={CHECKOUT_SESSION_ID}
-   Family plan: the buyer gets a family pass link (database: club_passes). Up to 5 people who open it
-   get the Club free; more spots cost CLUB.extraSpot.price each. Extra-spot link redirect:
-   https://heather-delta.vercel.app/?club=spots&session={CHECKOUT_SESSION_ID} Before switching on, add a Stripe webhook that sets club_passes.active = false
-   when a Family subscription is cancelled (and checks the session id is real). */
-const CLUB = {
-  on: false,                       // true = show the Garden Club in Settings and in the "stuck" pop-up
-  currency: "CAD",
-  trialDays: 7,
-  plans: [
-    { id: "yearly",  name: "Yearly",  price: "$29.99", per: "a year",  note: "Just $2.50 a month", best: true, link: "" },
-    { id: "monthly", name: "Monthly", price: "$3.99",  per: "a month", note: "Stop any time", link: "" },
-    { id: "family",  name: "Family",  price: "$49.99", per: "a year",  note: "You and up to 5 people, with more spots if you need them", link: "" }
-  ],
-  extraSpot: { price: 7.99, per: "a year", max: 15, link: "" },   // Stripe Payment Link for 1 extra family pass spot (yearly, quantity adjustable)
-  manage: ""                       // Stripe customer portal link (cancel / change card)
-};
-function clubPlan(id) { return CLUB.plans.find(p => p.id === id) || CLUB.plans[0]; }
-function clubFromUrl() {
-  if (NATIVE) return null;   // App Store: no outside payment links in the iOS app
-  const q = new URLSearchParams(location.search), v = q.get("club");
-  if (v === null) return null;
-  try { const u = new URL(location.href); u.searchParams.delete("club"); u.searchParams.delete("plan"); u.searchParams.delete("session"); history.replaceState(null, "", u.pathname + u.search + u.hash); } catch (e) { /* ignore */ }
-  if (v === "spots") { S.spotsSession = (q.get("session") || "").slice(0, 200) || null; save(); return "spots"; }
-  if (v === "welcome") { S.member = true; S.memberSince = S.memberSince || dayKey(); S.memberPlan = clubPlan(q.get("plan")).id; if (q.get("session")) S.passSession = q.get("session").slice(0, 200); save(); return "welcome"; }
-  return "open";
-}
-const CLUB_TICK = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#D6F0DA" stroke="#2D6340" stroke-width="1.6"/><path d="m7 12.5 3.2 3.2L17 9" fill="none" stroke="#2D6340" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-let clubPick = "yearly";
-function renderClub() {
-  const member = !!S.member, plan = clubPlan(clubPick), mine = member ? clubPlan(S.memberPlan) : null;
-  document.getElementById("app").innerHTML = `
-    ${gameBar("settings", "Garden Club", "", "")}
-    <div class="club">
-      <div class="club-hero">
-        ${bean("cheer", 104)}
-        <h1>${member ? `You're in the Garden Club, ${esc(S.name)}!` : "Join the Garden Club"}</h1>
-        <p class="welcome-lead">${member ? "Thank you for helping Heather grow." : `Try it free for ${CLUB.trialDays === 7 ? "a week" : CLUB.trialDays + " days"}.`}</p>
-      </div>
-      <ul class="club-perks">
-        <li>${CLUB_TICK}<span><strong>No videos, ever.</strong></span></li>
-        <li>${CLUB_TICK}<span><strong>Never stuck.</strong> Out of moves in Flower Match? Extra moves are yours straight away.</span></li>
-        <li>${CLUB_TICK}<span><strong>Helps Heather grow.</strong> New games and puzzles keep coming.</span></li>
-      </ul>
-      ${member ? `
-        ${S.memberPlan === "family" ? familyPassCard() : ""}
-        <div class="card club-card">
-          ${S.memberPlan === "guest"
-            ? `<p>You're on <strong>${esc(S.passOwner || "your family")}</strong>'s family pass${S.memberSince ? ` since ${new Date(S.memberSince + "T12:00:00").toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" })}` : ""}. It's free for you.</p>
-               <button class="btn block quiet" id="pass-leave">Leave the family pass</button>`
-            : `<p>Your ${esc(mine.name.toLowerCase())} membership is active${S.memberSince ? ` since ${new Date(S.memberSince + "T12:00:00").toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" })}` : ""}.</p>
-               <button class="btn block secondary" id="club-manage">Change card or cancel</button>`}
-        </div>` : `
-        <div class="card club-card">
-          <h2 class="club-pick-h" id="club-pick-h">Choose a plan</h2>
-          <div class="club-plans" role="radiogroup" aria-labelledby="club-pick-h">
-            ${CLUB.plans.map(p => `<button class="club-plan${p.id === plan.id ? " on" : ""}" role="radio" aria-checked="${p.id === plan.id}" data-plan="${p.id}">
-                <span class="club-dot" aria-hidden="true"></span>
-                <span class="club-plan-txt"><span><strong>${p.name}</strong>${p.best ? ` <em class="club-best">Best value</em>` : ""}</span><span class="muted">${esc(p.note)}</span></span>
-                <span class="club-plan-price"><b>${p.price}</b><span class="muted">${p.per}</span></span>
-              </button>`).join("")}
-          </div>
-          <button class="btn block big" id="club-join">Start my free week</button>
-          <p class="muted small club-fine">Free for ${CLUB.trialDays} days, then ${plan.price} ${plan.per} (${CLUB.currency}). Cancel before then and you won't pay anything. You'll pay on Stripe's secure page; Heather never sees your card number.</p>
-        </div>`}
-      <p class="muted small" style="text-align:center"><a href="privacy" target="_blank" rel="noopener">Privacy</a></p>
-    </div>`;
-  document.querySelectorAll("[data-plan]").forEach(b => b.onclick = () => { clubPick = b.dataset.plan; renderClub(); const f = document.querySelector(`[data-plan="${clubPick}"]`); if (f) f.focus(); });
-  const j = document.getElementById("club-join");
-  if (j) j.onclick = () => { if (plan.link) location.href = plan.link; else toast("Payments aren't switched on yet. Check back soon!"); };
-  const m = document.getElementById("club-manage");
-  if (m) m.onclick = () => { if (CLUB.manage) window.open(CLUB.manage, "_blank", "noopener"); else toast("Membership settings are coming soon."); };
-  wireFamilyPass();
-}
-
-/* ---------- Family pass: the Family plan buyer shares a link; up to 4 people get the Club free ---------- */
-function deviceId() {
-  if (!S.deviceId) {
-    const r = crypto.getRandomValues(new Uint8Array(18));
-    S.deviceId = Array.from(r, b => b.toString(16).padStart(2, "0")).join(""); save();
-  }
-  return S.deviceId;
-}
-function passLink(code) { return `${appLink()}?pass=${encodeURIComponent(code)}&from=${encodeURIComponent(myName())}`; }
-function passCodeFromUrl() { return (new URLSearchParams(location.search).get("pass") || "").replace(/[^A-Za-z0-9]/g, "").toUpperCase(); }
-function clearPassFromUrl() { try { const u = new URL(location.href); u.searchParams.delete("pass"); history.replaceState(null, "", u.pathname + u.search + u.hash); } catch (e) { /* ignore */ } }
-let passBusy = null, passErr = "", passSyncedAt = 0;
-function loadFamilyPass() {
-  if (passBusy) return passBusy;
-  passBusy = (async () => {
-    try {
-      if (!(S.familyPass && S.familyPass.owner)) {
-        const r = await circleCall("create_family_pass", { p_owner_name: myName() || "Your family", p_session: S.passSession || null });
-        S.familyPass = { code: r.code, owner: r.owner_token, seats: r.seats, members: [] }; save();
-      }
-      const g = await circleCall("get_family_pass", { p_owner: S.familyPass.owner });
-      Object.assign(S.familyPass, { code: g.code, seats: g.seats, active: g.active, members: g.members || [] }); save();
-      passErr = ""; passSyncedAt = Date.now();
-    } catch (e) { passErr = e.code === "pass_exists" ? "This purchase already has a family pass on another device. Open the Garden Club there to share it." : e.message; }
-    finally { passBusy = null; }
-    if (view === "club") renderClub();
-  })();
-  return passBusy;
-}
-function familyPassCard() {
-  const P = S.familyPass;
-  if (!P || !P.code) return `<div class="card club-card club-pass"><h2>Your family pass</h2>
-      <p class="msg" role="status">${passErr ? esc(passErr) : "Getting your family pass ready…"}</p>
-      ${passErr ? `<button class="btn block secondary" id="pass-retry">Try again</button>` : ""}</div>`;
-  const ms = P.members || [], seats = P.seats || 5, left = Math.max(0, seats - ms.length), canAdd = seats < CLUB.extraSpot.max;
-  return `<div class="card club-card club-pass">
-      <h2>Your family pass</h2>
-      <p>Send this link to up to ${seats} people. When they open it, they get the Garden Club free, as part of your plan.</p>
-      <p class="club-seats"><strong>${ms.length} of ${seats}</strong> spots used${left ? ` · ${left} left` : ""}</p>
-      ${ms.length ? `<ul class="club-pass-list">${ms.map(m => `<li><span>${esc(m.name)}</span><button class="btn quiet" data-passrem="${esc(m.id)}" data-passname="${esc(m.name)}" aria-label="Take ${esc(m.name)} off your family pass">Remove</button></li>`).join("")}</ul>` : ""}
-      ${left ? `<button class="btn block big" id="pass-share">${SHARE_ICON.share} Share the pass</button>`
-             : `<p class="muted">Your pass is full. ${canAdd ? "Add more spots, or remove someone to free one." : "Remove someone to free a spot."}</p>`}
-      ${canAdd ? `<button class="btn block ${left ? "quiet" : "big"}" id="pass-more">${left ? "Need more spots?" : "Add more spots"}</button>` : ""}
-      ${passErr ? `<p class="msg" role="status">${esc(passErr)}</p>` : ""}
-    </div>`;
-}
-function wireFamilyPass() {
-  if (view !== "club") return;
-  if (S.member && S.memberPlan === "family" && !passBusy && Date.now() - passSyncedAt > 30000) loadFamilyPass();
-  const rt = document.getElementById("pass-retry"); if (rt) rt.onclick = () => { passErr = ""; renderClub(); loadFamilyPass(); };
-  const sh = document.getElementById("pass-share"); if (sh) sh.onclick = () => openInvite("pass");
-  const mo = document.getElementById("pass-more"); if (mo) mo.onclick = openAddSpots;
-  document.querySelectorAll("[data-passrem]").forEach(b => b.onclick = () => {
-    const nm = b.dataset.passname;
-    dialog(`<h2>Take ${esc(nm)} off your family pass?</h2><p>${esc(nm)} will go back to the free version of Heather, and the spot will be free for someone else.</p>
-      <button class="btn block" id="pr-yes">Remove ${esc(nm)}</button><button class="btn block quiet" data-close>Keep ${esc(nm)}</button>`, o => {
-      o.querySelector("#pr-yes").onclick = async () => {
-        try { await circleCall("remove_from_pass", { p_owner: S.familyPass.owner, p_member_id: b.dataset.passrem }); o.remove(); toast(`${nm} is off your family pass.`); passSyncedAt = 0; loadFamilyPass(); }
-        catch (e) { o.remove(); toast(e.message); }
-      };
-    });
-  });
-  const lv = document.getElementById("pass-leave");
-  if (lv) lv.onclick = () => dialog(`<h2>Leave the family pass?</h2><p>You'll go back to the free version of Heather, and ${esc(S.passOwner || "your family member")} gets the spot back.</p>
-      <button class="btn block" id="pl-yes">Leave the pass</button><button class="btn block quiet" data-close>Stay</button>`, o => {
-      o.querySelector("#pl-yes").onclick = async () => {
-        try { await circleCall("leave_pass", { p_code: S.passCode, p_device: deviceId() }); } catch (e) { /* still leave on this device */ }
-        endGuestPass(); o.remove(); toast("You've left the family pass."); go("settings");
-      };
-    });
-}
-function money(n) { return "$" + n.toFixed(2); }
-function openAddSpots() {
-  const P = S.familyPass || {}, X = CLUB.extraSpot, room = Math.max(0, X.max - (P.seats || 5));
-  if (!room) { toast("Your pass has the most spots it can have."); return; }
-  let n = 1;
-  dialog(`<div class="center">${bean("cheer", 84)}</div>
-    <h2 style="text-align:center">Add more spots</h2>
-    <p style="text-align:center">Each extra person is <strong>${money(X.price)} ${X.per}</strong>, added to your Family plan.</p>
-    <div class="spot-step" role="group" aria-label="How many extra spots">
-      <button class="btn secondary spot-btn" id="sp-minus" aria-label="One fewer spot">−</button>
-      <span class="spot-n" id="sp-n" aria-live="polite"></span>
-      <button class="btn secondary spot-btn" id="sp-plus" aria-label="One more spot">+</button>
-    </div>
-    <p class="spot-total" id="sp-total"></p>
-    <button class="btn block big" id="sp-go">Continue to payment</button>
-    <p class="muted small" style="text-align:center">You'll pay on Stripe's secure page.</p>
-    <button class="btn block quiet" data-close>Not now</button>`, o => {
-    const draw = () => {
-      o.querySelector("#sp-n").textContent = `${n} more ${n === 1 ? "spot" : "spots"}`;
-      o.querySelector("#sp-total").innerHTML = `<strong>${money(X.price * n)}</strong> ${X.per} · ${(P.seats || 5) + n} spots in all`;
-      o.querySelector("#sp-minus").disabled = n <= 1; o.querySelector("#sp-plus").disabled = n >= room;
-    };
-    o.querySelector("#sp-minus").onclick = () => { if (n > 1) { n--; draw(); } };
-    o.querySelector("#sp-plus").onclick = () => { if (n < room) { n++; draw(); } };
-    o.querySelector("#sp-go").onclick = () => {
-      if (!X.link) { toast("Payments aren't switched on yet. Check back soon!"); return; }
-      S.pendingSpots = n; save();
-      location.href = X.link + (X.link.includes("?") ? "&" : "?") + "client_reference_id=" + encodeURIComponent(P.code || "");
-    };
-    draw();
-  });
-}
-async function finishAddSpots() {
-  const n = S.pendingSpots, sess = S.spotsSession;
-  S.pendingSpots = null; S.spotsSession = null; save();
-  if (!n || !(S.familyPass && S.familyPass.owner)) return;
-  try {
-    const r = await circleCall("add_pass_seats", { p_owner: S.familyPass.owner, p_count: n, p_session: sess });
-    S.familyPass.seats = r.seats; save(); passSyncedAt = 0;
-    toast(`Added ${n} ${n === 1 ? "spot" : "spots"}. Your pass now has ${r.seats}.`);
-  } catch (e) { toast(e.message); }
-  if (view === "club") renderClub();
-}
-function endGuestPass() { S.member = false; S.memberPlan = null; S.passCode = null; S.passOwner = null; S.memberSince = null; save(); }
-async function openPassClaim(code) {
-  clearPassFromUrl();
-  if (NATIVE || !code) return;
-  if (S.familyPass && S.familyPass.code === code) { toast("That's your own family pass. Share it with your family!"); return; }
-  if (S.memberPlan === "guest" && S.passCode === code) { toast(`You're already on ${S.passOwner || "this"} family pass.`); return; }
-  if (S.member && S.memberPlan !== "guest") { toast("You're already in the Garden Club."); return; }
-  let pv;
-  try { pv = await circleCall("pass_preview", { p_code: code }); }
-  catch (e) { dialog(`<h2>Family pass</h2><p>${esc(e.message)}</p><button class="btn block" data-close>OK</button>`); return; }
-  if (!pv.active) { dialog(`<h2>Family pass</h2><p>${esc(CIRCLE_ERRORS.pass_inactive)}</p><button class="btn block" data-close>OK</button>`); return; }
-  const owner = pv.owner_name;
-  dialog(`<div class="center">${bean("cheer", 84)}</div>
-    <h2 style="text-align:center">${esc(owner)} shared the Garden Club with you</h2>
-    <p style="text-align:center">Join ${esc(owner)}'s family pass and play Heather with no videos. It's free for you.</p>
-    ${pv.seats_left > 0 ? "" : `<p class="share-tip">This pass looks full. If you were on it before, you can still join.</p>`}
-    <label class="lab" for="pc-me">Your name</label><input type="text" id="pc-me" maxlength="40" value="${S.started ? esc(S.name) : ""}" placeholder="Sarah">
-    <p class="msg" id="pc-msg" role="status" aria-live="polite"></p>
-    <button class="btn block big" id="pc-go">Join for free</button>
-    <button class="btn block quiet" data-close>Not now</button>`, o => {
-    o.querySelector("#pc-go").onclick = async () => {
-      const me = o.querySelector("#pc-me").value.trim(), b = o.querySelector("#pc-go"), m = o.querySelector("#pc-msg");
-      if (!me) { m.textContent = CIRCLE_ERRORS.name_required; return; }
-      b.disabled = true; b.textContent = "Joining…"; m.textContent = "";
-      try {
-        await circleCall("claim_family_pass", { p_code: code, p_device: deviceId(), p_name: me });
-        Object.assign(S, { member: true, memberPlan: "guest", passCode: code, passOwner: owner, memberSince: dayKey(), passChecked: Date.now() });
-        if (!S.started && !S.name) S.name = me;
-        save(); o.remove(); toast(`Welcome to the Garden Club! ${owner} has you covered.`);
-        if (view === "club" || view === "settings") go(view);
-      } catch (e) { m.textContent = e.message; b.disabled = false; b.textContent = "Join for free"; }
-    };
-  });
-}
-
+/* club: website only */ var CLUB = { on: false, currency: "", trialDays: 0, plans: [], extraSpot: { price: 0, per: "", max: 0, link: "" }, manage: "" }; function clubFromUrl() { return null; } function renderClub() { go("settings"); } function deviceId() { return ""; } function passLink() { return ""; } function passCodeFromUrl() { return ""; } function finishAddSpots() {} function endGuestPass() {} function openPassClaim() {}
 function offerRescue({ title, text, reward, grant, again, leave }) {
   const give = () => { S.rescues = (S.rescues || 0) + 1; save(); grant(); };
   dialog(`<div class="center">${bean("calm", 84)}<h2>${title}</h2><p>${text}</p>
@@ -4591,164 +4240,8 @@ function offerRescue({ title, text, reward, grant, again, leave }) {
       o.querySelector("#rs-leave").onclick = () => { o.remove(); leave(); };
     }, false);
 }
-function playVideo(reward, done) {
-  let left = AD_SECONDS, timer = null;
-  dialog(`<div class="ad-box" aria-live="polite">
-      <div class="ad-screen">${bean("happy", 90)}<p><strong>Video ad</strong></p><p class="small">This is a placeholder. A real short video will play here later.</p></div>
-      <div class="bar"><span id="ad-bar" style="width:0%"></span></div>
-      <p id="ad-left" style="text-align:center;font-weight:700">Your ${reward} in ${left} seconds</p>
-    </div>
-    <button class="btn block" id="ad-done" disabled>Collect ${reward}</button>`, o => {
-      const btn = o.querySelector("#ad-done");
-      timer = setInterval(() => {
-        left--;
-        const bar = o.querySelector("#ad-bar"), lab = o.querySelector("#ad-left");
-        if (bar) bar.style.width = (100 * (AD_SECONDS - left) / AD_SECONDS) + "%";
-        if (lab) lab.textContent = left > 0 ? `Your ${reward} in ${left} second${left === 1 ? "" : "s"}` : "Thanks for watching!";
-        if (left <= 0) { clearInterval(timer); btn.disabled = false; btn.focus(); sfx.good(); }
-      }, 1000);
-      btn.onclick = () => { clearInterval(timer); o.remove(); done(); };
-    }, false);
-}
-
-/* ---------- Garden Loop: wheelbarrow yard + flower pot queue ----------
-   Pots wait in one long line on the winding garden path. Wheelbarrows are jammed in the
-   yard; each points one way and can only roll out if nothing is in its way. A barrow that
-   rolls out parks at the potting bench. Pots at the front of the line hop into a parked
-   barrow of their colour (3 pots fill a barrow, which then leaves). If every bench spot
-   is full and the front pot has no barrow, the level is lost. */
-const KIND_COLORS = ["#E5484D", "#F5B82E", "#3FA34D", "#3B82D6", "#9B5DE5", "#F07C2A"];
-const KIND_DARK = ["#8E1F25", "#9A6200", "#1D5E27", "#174A8A", "#4E2483", "#8F3E08"];
-const DIRS = { u: [-1, 0], d: [1, 0], l: [0, -1], r: [0, 1] };
-const EXTRA_SPOTS = 2;
-
-/* --- pure rules: shared by the game, the level maker and the hint --- */
-function gyOcc(s) { const g = {}; for (const b of s.yard) g[b.r + "," + b.c] = b; return g; }
-function gyFree(s, b, occ) {
-  occ = occ || gyOcc(s); const [dr, dc] = DIRS[b.dir]; let r = b.r + dr, c = b.c + dc;
-  while (r >= 0 && r < s.h && c >= 0 && c < s.w) { if (occ[r + "," + c]) return false; r += dr; c += dc; }
-  return true;
-}
-function gyClone(s) { return { w: s.w, h: s.h, yard: s.yard.slice(), queue: s.queue, qi: s.qi, parked: s.parked.map(p => ({ kind: p.kind, load: p.load })), spots: s.spots }; }
-function gyBoard(s) {
-  while (s.qi < s.queue.length) {
-    const k = s.queue[s.qi], p = s.parked.find(x => x.kind === k && x.load < 3);
-    if (!p) break;
-    p.load++; s.qi++;
-    if (p.load === 3) s.parked.splice(s.parked.indexOf(p), 1);
-  }
-}
-function gyStatus(s) { if (s.qi >= s.queue.length) return "win"; if (s.parked.length >= s.spots) return "lose"; return "ok"; }
-function gyMove(s, id) {
-  const b = s.yard.find(x => x.id === id);
-  s.yard = s.yard.filter(x => x !== b);
-  s.parked.push({ kind: b.kind, load: 0 });
-  gyBoard(s);
-  return gyStatus(s);
-}
-function gyMovable(s) { const occ = gyOcc(s); return s.yard.filter(b => gyFree(s, b, occ)); }
-function gySolve(s0, budget = 25000) {
-  const seen = new Set(); let left = budget;
-  function dfs(s) {
-    if (--left <= 0) return null;
-    const key = s.yard.map(b => b.id).join(".") + "|" + s.qi + "|" + s.parked.map(p => p.kind + ":" + p.load).sort().join(",") + "|" + s.spots;
-    if (seen.has(key)) return null; seen.add(key);
-    const front = s.queue[s.qi];
-    const opts = gyMovable(s).sort((a, b) => (b.kind === front) - (a.kind === front));
-    for (const b of opts) {
-      const c = gyClone(s), r = gyMove(c, b.id);
-      if (r === "lose") continue;
-      if (r === "win") return [b.id];
-      const sub = dfs(c); if (sub) return [b.id, ...sub];
-    }
-    return null;
-  }
-  return dfs(gyClone(s0));
-}
-function gyRandomWins(s0, tries, r) {
-  let wins = 0;
-  for (let t = 0; t < tries; t++) {
-    const s = gyClone(s0); let res = "ok";
-    while (res === "ok") { const m = gyMovable(s); res = gyMove(s, m[Math.floor(r() * m.length)].id); }
-    if (res === "win") wins++;
-  }
-  return wins;
-}
-
-// a sensible-but-casual player: frees a barrow for the next pot that has nowhere to go, if it can
-function gyCasualWins(s0, tries, r) {
-  let wins = 0;
-  for (let t = 0; t < tries; t++) {
-    const s = gyClone(s0); let res = "ok";
-    while (res === "ok") {
-      const m = gyMovable(s), need = [];
-      const room = {}; s.parked.forEach(p => room[p.kind] = (room[p.kind] || 0) + 3 - p.load);
-      for (let i = s.qi; i < s.queue.length && need.length < 3; i++) { const k = s.queue[i]; if (room[k] > 0) room[k]--; else if (!need.includes(k)) need.push(k); }
-      let pick = null;
-      for (const k of need) { const c = m.filter(b => b.kind === k); if (c.length) { pick = c[Math.floor(r() * c.length)]; break; } }
-      if (!pick || r() < 0.15) pick = m[Math.floor(r() * m.length)];
-      res = gyMove(s, pick.id);
-    }
-    if (res === "win") wins++;
-  }
-  return wins;
-}
-/* --- level maker: every level is checked by the solver --- */
-const LOOP_CACHE = new Map();
-function loopSpec(n) {
-  if (LOOP_CACHE.has(n)) return LOOP_CACHE.get(n);
-  const colors = n <= 2 ? 3 : n <= 5 ? 4 : n <= 9 ? 5 : 6;
-  const perColor = n <= 3 ? 2 : n <= 15 ? 3 : 4;
-  const N = colors * perColor;
-  const side = Math.min(6, Math.max(4, Math.ceil(Math.sqrt(N / 0.72))));
-  let spots = n <= 6 ? 5 : n <= 21 ? 4 : 3;
-  const target = n <= 2 ? 30 : n <= 5 ? 26 : n <= 10 ? 21 : n <= 18 ? 16 : 12;
-  const drift = n <= 2 ? 0 : n <= 6 ? 1.5 : n <= 12 ? 3 : n <= 20 ? 4.5 : 6;
-  const splitP = n <= 3 ? 0 : n <= 10 ? 0.3 : 0.5;
-  let best = null;
-  for (let grow = 0; grow < 3 && !best; grow++, spots++) {
-    for (let attempt = 0; attempt < 24; attempt++) {
-      const r = rng(n * 7349 + attempt * 104729 + grow * 13);
-      const kinds = shuffle([0, 1, 2, 3, 4, 5], r).slice(0, colors);
-      const order = []; kinds.forEach(k => { for (let i = 0; i < perColor; i++) order.push(k); });
-      // place barrows one by one so each one's way out is clear when placed: the yard can never deadlock
-      const yard = [], occ = {}; let ok = true, id = 0;
-      for (const k of shuffle(order, r)) {
-        let placed = false;
-        for (let tries = 0; tries < 80 && !placed; tries++) {
-          const rr = Math.floor(r() * side), cc = Math.floor(r() * side);
-          if (occ[rr + "," + cc]) continue;
-          const b = { id: ++id, kind: k, r: rr, c: cc, dir: "udlr"[Math.floor(r() * 4)] };
-          if (!gyFree({ w: side, h: side, yard }, b, occ)) continue;
-          yard.push(b); occ[rr + "," + cc] = b; placed = true;
-        }
-        if (!placed) { ok = false; break; }
-      }
-      if (!ok) continue;
-      // the pot line follows one possible way of clearing the yard, then gets mixed up a little
-      const sim = { w: side, h: side, yard: yard.slice() }, exitOrder = [];
-      while (sim.yard.length) { const m = gyMovable(sim), b = m[Math.floor(r() * m.length)]; exitOrder.push(b); sim.yard = sim.yard.filter(x => x !== b); }
-      const pieces = [];
-      exitOrder.forEach((b, i) => {
-        const parts = r() < splitP ? (r() < 0.6 ? [2, 1] : [1, 1, 1]) : [3];
-        parts.forEach(len => pieces.push({ key: i + r() * drift, kinds: Array(len).fill(b.kind) }));
-      });
-      const queue = pieces.sort((a, b) => a.key - b.key).flatMap(p => p.kinds);
-      const s = { w: side, h: side, yard, queue, qi: 0, parked: [], spots };
-      const sol = gySolve(s, 20000); if (!sol) continue;
-      const wins = gyCasualWins(s, 30, rng(n * 17 + attempt));
-      const cand = { n, colors, side, spots, yard, queue, solution: sol, randomWins: wins };
-      if (!best || Math.abs(wins - target) < Math.abs(best.randomWins - target)) best = cand;
-      if (Math.abs(wins - target) <= 2) break;
-    }
-  }
-  LOOP_CACHE.set(n, best);
-  return best;
-}
-function loopGoal(spec) {
-  return `Load all ${spec.queue.length} flower pots into the ${spec.yard.length} wheelbarrows. Only ${spec.spots} barrows fit at the potting bench. If it's full and the next pot has no barrow, you lose.`;
-}
-
+/* video: website only */ function playVideo(reward, done) { done(); }
+/* loop1: website only */ let L = null; function stopLoop() {} function openLoopIntro() {}
 /* --- drawing helpers --- */
 function barrowSVG(b, scale = 1) {
   const c = KIND_COLORS[b.kind];
@@ -4760,221 +4253,7 @@ function barrowSVG(b, scale = 1) {
     <g transform="translate(-17,-46) scale(0.34)">${KIND_ART[b.kind]}</g>
   </g>`;
 }
-function potSVG(k, x, y, s = 1) {
-  return `<g transform="translate(${x},${y}) scale(${s})"><path d="M-12 4 L12 4 L9 20 L-9 20 Z" fill="#C46A3A" stroke="#7A3A18" stroke-width="2"/><rect x="-14" y="0" width="28" height="6" rx="2" fill="#D98250" stroke="#7A3A18" stroke-width="2"/><g transform="translate(-17,-32) scale(0.34)">${KIND_ART[k]}</g></g>`;
-}
-function yardTile(b) {
-  const arrow = { u: "M0 -26 L-10 -14 L10 -14 Z", d: "M0 26 L-10 14 L10 14 Z", l: "M-26 0 L-14 -10 L-14 10 Z", r: "M26 0 L14 -10 L14 10 Z" }[b.dir];
-  return `<rect x="-23" y="-23" width="46" height="46" rx="11" fill="${KIND_COLORS[b.kind]}" stroke="${KIND_DARK[b.kind]}" stroke-width="3"/>
-    <circle cx="0" cy="0" r="12.5" fill="#fff" opacity="0.92"/><g transform="translate(-10,-10) scale(0.2)">${KIND_ART[b.kind]}</g>
-    <path d="${arrow}" fill="#fff" stroke="${KIND_DARK[b.kind]}" stroke-width="1.5" stroke-linejoin="round"/>`;
-}
-/* the pot line snakes up from the bench: front pot first */
-const Q_SLOTS = (() => {
-  const pts = [], sp = 22, rows = [170, 128, 86, 44];
-  for (let x = 180; x <= 336; x += sp) pts.push([x, rows[0]]);
-  rows.slice(1).forEach((y, i) => { const xs = []; for (let x = 336; x >= 24; x -= sp) xs.push(x); (i % 2 === 0 ? xs : xs.reverse()).forEach(x => pts.push([x, y])); });
-  return pts;
-})();
-const BENCH_Y = 236, YARD_TOP = 300, CELL = 54;
-
-/* --- game screen --- */
-let L = null;
-function stopLoop() { if (L) L.dead = true; }
-function openLoopIntro(n) {
-  const spec = loopSpec(n);
-  dialog(`<div class="center lvl-pop"><p class="eyebrow">Garden Loop</p><h2 class="big">Level ${n}</h2>
-      <div class="hud-goals"><div class="gbadge" role="img" aria-label="${spec.queue.length} flower pots"><svg viewBox="-20 -36 40 60">${potSVG(4, 0, 0, 1)}</svg><span class="n">${spec.queue.length}</span></div>
-      <div class="gbadge" role="img" aria-label="${spec.spots} bench spots"><svg viewBox="-40 -52 80 76">${barrowSVG({ kind: 1, load: 0 }, 1)}</svg><span class="n">${spec.spots}</span></div></div>
-      <p>${esc(loopGoal(spec))}</p>${S.loop.stars[n] ? `<p class="muted">Your best: ${starText(S.loop.stars[n])}</p>` : ""}</div>
-    <button class="btn block big" id="go-loop">Play</button>
-    <button class="btn block secondary" id="how-loop">How to play</button>
-    <button class="btn block quiet" data-close>Not now</button>`, o => {
-      o.querySelector("#go-loop").onclick = () => { o.remove(); startLoop(n); if (!S.seenLoop3Help) { S.seenLoop3Help = true; save(); howToLoop(); } };
-      o.querySelector("#how-loop").onclick = () => { o.remove(); howToLoop(); };
-    });
-}
-function howToLoop() {
-  dialog(`<h2>How to play Garden Loop</h2><ul>
-    <li>Flower pots wait in a long line on the garden path. The pot nearest the bench is <strong>next</strong>.</li>
-    <li>Tap a wheelbarrow in the yard. It can only roll out the way its <strong>white arrow</strong> points, and only if nothing is in the way.</li>
-    <li>It parks at the <strong>potting bench</strong>. Pots from the front of the line hop into a barrow of the <strong>same flower</strong>. 3 pots fill a barrow, and then it leaves.</li>
-    <li>The bench only has a few spots. <strong>If the bench is full and the next pot has no barrow, you lose.</strong> Plan which barrow to free next!</li>
-    <li>Tap a <strong>+</strong> spot to open an extra spot. Stuck? Tap <strong>Hint</strong> or <strong>Restart</strong>. There's no timer.</li></ul>
-    <button class="btn block" data-close>Let's play</button>`);
-}
-function startLoop(n) {
-  const spec = loopSpec(n);
-  L = { n, spec, extra: 0, ended: false, busy: false, sent: 0, els: new Map(), hint: null,
-    state: { w: spec.side, h: spec.side, yard: spec.yard.map(b => ({ ...b })), queue: spec.queue, qi: 0, parked: [], spots: spec.spots } };
-  today().garden.plays++; save();
-  go("loop");
-}
-function yardXY(b) { const s = L.state, x0 = 180 - s.w * CELL / 2; return [x0 + b.c * CELL + CELL / 2, YARD_TOP + b.r * CELL + CELL / 2]; }
-function spotXY(i) { const total = L.spec.spots + EXTRA_SPOTS, sp = Math.min(58, 344 / total); return [180 + (i - (total - 1) / 2) * sp, BENCH_Y]; }
-function renderLoop() {
-  if (!L) return go("garden", { game: "loop" });
-  const s = L.state, H = YARD_TOP + s.h * CELL + 16;
-  document.getElementById("app").innerHTML = `
-    ${gameBar("garden", `Level ${L.n}`, "Garden Loop")}
-    <div class="hudp"><div class="hud-row">
-      <div class="hud-moves" aria-live="polite"><b id="space"></b><span>bench spots free</span></div>
-      <div class="hud-goals"><div class="gbadge" role="img" aria-label="Flower pots left"><svg viewBox="-20 -36 40 60">${potSVG(4, 0, 0, 1)}</svg><span class="n" id="loopleft"></span></div></div>
-      <div class="hud-bean">${bean("happy", 50, false)}</div>
-    </div></div>
-    <div class="loopwrap"><svg id="loopsvg" viewBox="0 0 360 ${H}" role="img" aria-label="Line of flower pots, potting bench and wheelbarrow yard">
-      <rect x="0" y="0" width="360" height="200" rx="18" fill="var(--grass-a)"/>
-      <path d="${Q_SLOTS.map((p, i) => (i ? "L" : "M") + p[0] + " " + p[1]).join(" ")}" fill="none" stroke="#E7CFA6" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M180 170 V206" stroke="#E7CFA6" stroke-width="26" stroke-linecap="round"/>
-      <g id="queue"></g>
-      <rect x="4" y="204" width="352" height="66" rx="14" fill="#8A6A4A"/>
-      <rect x="4" y="204" width="352" height="66" rx="14" fill="none" stroke="#5B3A22" stroke-width="2"/>
-      <g id="spots"></g>
-      <rect x="${180 - s.w * CELL / 2 - 8}" y="${YARD_TOP - 8}" width="${s.w * CELL + 16}" height="${s.h * CELL + 16}" rx="16" fill="#D9CDBB" stroke="#B5A48C" stroke-width="2"/>
-      ${[...Array(s.w * s.h)].map((_, i) => { const r = Math.floor(i / s.w), c = i % s.w, [x, y] = yardXY({ r, c }); return `<rect x="${x - 25}" y="${y - 25}" width="50" height="50" rx="9" fill="#E8DECF"/>`; }).join("")}
-      <g id="yard"></g>
-      <g id="flying"></g>
-    </svg></div>
-    <div class="gmsg" id="lmsg" role="status" aria-live="polite">Tap a wheelbarrow whose arrow has a clear way out.</div>
-    <div class="toolbar">${toolBtn("lhint", ICON.bulb, "Hint")}${toolBtn("lrestart", ICON.restart, "Restart")}${toolBtn("how", ICON.help, "How to play")}</div>`;
-  L.els = new Map();
-  document.getElementById("how").onclick = howToLoop;
-  document.getElementById("lhint").onclick = loopHint;
-  document.getElementById("lrestart").onclick = () => { if (!L.busy) startLoop(L.n); };
-  const svg = document.getElementById("loopsvg");
-  const act = e => { const g = e.target.closest("[data-bid],[data-plus]"); if (!g) return; if (g.dataset.plus) unlockSpot(); else tapBarrow(+g.dataset.bid); };
-  svg.addEventListener("click", act);
-  svg.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); act(e); } });
-  drawLoopAll();
-}
-function drawQueue() {
-  const s = L.state, left = s.queue.length - s.qi;
-  const vis = s.queue.slice(s.qi, s.qi + Q_SLOTS.length);
-  document.getElementById("queue").innerHTML = vis.map((k, i) => { const [x, y] = Q_SLOTS[i]; return `<circle cx="${x}" cy="${y}" r="${i === 0 ? 13 : 10.5}" fill="#fff" stroke="${i === 0 ? "#221A2B" : KIND_DARK[k]}" stroke-width="${i === 0 ? 3 : 1.5}"/><g transform="translate(${x - (i === 0 ? 10 : 8.5)},${y - (i === 0 ? 10 : 8.5)}) scale(${i === 0 ? 0.2 : 0.17})">${KIND_ART[k]}</g>`; }).join("")
-    + (left > Q_SLOTS.length ? `<text x="24" y="20" font-size="12" font-weight="700" fill="var(--ink)">+${left - Q_SLOTS.length} more</text>` : "")
-    + (left ? `<text x="150" y="190" font-size="10" font-weight="700" fill="#7A5A3A" text-anchor="end">NEXT ▸</text>` : "");
-  const pl = document.getElementById("loopleft"); if (pl) pl.textContent = left;
-}
-function drawSpots() {
-  const s = L.state, total = L.spec.spots + EXTRA_SPOTS;
-  let html = "";
-  for (let i = 0; i < total; i++) {
-    const [x, y] = spotXY(i), open = i < s.spots, p = s.parked.find(q => q.spot === i);
-    if (open) html += `<rect x="${x - 25}" y="${y - 27}" width="50" height="54" rx="9" fill="${p ? "#A88664" : "none"}" stroke="#F3E6D2" stroke-width="2" stroke-dasharray="${p ? "0" : "5 4"}"/>` + (p ? `<g transform="translate(${x},${y + 6})">${barrowSVG(p, 0.62)}</g>` : "");
-    else html += `<g data-plus="1" role="button" tabindex="0" aria-label="Open an extra bench spot" style="cursor:pointer"><rect x="${x - 25}" y="${y - 27}" width="50" height="54" rx="9" fill="rgba(255,255,255,0.08)" stroke="#F3E6D2" stroke-width="2" stroke-dasharray="5 4"/><text x="${x}" y="${y + 11}" font-size="30" font-weight="700" text-anchor="middle" fill="#7BD88F">+</text></g>`;
-  }
-  document.getElementById("spots").innerHTML = html;
-  const free = s.spots - s.parked.length, sp = document.getElementById("space");
-  if (sp) { sp.textContent = free; sp.style.color = free <= 1 ? "var(--heart)" : ""; }
-}
-function drawYard() {
-  const s = L.state;
-  document.getElementById("yard").innerHTML = s.yard.map(b => { const [x, y] = yardXY(b); return `<g data-bid="${b.id}" id="yb${b.id}" role="button" tabindex="0" aria-label="${KIND_NAMES[b.kind]} wheelbarrow pointing ${{ u: "up", d: "down", l: "left", r: "right" }[b.dir]}" style="cursor:pointer" transform="translate(${x},${y})" class="ytile ${L.hint === b.id ? "lhint" : ""}"><g class="mv">${yardTile(b)}</g>${L.hint === b.id ? `<rect x="-27" y="-27" width="54" height="54" rx="13" fill="none" stroke="var(--sun)" stroke-width="4"/>` : ""}</g>`; }).join("");
-}
-function drawLoopAll() { if (view !== "loop") return; drawQueue(); drawSpots(); drawYard(); }
-function lmsg(t) { const m = document.getElementById("lmsg"); if (m) m.textContent = t; }
-function loopSpeed() { return reduceMotion() ? { out: 60, hop: 60, leave: 60 } : { out: 420, hop: 200, leave: 380 }; }
-async function tapBarrow(id) {
-  if (!L || L.ended || L.busy || view !== "loop") return;
-  const s = L.state, b = s.yard.find(x => x.id === id); if (!b) return;
-  const g = document.getElementById("yb" + id);
-  if (!gyFree(s, b)) {
-    sfx.oops(); lmsg("Something is in the way. Move the barrows in front of it first.");
-    if (g) { g.style.transition = "transform 0.08s"; const [x, y] = yardXY(b), [dr, dc] = DIRS[b.dir]; g.setAttribute("transform", `translate(${x + dc * 6},${y + dr * 6})`); setTimeout(() => g.setAttribute("transform", `translate(${x},${y})`), 140); }
-    return;
-  }
-  if (s.parked.length >= s.spots) { sfx.oops(); lmsg("The bench is full. Wait for a barrow to fill up, or open a + spot."); return; }
-  L.busy = true; L.hint = null; L.sent++; const me = L, sp = loopSpeed();
-  // roll out of the yard the way the arrow points
-  const [x, y] = yardXY(b), [dr, dc] = DIRS[b.dir], dist = (dr ? (dr < 0 ? b.r + 1 : s.h - b.r) : (dc < 0 ? b.c + 1 : s.w - b.c)) * CELL + 20;
-  if (g) { const mv = g.querySelector(".mv"); mv.style.transition = `transform ${sp.out}ms ease-in, opacity ${sp.out}ms`; mv.style.transform = `translate(${dc * dist}px, ${dr * dist}px)`; mv.style.opacity = "0"; }
-  sfx.soft();
-  await sleep(sp.out);
-  if (me.dead) return;
-  s.yard = s.yard.filter(q => q !== b);
-  const used = new Set(s.parked.map(p => p.spot)); let spot = 0; while (used.has(spot)) spot++;
-  const p = { kind: b.kind, load: 0, spot }; s.parked.push(p);
-  drawYard(); drawSpots();
-  lmsg(`The ${KIND_NAMES[b.kind]} barrow is at the bench.`);
-  await boardAnimated(me);
-  if (me.dead) return;
-  L.busy = false;
-  const st = gyStatus(s);
-  if (st === "win") return winLoop();
-  if (st === "lose") return loopLost();
-  const free = s.spots - s.parked.length;
-  if (free === 1) lmsg("Careful: only one bench spot left!");
-}
-async function boardAnimated(me) {
-  // mirrors gyBoard: the front pot hops into the first parked barrow of its colour
-  const s = L.state, sp = loopSpeed();
-  while (s.qi < s.queue.length) {
-    const k = s.queue[s.qi], p = s.parked.find(x => x.kind === k && x.load < 3);
-    if (!p) break;
-    p.load++; s.qi++; sfx.pop(p.load);
-    drawQueue(); drawSpots();
-    await sleep(sp.hop); if (me.dead) return;
-    if (p.load === 3) {
-      s.parked.splice(s.parked.indexOf(p), 1);
-      sfx.good(); lmsg(`The ${KIND_NAMES[p.kind]} barrow is full. Off to plant!`);
-      await sleep(sp.leave); drawSpots();
-    }
-  }
-}
-function unlockSpot() {
-  if (!L || L.busy) return;
-  if (L.state.spots >= L.spec.spots + EXTRA_SPOTS) return;
-  offerRescue({
-    title: "Open an extra spot?", text: "An extra spot at the bench gives you more room to plan.", reward: "an extra bench spot",
-    grant: () => { L.state.spots++; L.extra++; L.ended = false; drawSpots(); lmsg("A new bench spot is open."); },
-    again: () => startLoop(L.n), leave: () => go("garden", { game: "loop" })
-  });
-}
-function loopLost() {
-  L.ended = true; sfx.oops();
-  lmsg("The bench is full and the next pot has no barrow.");
-  const canExtend = L.state.spots < L.spec.spots + EXTRA_SPOTS;
-  if (!canExtend) {
-    return dialog(`<div class="center">${bean("calm", 84)}<h2>The bench is full</h2><p>The next pot has no barrow to go into. Try a different order. Every level can be solved!</p></div>
-      <button class="btn block big" id="again">Try again</button><button class="btn block quiet" id="leave">Back to levels</button>`, o => {
-        o.querySelector("#again").onclick = () => { o.remove(); startLoop(L.n); };
-        o.querySelector("#leave").onclick = () => { o.remove(); go("garden", { game: "loop" }); };
-      }, false);
-  }
-  offerRescue({
-    title: "The bench is full", text: "The next pot has no barrow to go into, so this level is lost. Try a different order, or open one more bench spot.", reward: "an extra bench spot",
-    grant: () => { L.state.spots++; L.extra++; L.ended = false; drawSpots(); lmsg("A new bench spot is open. Pick the next barrow carefully."); },
-    again: () => startLoop(L.n), leave: () => go("garden", { game: "loop" })
-  });
-}
-function loopHint() {
-  if (!L || L.ended || L.busy) return;
-  const sol = gySolve(L.state, 40000);
-  if (!sol) { lmsg("This one can't be finished from here. Tap Restart to try a different order."); sfx.oops(); return; }
-  L.hint = sol[0]; drawYard(); sfx.soft();
-  const b = L.state.yard.find(x => x.id === sol[0]);
-  lmsg(`Try the ${KIND_NAMES[b.kind]} barrow with the glowing outline.`);
-}
-function winLoop() {
-  L.ended = true;
-  const n = L.n, stars = L.extra === 0 ? 3 : L.extra === 1 ? 2 : 1;
-  S.loop.stars[n] = Math.max(S.loop.stars[n] || 0, stars);
-  const first = S.loop.unlocked === n; if (first) S.loop.unlocked = n + 1;
-  today().garden.wins++; today().garden.lw = (today().garden.lw || 0) + 1; save(); sfx.win(); renderChrome();
-  const share = `${S.name} solved Garden Loop level ${n} with ${stars} star${stars > 1 ? "s" : ""}! ${"🌸".repeat(stars)}`;
-  dialog(`<div class="center">${bean("cheer", 100)}<h2>Every pot is planted!</h2>
-      <div class="stars-big" aria-label="${stars} of 3 stars">${[1, 2, 3].map(i => `<span class="${i <= stars ? "on" : "off"}">★</span>`).join("")}</div>
-      <p>${L.extra === 0 ? "You solved it without any extra spots. Perfect!" : `You used ${L.extra} extra spot${L.extra > 1 ? "s" : ""}. Solve it without them for 3 stars.`}</p>
-      ${first ? `<p><strong>Level ${n + 1} is now open.</strong></p>` : ""}</div>
-    <button class="btn block big" id="next">Play level ${n + 1}</button>
-    <button class="btn block secondary" id="share">Share this win with family</button>
-    <button class="btn block quiet" id="tohome">Back to today</button>`, o => {
-      o.querySelector("#next").onclick = () => { o.remove(); openLoopIntro(n + 1); };
-      o.querySelector("#share").onclick = () => copyText(share);
-      o.querySelector("#tohome").onclick = () => { o.remove(); go("home"); };
-    }, false);
-}
-
+/* loop2: website only */ function renderLoop() { go("home"); }
 /* ---------- Word Tiles ---------- */
 let T = null;
 function tilesGame(practice) {
@@ -5471,7 +4750,7 @@ function renderSettings() {
     <div class="card help-links">
       <h3>Help</h3>
       <p class="muted small">How to play, family circle safety and how to contact us.</p>
-      <div class="row"><a class="btn secondary" href="support" target="_blank" rel="noopener">Help and contact</a><a class="btn quiet" href="privacy" target="_blank" rel="noopener">Privacy</a></div>
+      <div class="row"><a class="btn secondary" href="support" target="_blank" rel="noopener">Help and contact</a><a class="btn quiet" href="privacy" target="_blank" rel="noopener">Privacy</a><a class="btn quiet" href="terms" target="_blank" rel="noopener">Terms</a></div>
     </div>`;
   wireFamilyQuestions();
   if (ACCOUNTS_ON) wireAccountCard();
