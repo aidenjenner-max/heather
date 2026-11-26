@@ -400,6 +400,18 @@ body[data-contrast="high"] .ml-card { --ml-bg: #FFFFFF; --ml-edge: #000000; --ml
 .ml-fam.quiet { background: transparent; padding: 0; color: var(--ml-soft); }
 .ml-fam svg { width: 28px !important; height: 28px !important; flex: none; color: var(--heart); fill: var(--heart); }
 .ml-fam .linkish { font: inherit; color: inherit; text-decoration: underline; }
+.ml-open { border-top: 2px dashed var(--ml-edge, #E3C9A4); padding-top: 12px; }
+.ml-open-h { margin: 0 0 6px; font-weight: 800; font-size: .95em; text-transform: uppercase; letter-spacing: .06em; color: var(--ml-soft); }
+.ml-open ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.ml-open li { display: grid; gap: 4px; }
+.ml-open-q { font-weight: 700; line-height: 1.35; }
+.ml-open-who { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; color: var(--ml-soft); line-height: 1.35; }
+.ml-open-avs { display: inline-flex; }
+.ml-open-avs .fam-av + .fam-av { margin-left: -6px; box-shadow: 0 0 0 2px var(--ml-bg); }
+.ml-open-more { margin: 8px 0 0; color: var(--ml-soft); }
+.ml-open .linkish { font: inherit; color: inherit; text-decoration: underline; }
+.mem-left { margin: 8px 0 0; font-weight: 700; color: var(--muted, #6b5a7a); }
+.mem-left.all { color: #1D5E27; }
 .ml-done { margin: 0; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 1.05em; }
 .ml-alt { background: transparent; border-color: var(--ml-edge); color: var(--ml-ink); }
 .ml-go { background: #8A5A3B; border-color: #8A5A3B; color: #FFFDF8; }
@@ -1461,12 +1473,24 @@ const ML_ART = `<svg viewBox="0 0 120 96" aria-hidden="true">
 function memoryLaneCard(rec, plan) {
   if (plan.includes("trivia")) return "";   // an older saved plan already shows it
   const done = rec.trivia.done, circle = inCircle();
-  const waiting = circle ? familyQs().filter(q => q.shared && !famPlayed(q.id)) : [];
+  const waiting = famForMe(), today_n = Math.min(waiting.length, FAM_MAX);
   const who = [...new Set(waiting.map(q => q.from))];
   const whoLine = who.length === 1 ? who[0] : who.length === 2 ? `${who[0]} and ${who[1]}` : who.length ? `${who[0]}, ${who[1]} and others` : "";
   const fam = waiting.length
-    ? `<p class="ml-fam">${ICON.heart}<span><strong>${waiting.length} family ${waiting.length === 1 ? "memory" : "memories"}</strong> waiting, from ${esc(whoLine)}</span></p>`
+    ? `<p class="ml-fam">${ICON.heart}<span><strong>${waiting.length} family ${waiting.length === 1 ? "memory" : "memories"}</strong> waiting for you, from ${esc(whoLine)}</span></p>`
     : circle ? "" : `<p class="ml-fam quiet">${ICON.heart}<span>Add your own family's memories in the <button class="linkish" data-go="family">Family</button> tab.</span></p>`;
+  const line = waiting.length && !done
+    ? (today_n >= 5 ? `${today_n} questions today, all from your family.` : `Five questions today: ${today_n} from your family and ${5 - today_n} about days gone by.`)
+    : "Five questions about music, TV, Canada and everyday life from years gone by.";
+  // Memories you've already answered (or wrote) that others haven't: show who's still to answer
+  const open = famOpenForOthers();
+  const short = t => t.length > 70 ? t.slice(0, 67).trimEnd() + "…" : t;
+  const openHTML = open.length ? `<div class="ml-open">
+        <p class="ml-open-h">Still waiting for answers</p>
+        <ul>${open.slice(0, 3).map(({ q, left }) => `<li><span class="ml-open-q">“${esc(short(q.question))}”</span>
+          <span class="ml-open-who"><span class="ml-open-avs">${left.slice(0, 4).map(m => famAvatar(m.id, m.name, "xs")).join("")}</span>${esc(whoList(left))} ${left.length === 1 ? "hasn't" : "haven't"} answered yet</span></li>`).join("")}</ul>
+        ${open.length > 3 ? `<p class="ml-open-more">And ${open.length - 3} more on the <button class="linkish" data-go="family">Family</button> tab.</p>` : ""}
+      </div>` : "";
   return `<section class="ml-card" aria-labelledby="mlh">
       <span class="ml-corner tl" aria-hidden="true"></span><span class="ml-corner br" aria-hidden="true"></span>
       <div class="ml-top">
@@ -1476,12 +1500,13 @@ function memoryLaneCard(rec, plan) {
         </div>
         <span class="ml-art">${ML_ART}</span>
       </div>
-      <p class="ml-line">Five questions about music, TV, Canada and everyday life from years gone by.</p>
+      <p class="ml-line">${line}</p>
       ${fam}
       ${done
-        ? `<p class="ml-done"><span class="pill done">✓ ${rec.trivia.right} of 5 today</span> Come back tomorrow for five more.</p>
-`
+        ? `<p class="ml-done"><span class="pill done">✓ ${rec.trivia.right} of ${rec.trivia.n || 5} today</span> ${waiting.length ? "" : "Come back tomorrow for more."}</p>
+           ${waiting.length ? `<button class="btn block big ml-go" data-go="trivia" data-fam="1">Answer ${today_n === 1 ? "it" : `${today_n} of them`} now</button>` : ""}`
         : `<button class="btn block big ml-go" data-go="splash" data-game="trivia">Take a stroll down Memory Lane</button>`}
+      ${openHTML}
     </section>`;
 }
 
@@ -1807,9 +1832,10 @@ const TRIVIA = [
 ];
 let TQ = null;
 function renderTrivia(opts = {}) {
-  TQ = triviaMake(!!opts.practice || today().trivia.done, opts.players);
+  TQ = triviaMake(!!opts.practice || today().trivia.done, !!opts.fam);
+  if (!TQ.qs.length) return go("home");
   document.getElementById("app").innerHTML = `
-    ${gameBar("home", TQ.players ? "Memory Lane together" : TQ.practice ? "Practice Memory Lane" : "Memory Lane", TQ.players ? TQ.players.join(" & ") : "5 questions · years gone by", iconBtn("trhow", ICON.help, "Help"))}
+    ${gameBar("home", TQ.famOnly ? "Family memories" : TQ.practice ? "Practice Memory Lane" : "Memory Lane", TQ.famOnly ? `${TQ.qs.length} from your family` : `${TQ.qs.length} questions · years gone by`, iconBtn("trhow", ICON.help, "Help"))}
     <div class="progress-line"><strong id="trcount"></strong><div class="bar"><span id="trbar"></span></div></div>
     <div class="card tr-card" id="trcard"></div>`;
   document.getElementById("trhow").onclick = howToTrivia;
@@ -1818,9 +1844,9 @@ function renderTrivia(opts = {}) {
 }
 function howToTrivia() {
   dialog(`<h2>How to play Memory Lane</h2><ul>
-    <li>Five questions each day about music, TV, Canada and everyday life from years gone by.</li>
+    <li>Questions each day about music, TV, Canada and everyday life from years gone by.</li>
     <li>Tap the answer you think is right. Then read a little fact about it.</li>
-    <li>Family members can add their own memory questions on the Family tab.</li></ul>
+    <li>Family members can add their own memory questions on the Family tab. Each one comes up once, until everyone in the family has answered it, with up to 10 in a day.</li></ul>
     <button class="btn block" data-close>Let's play</button>`);
 }
 function drawTrivia() {
@@ -1858,8 +1884,10 @@ function finishTrivia() {
     const res = { game: "trivia", title: x === y ? "It's a tie!" : `${x > y ? a : b} wins!`, detail: `${a}: ${x} of 3 · ${b}: ${y} of 3. Together you got ${x + y} of 6!`, note: "", share: `${a} and ${b} played Memory Lane together and got ${x + y} of 6!`, practice: true };
     sfx.win(); return go("results", { game: "trivia", r: res });
   }
-  const res = { game: "trivia", title: TQ.right === 5 ? "Full marks!" : TQ.right >= 3 ? "What a memory!" : "Lovely trip down memory lane!", detail: `You got ${TQ.right} of 5 right.`, note: "", share: `${S.name} scored ${TQ.right}/5 on today's Memory Lane quiz! How many can you get?`, practice: TQ.practice };
-  if (!TQ.practice) { Object.assign(today().trivia, { done: true, right: TQ.right }); save(); recordPerf("trivia", TQ.right * 20); if (TQ.right === 5) noteWin(smallWin("Full marks on Memory Lane!")); }
+  const N = TQ.qs.length;
+  if (TQ.famOnly) { sfx.win(); return go("results", { game: "trivia", r: { game: "trivia", title: "Thank you!", detail: `You answered ${N} family ${N === 1 ? "memory" : "memories"} and got ${TQ.right} right.`, note: "", share: "", practice: true } }); }
+  const res = { game: "trivia", title: TQ.right === N ? "Full marks!" : TQ.right >= N * 0.6 ? "What a memory!" : "Lovely trip down memory lane!", detail: `You got ${TQ.right} of ${N} right.`, note: "", share: `${S.name} scored ${TQ.right}/${N} on today's Memory Lane quiz! How many can you get?`, practice: TQ.practice };
+  if (!TQ.practice) { Object.assign(today().trivia, { done: true, right: TQ.right, n: N }); save(); recordPerf("trivia", Math.round(TQ.right / N * 100)); if (TQ.right === N) noteWin(smallWin("Full marks on Memory Lane!")); }
   sfx.win(); go("results", { game: "trivia", r: res });
 }
 
@@ -3118,7 +3146,9 @@ async function circleJoin(code, myName) {
 function familyQs() {
   const mine = S.circle && S.circle.me ? S.circle.me.id : null;
   const blocked = (S.circle && S.circle.blocked) || [];
-  const shared = circleQuestions().filter(q => q.author_id !== mine && !blocked.includes(q.author_id)).map(q => ({ id: q.id, aid: q.author_id, from: q.author_name || "your family", q: q.question, answer: q.answer, wrong: q.wrong || [], note: q.note || "", shared: true }));
+  const shared = circleQuestions().filter(q => q.author_id !== mine && !blocked.includes(q.author_id))
+    .slice().sort((a, b) => new Date(a.created_at || 0) - new Date(b.created_at || 0))
+    .map(q => ({ id: q.id, aid: q.author_id, from: q.author_name || "your family", q: q.question, answer: q.answer, wrong: q.wrong || [], note: q.note || "", at: q.created_at, shared: true }));
   return shared.concat(S.familyQs || []);
 }
 
@@ -3477,6 +3507,24 @@ function myAnswer(q) {
   const a = (q.answers || []).find(x => x.member_id === me);
   return a ? a.right : undefined;
 }
+/* A family memory stays up until everyone in the circle (except the person who wrote it) has answered it.
+   Nobody is asked the same memory twice: once you've answered, you just see who still hasn't. */
+const FAM_MAX = 10;   // most family memories in one Memory Lane round
+function famStillToAnswer(q) {
+  const me = (S.circle.me || {}).id, done = new Set((q.answers || []).map(a => a.member_id));
+  return circleMembers().filter(m => m.id !== q.author_id && !done.has(m.id) && !(m.id === me && myAnswer(q) !== undefined));
+}
+function famForMe() { return inCircle() ? familyQs().filter(q => q.shared && !famPlayed(q.id)) : []; }
+function famOpenForOthers() {
+  if (!inCircle()) return [];
+  const me = (S.circle.me || {}).id, blocked = S.circle.blocked || [];
+  return circleQuestions().filter(q => !blocked.includes(q.author_id) && (q.author_id === me || myAnswer(q) !== undefined))
+    .map(q => ({ q, left: famStillToAnswer(q) })).filter(x => x.left.length);
+}
+function whoList(people) {
+  const me = (S.circle && S.circle.me || {}).id, n = people.map(m => m.id === me ? "you" : m.name);
+  return n.length <= 3 ? names(n) : `${n[0]}, ${n[1]} and ${n.length - 2} others`;
+}
 function memoryCard(q) {
   const me = S.circle.me || {}, mine = q.author_id === me.id, played = myAnswer(q);
   const showAns = mine || played !== undefined || (S.famPeek || {})[q.id];
@@ -3488,6 +3536,7 @@ function memoryCard(q) {
     <p class="mem-q">${esc(q.question)}</p>
     ${showAns ? `<p class="mem-a">${played === true ? "✓ You got it: " : played === false ? "The answer: " : "Answer: "}<strong>${esc(q.answer)}</strong></p>${q.note ? `<p class="mem-note">“${esc(q.note)}”</p>` : ""}`
       : `<p class="mem-wait">${S.started ? "Coming up in your Memory Lane." : "Not played yet."} <button class="linkish" data-mempeek="${esc(q.id)}">Show the answer</button></p>`}
+    ${(() => { const left = famStillToAnswer(q); return left.length ? `<p class="mem-left">Still to answer: ${esc(whoList(left))}</p>` : circleMembers().length > 1 ? `<p class="mem-left all">✓ Everyone has answered</p>` : ""; })()}
     <div class="mem-tries">${tries.length ? tries.map(a => `<span class="mem-try ${a.right ? "ok" : "no"}">${famAvatar(a.member_id, a.name, "xs")}${a.member_id === me.id ? "You" : esc(a.name)} ${a.right ? "✓ got it" : "had a go"}</span>`).join("") : `<span class="muted small">${mine ? "Nobody has tried it yet." : ""}</span>`}</div>
   </article>`;
 }
@@ -3786,22 +3835,24 @@ function wireAccountCard() {
 
 /* @web-only:end accounts */
 /* --- Memory Lane with interests, family questions and a two-player mode --- */
-function triviaMake(practice, players) {
-  const r = gameRng("trivia", practice), n = players ? 6 : 5;
+function triviaMake(practice, famOnly) {
+  const r = gameRng("trivia", practice);
+  const famQ = f => ({ q: f.q, answer: f.answer, opts: shuffle([f.answer, ...f.wrong], r), fact: f.note || "A question from your family.", from: f.from || "your family", fid: f.shared ? f.id : null, aid: f.aid || null });
+  // Every family memory you haven't answered yet (oldest first, up to 10). Ones you've answered are never asked again.
+  let fam = famForMe().slice(0, FAM_MAX).map(famQ);
+  const local = inCircle() ? [] : (S.familyQs || []);   // kept on this device before a circle existed
+  if (!fam.length && local.length) fam = [famQ(practice ? local[Math.floor(r() * local.length)] : local[((dayIndex(dayKey()) % local.length) + local.length) % local.length])];
+  // Top up with everyday questions so a round always has at least five
+  const n = famOnly ? 0 : Math.max(0, 5 - fam.length);
   const tags = [...new Set(myInterests().flatMap(i => INTERESTS[i].tags))];
   const order = practice ? shuffle(TRIVIA.map((_, i) => i), r) : shuffle(TRIVIA.map((_, i) => i), rng(777 + dayIndex(dayKey())));
   const liked = order.filter(i => tags.includes(TRIVIA_TAGS[i])), rest = order.filter(i => !tags.includes(TRIVIA_TAGS[i]));
   const picks = [];
   while (picks.length < n && (liked.length || rest.length)) picks.push((picks.length % 3 !== 2 && liked.length ? liked : rest.length ? rest : liked).shift());
-  let qs = picks.map(i => { const [q, opts, fact] = TRIVIA[i]; return { q, answer: opts[0], opts: shuffle(opts, r), fact }; });
-  const fam = familyQs();
-  if (fam.length) {
-    // Unplayed family memories come first (oldest first), so nothing new waits behind a repeat
-    const unplayed = fam.filter(q => !q.shared || !famPlayed(q.id)), pool = unplayed.length ? unplayed : fam;
-    const f = practice ? pool[Math.floor(r() * pool.length)] : unplayed.length ? unplayed[0] : fam[((dayIndex(dayKey()) % fam.length) + fam.length) % fam.length];
-    qs[1] = { q: f.q, answer: f.answer, opts: shuffle([f.answer, ...f.wrong], r), fact: f.note || "A question from your family.", from: f.from || "your family", fid: f.shared ? f.id : null, aid: f.aid || null };
-  }
-  return { qs, i: 0, right: 0, picked: null, practice: practice || !!players, players: players || null, scores: players ? [0, 0] : null };
+  const every = picks.map(i => { const [q, opts, fact] = TRIVIA[i]; return { q, answer: opts[0], opts: shuffle(opts, r), fact }; });
+  const qs = [];
+  while (every.length || fam.length) { if (every.length) qs.push(every.shift()); if (fam.length) qs.push(fam.shift()); }
+  return { qs, i: 0, right: 0, picked: null, practice: practice || famOnly, famOnly: !!famOnly, players: null, scores: null };
 }
 
 const PLAY_TRI = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.6-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z" fill="currentColor"/></svg>';
@@ -3812,7 +3863,7 @@ function gameCard(g, rec, k) {
   else if (g === "tiles") { const n = rec.tiles.found.length + rec.tiles.bonus.length; st = rec.tiles.done ? pill("done", `✓ ${n} words`) : n ? (footL += `<br><span class="gc-count">${n} found</span>`, pill("going", "Keep going")) : pill("play", "Play"); }
   else if (g === "memory") st = rec.memory.done ? pill("done", `✓ ${rec.memory.moves} turns`) : pill("play", "Play");
   else if (g === "ws") st = rec.ws.done ? pill("done", "✓ All found") : rec.ws.found.length ? (footL += `<br><span class="gc-count">${rec.ws.found.length} found</span>`, pill("going", "Keep going")) : pill("play", "Play");
-  else if (g === "trivia") st = rec.trivia.done ? pill("done", `✓ ${rec.trivia.right} of 5`) : pill("play", "Play");
+  else if (g === "trivia") st = rec.trivia.done ? pill("done", `✓ ${rec.trivia.right} of ${rec.trivia.n || 5}`) : pill("play", "Play");
   else st = G.done(rec) ? pill("done", "✓ Done") : pill("play", "Play");
   const open = typeof G.open === "function" ? G.open() : G.open;
   return `<button class="gcard" ${open} style="--card:${G.color}"><span class="gc-text"><h3>${G.name}</h3><p>${G.line}</p></span><span class="gc-art">${G.art()}</span><span class="gc-foot"><span>${footL}</span>${st}</span></button>`;
@@ -3859,8 +3910,10 @@ function renderSplash(opts = {}) {
     else btns = `<button class="btn block play" data-go="memory">Play</button>${how}`;
   } else {
     const d = rec[g];
-    const doneLine = { ws: () => `You found all of today's words${d.hints ? "" : " without a hint"}.`, su: () => `You solved today's puzzle${d.mistakes ? "" : " without a mistake"}.`, odd: () => `You spotted all 8 today${d.misses ? "" : " without a miss"}.`, peek: () => `You got ${d.right} of 15 today, with a ${d.thr} ms flash time.`, two: () => `Doing both at once: plant watered ${d.steer}% of the time, ${d.signs}% of sunflowers caught.`, walk: () => `You remembered ${d.route} of ${d.of} turns and ${d.lm} of ${d.lmOf} places today.`, bee: () => `You flew today's Bee Line${d.hints ? "" : " without a hint"}.`, dbl: () => `You joined everything into ${d.final}${d.hints ? "" : " without a hint"}.`, vine: () => `You found every word in today's vines${d.hints ? "" : " without a hint"}.`, names: () => `You remembered ${d.names} of ${d.of} names today. Bean will ask about them tomorrow!`, trivia: () => `You got ${d.right} of 5 right today.` }[g];
-    if (d.done) { status = doneLine(); btns = `<button class="btn block play" data-go="${g}" data-practice="1">Play a practice round</button>`; }
+    const doneLine = { ws: () => `You found all of today's words${d.hints ? "" : " without a hint"}.`, su: () => `You solved today's puzzle${d.mistakes ? "" : " without a mistake"}.`, odd: () => `You spotted all 8 today${d.misses ? "" : " without a miss"}.`, peek: () => `You got ${d.right} of 15 today, with a ${d.thr} ms flash time.`, two: () => `Doing both at once: plant watered ${d.steer}% of the time, ${d.signs}% of sunflowers caught.`, walk: () => `You remembered ${d.route} of ${d.of} turns and ${d.lm} of ${d.lmOf} places today.`, bee: () => `You flew today's Bee Line${d.hints ? "" : " without a hint"}.`, dbl: () => `You joined everything into ${d.final}${d.hints ? "" : " without a hint"}.`, vine: () => `You found every word in today's vines${d.hints ? "" : " without a hint"}.`, names: () => `You remembered ${d.names} of ${d.of} names today. Bean will ask about them tomorrow!`, trivia: () => `You got ${d.right} of ${d.n || 5} right today.` }[g];
+    const famNew = g === "trivia" ? famForMe().length : 0;
+    if (d.done && famNew) { status = doneLine(); btns = `<button class="btn block play" data-go="trivia" data-fam="1">Answer ${Math.min(famNew, FAM_MAX)} family ${famNew === 1 ? "memory" : "memories"}</button><button class="btn block out" data-go="trivia" data-practice="1">Play a practice round</button>`; }
+    else if (d.done) { status = doneLine(); btns = `<button class="btn block play" data-go="${g}" data-practice="1">Play a practice round</button>`; }
     else btns = `<button class="btn block play" data-go="${g}">${g === "ws" && d.found && d.found.length ? "Continue" : "Play"}</button>${how}`;
     if (g === "two") status += `${status ? " " : ""}<span class="muted" style="font-weight:400">Plant speed and sign time each adjust after every round.</span>`;
     else if (g === "peek") status += `${status ? " " : ""}<span class="muted" style="font-weight:400">Stage ${peekState().stage} of 3 · flash time ${Math.round(peekDur(peekState().stage))} ms. It adjusts after every peek.</span>`;
@@ -5542,7 +5595,7 @@ document.addEventListener("click", e => {
         o.querySelector("#leave").onclick = () => { o.remove(); if (view === "level") G.ended = true; else L.ended = true; go(v, { game: t.dataset.game }); };
       });
     }
-    return go(v, { practice: !!t.dataset.practice, game: t.dataset.game });
+    return go(v, { practice: !!t.dataset.practice, game: t.dataset.game, fam: !!t.dataset.fam });
   }
   if (t.dataset.k) return wordKey(t.dataset.k);
   if (t.dataset.pick !== undefined) { T.picked.push(+t.dataset.pick); sfx.soft(); drawTiles(); tMsg(""); return; }
