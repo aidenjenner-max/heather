@@ -496,6 +496,12 @@ body[data-contrast="high"] .yr-mem-a { color: #000; }
 .pill { padding: 5px 12px; border-radius: 999px; background: rgba(255, 255, 255, 0.8); color: var(--card-ink); font-weight: 700; font-size: 0.85rem; white-space: nowrap; }
 .pill.done { background: #2E7A4B; color: #fff; }
 .pill.going { background: var(--card-ink); color: #fff; }
+.pill.play { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px; min-width: 120px; padding: 10px 24px; font-size: 1.2rem; background: var(--accent); color: var(--accent-ink); box-shadow: 0 3px 0 rgba(0, 0, 0, 0.18); }
+.pill.play svg { width: 20px; height: 20px; flex: none; }
+.gc-count { font-weight: 600; opacity: 0.8; }
+.pill.play.going { background: var(--card-ink); color: #fff; }
+.gcard:active .pill.play { transform: translateY(2px); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.18); }
+body[data-contrast="high"] .pill.play { background: #000; color: #fff; }
 body[data-contrast="high"] .gcard { background: #fff !important; border: 3px solid #000; }
 
 /* Launch screen (NYT style) */
@@ -3808,15 +3814,16 @@ function startTogether() {
     });
 }
 
+const PLAY_TRI = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.6-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z" fill="currentColor"/></svg>';
 function gameCard(g, rec, k) {
-  const G = GAMES[g], pill = (state, text) => `<span class="pill ${state}">${text}</span>`;
+  const G = GAMES[g], pill = (state, text) => state === "play" || state === "going" ? `<span class="pill play ${state}">${PLAY_TRI}${text}</span>` : `<span class="pill ${state}">${text}</span>`;
   let footL = G.domain, st;
-  if (g === "match") { footL = `Level ${S.garden.unlocked} · Reasoning`; st = G.done(rec) ? pill("done", "✓ Level done") : pill("", "Play"); }
-  else if (g === "tiles") { const n = rec.tiles.found.length + rec.tiles.bonus.length; st = rec.tiles.done ? pill("done", `✓ ${n} words`) : n ? pill("going", `${n} found`) : pill("", "Play"); }
-  else if (g === "memory") st = rec.memory.done ? pill("done", `✓ ${rec.memory.moves} turns`) : pill("", "Play");
-  else if (g === "ws") st = rec.ws.done ? pill("done", "✓ All found") : rec.ws.found.length ? pill("going", `${rec.ws.found.length} found`) : pill("", "Play");
-  else if (g === "trivia") st = rec.trivia.done ? pill("done", `✓ ${rec.trivia.right} of 5`) : pill("", "Play");
-  else st = G.done(rec) ? pill("done", "✓ Done") : pill("", "Play");
+  if (g === "match") { footL = `Level ${S.garden.unlocked} · Reasoning`; st = G.done(rec) ? pill("done", "✓ Level done") : pill("play", "Play"); }
+  else if (g === "tiles") { const n = rec.tiles.found.length + rec.tiles.bonus.length; st = rec.tiles.done ? pill("done", `✓ ${n} words`) : n ? (footL += `<br><span class="gc-count">${n} found</span>`, pill("going", "Keep going")) : pill("play", "Play"); }
+  else if (g === "memory") st = rec.memory.done ? pill("done", `✓ ${rec.memory.moves} turns`) : pill("play", "Play");
+  else if (g === "ws") st = rec.ws.done ? pill("done", "✓ All found") : rec.ws.found.length ? (footL += `<br><span class="gc-count">${rec.ws.found.length} found</span>`, pill("going", "Keep going")) : pill("play", "Play");
+  else if (g === "trivia") st = rec.trivia.done ? pill("done", `✓ ${rec.trivia.right} of 5`) : pill("play", "Play");
+  else st = G.done(rec) ? pill("done", "✓ Done") : pill("play", "Play");
   const open = typeof G.open === "function" ? G.open() : G.open;
   return `<button class="gcard" ${open} style="--card:${G.color}"><span class="gc-text"><h3>${G.name}</h3><p>${G.line}</p></span><span class="gc-art">${G.art()}</span><span class="gc-foot"><span>${footL}</span>${st}</span></button>`;
 }
