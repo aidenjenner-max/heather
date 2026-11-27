@@ -1,0 +1,2 @@
+phone: com.apple.CoreSimulator.SimDeviceType.iPhone-17-Pro-Max / com.apple.CoreSimulator.SimRuntime.iOS-26-5
+pad: com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M5-16GB / com.apple.CoreSimulator.SimRuntime.iOS-26-5

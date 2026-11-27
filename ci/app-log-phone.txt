@@ -1,0 +1,563 @@
+getpwuid_r did not find a match for uid 501
+Timestamp               Ty Process[PID:TID]
+2026-11-27 04:28:37.634 Df Heather[14160:af66] [com.apple.xpc:connection] [0x1011d58a0] activating connection: mach=true listener=false peer=false name=com.apple.cfprefsd.daemon
+2026-11-27 04:28:37.635 Df Heather[14160:af57] (libMobileGestalt.dylib) No persisted cache on this platform.
+2026-11-27 04:28:37.640 Df Heather[14160:af57] [com.apple.BoardServices:XPCErrors] [C:1] Alloc com.apple.frontboard.systemappservices
+2026-11-27 04:28:37.641 Df Heather[14160:af57] [com.apple.xpc:connection] [0x10197c000] activating connection: mach=false listener=false peer=false name=(anonymous)
+2026-11-27 04:28:37.641 Df Heather[14160:af66] [com.apple.UIKit:BackgroundTask] Creating new assertion because there is no existing background assertion.
+2026-11-27 04:28:37.651 A  Heather[14160:af68] (CoreFoundation) Loading Preferences From User Session CFPrefsD
+2026-11-27 04:28:37.657 Df Heather[14160:af66] [com.apple.UIKit:BackgroundTask] Creating new background assertion
+2026-11-27 04:28:37.657 Df Heather[14160:af66] [com.apple.UIKit:BackgroundTask] Created new background assertion <BKSProcessAssertion: 0x1011debe0>
+2026-11-27 04:28:37.657 Df Heather[14160:af66] [com.apple.runningboard:connection] Initializing connection
+2026-11-27 04:28:37.658 Df Heather[14160:af66] [com.apple.runningboard:process] Removing all cached process handles
+2026-11-27 04:28:37.658 Df Heather[14160:af6b] [com.apple.runningboard:connection] Sending handshake request attempt #1 to server
+2026-11-27 04:28:37.658 Df Heather[14160:af6b] [com.apple.runningboard:connection] Creating connection to com.apple.runningboard
+2026-11-27 04:28:37.658 Df Heather[14160:af6b] [com.apple.xpc:connection] [0x10197c140] activating connection: mach=true listener=false peer=false name=com.apple.runningboard
+2026-11-27 04:28:37.659 A  Heather[14160:af6d] (RunningBoardServices) didChangeInheritances
+2026-11-27 04:28:37.660 Df Heather[14160:af6b] [com.apple.runningboard:connection] Handshake succeeded
+2026-11-27 04:28:37.660 Df Heather[14160:af6b] [com.apple.runningboard:connection] Identity resolved as app<com.aidenjenner.heather((null))>
+2026-11-27 04:28:37.662 Df Heather[14160:af66] [com.apple.UIKit:BackgroundTask] Incrementing reference count for background assertion <BKSProcessAssertion: 0x1011debe0>
+2026-11-27 04:28:37.662 Df Heather[14160:af66] [com.apple.UIKit:BackgroundTask] Created background task <_UIBackgroundTaskInfo: 0x1018a4940>: taskID = 1, taskName = Launch Background Task for Coalescing, creationTime = 846 (elapsed = 0).
+2026-11-27 04:28:37.662 Df Heather[14160:af66] [com.apple.FrontBoard:SceneExtension] Realizing settings extension _UIApplicationSceneKeyboardSettings on FBSSceneSettings
+2026-11-27 04:28:37.664 Df Heather[14160:af66] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneOcclusionSettings> on FBSSceneSettings
+2026-11-27 04:28:37.665 Df Heather[14160:af66] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneInterfaceProtectionSettings> on FBSSceneSettings
+2026-11-27 04:28:37.666 Df Heather[14160:af66] [com.apple.FrontBoard:SceneExtension] Realizing settings extension _UISceneLayoutPreferencesHostSettingsExtension on FBSSceneSettings
+2026-11-27 04:28:37.666 Df Heather[14160:af66] [com.apple.FrontBoard:SceneExtension] Realizing settings extension _UISceneSafeAreaSettingsExtension on FBSSceneSettings
+2026-11-27 04:28:37.667 Df Heather[14160:af66] [com.apple.FrontBoard:SceneExtension] Realizing settings extension _UISceneLayoutPreferenceClientSettingsExtension on FBSSceneClientSettings
+2026-11-27 04:28:37.667 Df Heather[14160:af57] [com.apple.UIKit:Application] Deactivation reason added: 10; deactivation reasons: 0 -> 1024; animating application lifecycle event: 0
+2026-11-27 04:28:37.668 Df Heather[14160:af57] [com.apple.BoardServices:Injection] activating monitor for service com.apple.frontboard.open
+2026-11-27 04:28:37.669 Df Heather[14160:af57] [com.apple.BoardServices:Injection] activating monitor for service com.apple.frontboard.workspace-service
+2026-11-27 04:28:37.669 Df Heather[14160:af66] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UIHomeAffordanceHostSceneSettings> on FBSSceneSettings
+2026-11-27 04:28:37.669 Df Heather[14160:af66] [com.apple.FrontBoard:SceneExtension] Realizing settings extension _UISystemShellSceneHostingEnvironmentSettings on FBSSceneSettings
+2026-11-27 04:28:37.669 Df Heather[14160:af66] [com.apple.FrontBoard:SceneExtension] Realizing settings extension _UISceneRenderingEnvironmentSettings on FBSSceneSettings
+2026-11-27 04:28:37.670 Df Heather[14160:af66] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneRenderingEnvironmentClientSettings> on FBSSceneClientSettings
+2026-11-27 04:28:37.670 Df Heather[14160:af57] [com.apple.FrontBoard:Common] FBSWorkspace registering source: com.apple.frontboard.systemappservices
+2026-11-27 04:28:37.670 Df Heather[14160:af66] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneTransitioningHostSettings> on FBSSceneSettings
+2026-11-27 04:28:37.671 Df Heather[14160:af66] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneFocusSystemSettings> on FBSSceneSettings
+2026-11-27 04:28:37.671 Df Heather[14160:af66] [com.apple.FrontBoard:SceneExtension] Realizing settings extension _UISceneOrientationSettingsExtension on FBSSceneSettings
+2026-11-27 04:28:37.671 Df Heather[14160:af66] [com.apple.FrontBoard:SceneExtension] Realizing settings extension _UISceneOrientationClientSettingsExtension on FBSSceneClientSettings
+2026-11-27 04:28:37.672 Df Heather[14160:af66] [com.apple.FrontBoard:SceneExtension] Realizing settings extension _UISceneWindowingControlClientSettings on FBSSceneClientSettings
+2026-11-27 04:28:37.673 Df Heather[14160:af66] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneHostingContentSizePreferenceClientSettings> on FBSSceneClientSettings
+2026-11-27 04:28:37.675 Df Heather[14160:af66] [com.apple.FrontBoard:SceneExtension] Realizing settings extension _UISceneHostingTraitCollectionPropagationSettings on FBSSceneSettings
+2026-11-27 04:28:37.675 Df Heather[14160:af66] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneHostingSheetPresentationSettings> on FBSSceneSettings
+2026-11-27 04:28:37.676 Df Heather[14160:af57] [com.apple.FrontBoard:Common] FBSWorkspace connected to endpoint : <BSServiceConnectionEndpoint: 0x101948e60; target: com.apple.frontboard.systemappservices; service: com.apple.frontboard.workspace-service>
+2026-11-27 04:28:37.676 Df Heather[14160:af66] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneHostingSheetPresentationClientSettings> on FBSSceneClientSettings
+2026-11-27 04:28:37.676 Df Heather[14160:af57] [com.apple.FrontBoard:Common] <FBSWorkspaceScenesClient:0x1018f4960 com.apple.frontboard.systemappservices> attempting immediate handshake from activate
+2026-11-27 04:28:37.676 Df Heather[14160:af66] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneHostingEventDeferringSettings> on FBSSceneSettings
+2026-11-27 04:28:37.677 Df Heather[14160:af66] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <UIKit__UITypedKeyValueSceneSettings> on FBSSceneSettings
+2026-11-27 04:28:37.677 Df Heather[14160:af66] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <UIKit__UITypedKeyValueSceneSettings> on FBSSceneClientSettings
+2026-11-27 04:28:37.677 Df Heather[14160:af66] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneHostingViewControllerPreferencePropagationClientSettings> on FBSSceneClientSettings
+2026-11-27 04:28:37.677 Df Heather[14160:af66] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneZoomTransitionSettings> on FBSSceneSettings
+2026-11-27 04:28:37.678 Df Heather[14160:af57] [com.apple.FrontBoard:Common] <FBSWorkspaceScenesClient:0x1018f4960 com.apple.frontboard.systemappservices> sent handshake
+2026-11-27 04:28:37.679 Df Heather[14160:af57] [com.apple.runningboard:general] Added observer for process assertions expiration warning: <_RBSExpirationWarningClient: 0x101949920>
+2026-11-27 04:28:37.707 Df Heather[14160:af68] [com.apple.FrontBoard:SceneExtension] Realizing settings extension FBSSceneSettingsCore on FBSSceneSettings
+2026-11-27 04:28:37.712 Df Heather[14160:af68] [com.apple.FrontBoard:SceneExtension] Realizing settings extension FBSSceneClientSettingsCore on FBSSceneClientSettings
+2026-11-27 04:28:37.722 Df Heather[14160:af68] [com.apple.FrontBoard:SceneExtension] UIMutableApplicationSceneSettings setting counterpart class: UIApplicationSceneSettings
+2026-11-27 04:28:37.723 Df Heather[14160:af68] [com.apple.FrontBoard:SceneExtension] UIMutableApplicationSceneClientSettings setting counterpart class: UIApplicationSceneClientSettings
+2026-11-27 04:28:37.723 Df Heather[14160:af68] [com.apple.FrontBoard:SceneExtension] Realizing settings extension FBSSceneTransitionContextCore on FBSSceneTransitionContext
+2026-11-27 04:28:37.744 Df Heather[14160:af57] [com.apple.UIKit:UIScreen] Evaluated capturing state as 0 on <UIScreen: 0x10197c3c0> for initial
+2026-11-27 04:28:37.745 Df Heather[14160:af57] [com.apple.UIKit:UIScreen] Evaluated capturing state as 0 on <UIScreen: 0x10197c3c0> for CADisplay KVO
+2026-11-27 04:28:37.748 Df Heather[14160:af57] [com.apple.Accessibility:AXSupportCommon] Read CategoryName: per-app = 1, category name = (null)
+2026-11-27 04:28:37.750 Df Heather[14160:af57] [com.apple.Accessibility:AXSupportCommon] Read CategoryName: per-app = 0, category name = (null)
+2026-11-27 04:28:37.761 Df Heather[14160:af57] [com.apple.dt.xctest:Default] Registering for test daemon availability notify post.
+2026-11-27 04:28:37.762 Df Heather[14160:af57] [com.apple.dt.xctest:Default] notify_get_state check indicated test daemon not ready.
+2026-11-27 04:28:37.763 Df Heather[14160:af57] [com.apple.dt.xctest:Default] notify_get_state check indicated test daemon not ready.
+2026-11-27 04:28:37.763 Df Heather[14160:af57] [com.apple.dt.xctest:Default] notify_get_state check indicated test daemon not ready.
+2026-11-27 04:28:37.771 Df Heather[14160:af57] [com.apple.UIKit:Application] Deactivation reason added: 11; deactivation reasons: 1024 -> 3072; animating application lifecycle event: 0
+2026-11-27 04:28:37.774 Df Heather[14160:af57] [com.apple.UIKit:Application] Deactivation reason removed: 10; deactivation reasons: 3072 -> 2048; animating application lifecycle event: 0
+2026-11-27 04:28:37.775 Df Heather[14160:af57] [com.apple.UIKit:EventBus] Event Timing Profile for Touch: not found, path="/System/Library/EventTimingProfiles/Sim.Touch.plist"
+2026-11-27 04:28:37.775 Df Heather[14160:af57] [com.apple.UIKit:EventBus] Event Timing Profile for Pencil: not found, path="/System/Library/EventTimingProfiles/Sim.Pencil.plist"
+2026-11-27 04:28:37.775 Df Heather[14160:af57] [com.apple.UIKit:UpdateScheduler] Selected display: name=LCD (PurpleMain), id=1
+2026-11-27 04:28:37.782 Df Heather[14160:af57] [com.apple.xpc:connection] [0x10197ca00] activating connection: mach=true listener=false peer=false name=com.apple.lsd.mapdb
+2026-11-27 04:28:37.855 Df Heather[14160:af57] [com.apple.BoardServices:XPCErrors] [C:2] Alloc com.apple.backboard.hid-services.xpc
+2026-11-27 04:28:37.855 Df Heather[14160:af57] [com.apple.xpc:connection] [0x10197cc80] activating connection: mach=false listener=false peer=false name=(anonymous)
+2026-11-27 04:28:37.858 Df Heather[14160:af57] [com.apple.app_launch_measurement:ApplicationLaunch] alm_acquire_pageins_recording_assertion: acquired pageins recording assertion!
+2026-11-27 04:28:37.878 Df Heather[14160:af6e] [com.apple.BackBoard:EventDelivery] BKSHIDEventDeliveryManager - connection activation
+2026-11-27 04:28:38.156 Df Heather[14160:af57] (WebKit) 0x1011e8768 - WebsiteDataStore::WebsiteDataStore sessionID=1 identifier=null
+2026-11-27 04:28:38.195 A  Heather[14160:af6b] (libsystem_containermanager.dylib) container_system_group_path_for_identifier
+2026-11-27 04:28:38.196 Df Heather[14160:af6b] [com.apple.containermanager:xpc] Requesting container lookup; class = 13, identifier = (null), group_identifier = systemgroup.com.apple.configurationprofiles, create = 1, temp = 0, euid = 501, uid = 501
+2026-11-27 04:28:38.196 A  Heather[14160:af6b] (libsystem_containermanager.dylib) container_query_t
+2026-11-27 04:28:38.196 Df Heather[14160:af6b] [com.apple.containermanager:xpc] Query; euid = 501, uid = 501, class = 13, identifier = [(null)](0), flags = 900000003
+2026-11-27 04:28:38.245 Df Heather[14160:af6b] [com.apple.containermanager:unspecified] _container_query_get_result_at_index: success
+2026-11-27 04:28:38.245 A  Heather[14160:af6b] (libsystem_containermanager.dylib) container_copy_object
+2026-11-27 04:28:38.245 Df Heather[14160:af6b] [com.apple.containermanager:unspecified] container_system_group_path_for_identifier: success
+2026-11-27 04:28:38.245 Df Heather[14160:af6b] [com.apple.ManagedConfiguration:MC] Got system group container path from MCM for systemgroup.com.apple.configurationprofiles: /Users/runner/Library/Developer/CoreSimulator/Devices/85CA756E-61E0-4D53-8B3B-E601FE04D648/data/Containers/Shared/SystemGroup/systemgroup.com.apple.configurationprofiles
+2026-11-27 04:28:38.266 A  Heather[14160:af57] (TCC) TCCAccessRequest() IPC
+2026-11-27 04:28:38.266 Df Heather[14160:af57] [com.apple.xpc:connection] [0x10197d400] activating connection: mach=true listener=false peer=false name=com.apple.tccd
+2026-11-27 04:28:38.298 Df Heather[14160:af57] [com.apple.xpc:connection] [0x10197d400] invalidated after the last release of the connection object
+2026-11-27 04:28:38.299 A  Heather[14160:af57] (TCC) TCCAccessRequest() IPC
+2026-11-27 04:28:38.299 Df Heather[14160:af57] [com.apple.xpc:connection] [0x10197d540] activating connection: mach=true listener=false peer=false name=com.apple.tccd
+2026-11-27 04:28:38.307 Df Heather[14160:af57] [com.apple.xpc:connection] [0x10197d540] invalidated after the last release of the connection object
+2026-11-27 04:28:38.401 Df Heather[14160:af57] (WebKit) 0x10e0c40e0 - [PID=0] WebProcessCache::updateCapacity: Cache is disabled because process swap on navigation is disabled
+2026-11-27 04:28:38.441 Df Heather[14160:af57] (libMobileGestalt.dylib) No persisted cache on this platform.
+2026-11-27 04:28:38.497 Df Heather[14160:af68] [com.apple.xpc:connection] [0x10197d400] activating connection: mach=true listener=false peer=false name=com.apple.webprivacyd
+2026-11-27 04:28:38.529 Df Heather[14160:af57] [com.apple.WebKit:Process] 0x1011ea468 - PageConfiguration::delaysWebProcessLaunchUntilFirstLoad() -> false because of associated processPool value
+2026-11-27 04:28:38.529 Df Heather[14160:af57] [com.apple.WebKit:Process] 0x1019b8008 - WebProcessPool::createWebPage: Not delaying WebProcess launch
+2026-11-27 04:28:38.531 Df Heather[14160:af57] [com.apple.WebKit:Process] 0x10e0e00c0 - [PID=0] WebProcessProxy::constructor:
+2026-11-27 04:28:38.553 Df Heather[14160:af6b] [com.apple.extensionkit:launch] Launching process with config: bundleID: com.apple.WebKit.WebContent instance ID: Optional([_EXExtensionInstanceIdentifier: 70CE5859-6D57-495E-B995-4747E0DE2D95])
+2026-11-27 04:28:38.561 Df Heather[14160:af57] [com.apple.WebKit:Sandbox] Successfully created a sandbox extension for '/Users/runner/Library/Developer/CoreSimulator/Devices/85CA756E-61E0-4D53-8B3B-E601FE04D648/data/Containers/Bundle/Application/88A67982-BBD5-497B-B08C-CF0D02C87018/Heather.app'
+2026-11-27 04:28:38.592 Df Heather[14160:af57] [com.apple.avkit:AVKit] +[AVPictureInPicturePlatformAdapter isPictureInPictureSupported]_block_invoke isPictureInPictureSupported NO
+2026-11-27 04:28:38.599 Df Heather[14160:af57] (libMobileGestalt.dylib) No persisted cache on this platform.
+2026-11-27 04:28:38.599 Df Heather[14160:af57] [com.apple.xpc:connection] [0x10197e440] activating connection: mach=true listener=false peer=false name=com.apple.IOSurface.Remote
+2026-11-27 04:28:38.601 Df Heather[14160:af57] [com.apple.WebKit:Sandbox] Successfully created a sandbox extension for '/Users/runner/Library/Developer/CoreSimulator/Devices/85CA756E-61E0-4D53-8B3B-E601FE04D648/data/Containers/Data/Application/CE6D9BD4-625A-4E7C-A34C-5FB5174678AC/Library/WebKit/com.aidenjenner.heather/WebsiteData/MediaKeys/v1'
+2026-11-27 04:28:38.601 Df Heather[14160:af57] [com.apple.WebKit:ProcessSuspension] 0x10e0ec0c0 - [PID=0, throttler=0x10e0e0150] ProcessThrottler::Activity::Activity: Starting foreground activity / 'Process initialization'
+2026-11-27 04:28:38.610 Df Heather[14160:af69] [com.apple.xpc:connection] [0x10197e580] activating connection: mach=true listener=false peer=false name=com.apple.accessibility.mediaaccessibilityd
+2026-11-27 04:28:38.619 Df Heather[14160:af57] [com.apple.WebKit:Loading] 0x101ad8718 - [pageProxyID=7, webPageID=8, PID=0] WebPageProxy::constructor, site isolation enabled 0
+2026-11-27 04:28:38.621 Df Heather[14160:af57] [com.apple.WebKit:Media] PlaybackSessionManagerProxy::PlaybackSessionManagerProxy(2906663760)
+2026-11-27 04:28:38.622 Df Heather[14160:af57] [com.apple.WebKit:Fullscreen] PlaybackSessionManagerProxy::VideoPresentationManagerProxy(2906663760)
+2026-11-27 04:28:38.633 Df Heather[14160:af57] [com.apple.WebKit:Process] 0x10e0e00c0 - [PID=0] WebProcessProxy::addExistingWebPage: webPage=0x101ad8718, pageProxyID=7, webPageID=8
+2026-11-27 04:28:38.637 Df Heather[14160:af57] [com.apple.WebKit:ProcessSwapping] 0x10e0c40e0 - [PID=0] WebProcessCache::updateCapacity: Cache is disabled by client
+2026-11-27 04:28:38.638 Df Heather[14160:af57] [com.apple.WebKit:Sandbox] Successfully created a sandbox extension for '/Users/runner/Library/Developer/CoreSimulator/Devices/85CA756E-61E0-4D53-8B3B-E601FE04D648/data/Containers/Data/Application/CE6D9BD4-625A-4E7C-A34C-5FB5174678AC/Library/Caches/com.apple.WebKit.GPU'
+2026-11-27 04:28:38.638 Df Heather[14160:af57] [com.apple.WebKit:Sandbox] Successfully created a sandbox extension for '/Users/runner/Library/Developer/CoreSimulator/Devices/85CA756E-61E0-4D53-8B3B-E601FE04D648/data/Containers/Data/Application/CE6D9BD4-625A-4E7C-A34C-5FB5174678AC/tmp/com.apple.WebKit.GPU'
+2026-11-27 04:28:38.639 Df Heather[14160:af57] (libMobileGestalt.dylib) No persisted cache on this platform.
+2026-11-27 04:28:38.639 Df Heather[14160:af57] [com.apple.WebKit:ProcessSuspension] 0x10e0ec150 - [PID=0, throttler=0x10e11c270] ProcessThrottler::Activity::Activity: Starting foreground activity / 'Process initialization'
+2026-11-27 04:28:38.646 Df Heather[14160:af6e] [com.apple.extensionkit:launch] Launching process with config: bundleID: com.apple.WebKit.GPU instance ID: Optional([_EXExtensionInstanceIdentifier: 852D409A-BF85-4C14-A100-B9CAE02A8D9B])
+2026-11-27 04:28:38.655 Df Heather[14160:af57] [com.apple.WebKit:TextInteraction] Conforming to BrowserEngineKit text input protocol
+2026-11-27 04:28:38.675 Df Heather[14160:af66] [com.apple.UIKit:BackgroundTask] Ending background task with UIBackgroundTaskIdentifier: 1
+2026-11-27 04:28:38.676 Df Heather[14160:af66] [com.apple.UIKit:BackgroundTask] Ending task with identifier 1 and description: <_UIBackgroundTaskInfo: 0x1018a4940>: taskID = 1, taskName = Launch Background Task for Coalescing, creationTime = 846 (elapsed = 1), _expireHandler: (null)
+2026-11-27 04:28:38.677 Df Heather[14160:af66] [com.apple.UIKit:BackgroundTask] Decrementing reference count for assertion <BKSProcessAssertion: 0x1011debe0> (used by background task with identifier 1: <_UIBackgroundTaskInfo: 0x1018a4940>: taskID = 1, taskName = Launch Background Task for Coalescing, creationTime = 846 (elapsed = 1))
+2026-11-27 04:28:38.677 Df Heather[14160:af66] [com.apple.UIKit:BackgroundTask] Will invalidate assertion: <BKSProcessAssertion: 0x1011debe0> for task identifier: 1
+2026-11-27 04:28:38.691 Df Heather[14160:af57] [com.apple.WebKit:Loading] 0x101ad8718 - [pageProxyID=7, webPageID=8, PID=0] WebPageProxy::loadRequest:
+2026-11-27 04:28:38.693 Df Heather[14160:af57] [com.apple.runningboard:connection] Creating side-channel connection to com.apple.runningboard
+2026-11-27 04:28:38.693 Df Heather[14160:af57] [com.apple.xpc:connection] [0x10197fac0] activating connection: mach=true listener=false peer=false name=com.apple.runningboard
+2026-11-27 04:28:38.695 Df Heather[14160:af57] [com.apple.runningboard:process] Hit the server for a process handle 1e35115000003750 that resolved to: [app<com.aidenjenner.heather((null))>:14160]
+2026-11-27 04:28:38.696 Df Heather[14160:af57] [com.apple.WebKit:Process] 0x101ad8718 - [pageProxyID=7, webPageID=8, PID=0] WebPageProxy::WebPageProxy::shouldForceForegroundPriorityForClientNavigation() returns 1 based on PageClient::canTakeForegroundAssertions()
+2026-11-27 04:28:38.697 Df Heather[14160:af57] [com.apple.WebKit:ProcessSuspension] 0x10e0ec1e0 - [PID=0, throttler=0x10e0e0150] ProcessThrottler::Activity::Activity: Starting foreground activity / 'Client navigation'
+2026-11-27 04:28:38.697 Df Heather[14160:af57] [com.apple.WebKit:Loading] 0x101ad8718 - [pageProxyID=7, webPageID=8, PID=0] WebPageProxy::loadRequestWithNavigationShared:
+2026-11-27 04:28:38.700 Df Heather[14160:af57] [com.apple.WebKit:Process] 0x10e140190 - NetworkProcessProxy::NetworkProcessProxy
+2026-11-27 04:28:38.701 Df Heather[14160:af57] [com.apple.WebKit:Sandbox] Successfully created a sandbox extension for '/Users/runner/Library/Developer/CoreSimulator/Devices/85CA756E-61E0-4D53-8B3B-E601FE04D648/data/Containers/Data/Application/CE6D9BD4-625A-4E7C-A34C-5FB5174678AC/Library/WebKit/com.aidenjenner.heather/WebsiteData/ResourceLoadStatistics'
+2026-11-27 04:28:38.702 Df Heather[14160:af57] [com.apple.WebKit:Sandbox] Successfully created a sandbox extension for '/Users/runner/Library/Developer/CoreSimulator/Devices/85CA756E-61E0-4D53-8B3B-E601FE04D648/data/Containers/Data/Application/CE6D9BD4-625A-4E7C-A34C-5FB5174678AC/Library/Caches/com.aidenjenner.heather/WebKit/NetworkCache'
+2026-11-27 04:28:38.702 Df Heather[14160:af57] [com.apple.WebKit:Sandbox] Successfully created a sandbox extension for '/Users/runner/Library/Developer/CoreSimulator/Devices/85CA756E-61E0-4D53-8B3B-E601FE04D648/data/Containers/Data/Application/CE6D9BD4-625A-4E7C-A34C-5FB5174678AC/Library/Caches/com.aidenjenner.heather/WebKit/HSTS'
+2026-11-27 04:28:38.702 Df Heather[14160:af57] [com.apple.WebKit:Sandbox] Successfully created a sandbox extension for '/Users/runner/Library/Developer/CoreSimulator/Devices/85CA756E-61E0-4D53-8B3B-E601FE04D648/data/Containers/Data/Application/CE6D9BD4-625A-4E7C-A34C-5FB5174678AC/Library/WebKit/com.aidenjenner.heather/WebsiteData/ResourceMonitorThrottler'
+2026-11-27 04:28:38.703 Df Heather[14160:af57] [com.apple.WebKit:Sandbox] Successfully created a sandbox extension for '/Users/runner/Library/Developer/CoreSimulator/Devices/85CA756E-61E0-4D53-8B3B-E601FE04D648/data/Containers/Data/Application/CE6D9BD4-625A-4E7C-A34C-5FB5174678AC/Library/WebKit/com.aidenjenner.heather/WebsiteData/LocalStorage'
+2026-11-27 04:28:38.703 Df Heather[14160:af57] [com.apple.WebKit:Sandbox] Successfully created a sandbox extension for '/Users/runner/Library/Developer/CoreSimulator/Devices/85CA756E-61E0-4D53-8B3B-E601FE04D648/data/Containers/Data/Application/CE6D9BD4-625A-4E7C-A34C-5FB5174678AC/Library/WebKit/com.aidenjenner.heather/WebsiteData/IndexedDB'
+2026-11-27 04:28:38.703 Df Heather[14160:af57] [com.apple.WebKit:Sandbox] Successfully created a sandbox extension for '/Users/runner/Library/Developer/CoreSimulator/Devices/85CA756E-61E0-4D53-8B3B-E601FE04D648/data/Containers/Data/Application/CE6D9BD4-625A-4E7C-A34C-5FB5174678AC/Library/WebKit/com.aidenjenner.heather/WebsiteData/Default'
+2026-11-27 04:28:38.703 Df Heather[14160:af57] [com.apple.WebKit:Sandbox] Successfully created a sandbox extension for '/Users/runner/Library/Developer/CoreSimulator/Devices/85CA756E-61E0-4D53-8B3B-E601FE04D648/data/Containers/Data/Application/CE6D9BD4-625A-4E7C-A34C-5FB5174678AC/Library/Caches/com.aidenjenner.heather/WebKit/CacheStorage'
+2026-11-27 04:28:38.703 Df Heather[14160:af57] [com.apple.WebKit:Sandbox] Successfully created a sandbox extension for '/Users/runner/Library/Developer/CoreSimulator/Devices/85CA756E-61E0-4D53-8B3B-E601FE04D648/data/Containers/Data/Application/CE6D9BD4-625A-4E7C-A34C-5FB5174678AC/Library/Caches/com.aidenjenner.heather/WebKit/ServiceWorkers'
+2026-11-27 04:28:38.704 Df Heather[14160:af57] [com.apple.WebKit:Sandbox] Successfully created a sandbox extension for '/Users/runner/Library/Developer/CoreSimulator/Devices/85CA756E-61E0-4D53-8B3B-E601FE04D648/data/Containers/Data/Application/CE6D9BD4-625A-4E7C-A34C-5FB5174678AC/Library/Caches/com.aidenjenner.heather/WebKit/AlternativeServices'
+2026-11-27 04:28:38.704 Df Heather[14160:af57] [com.apple.CFNetwork:Default] Initializing CFHTTPCookieStorage singleton
+2026-11-27 04:28:38.705 Df Heather[14160:af57] [com.apple.CFNetwork:Default] Creating default cookie storage with process/bundle identifier
+2026-11-27 04:28:38.707 Df Heather[14160:af57] [com.apple.network:] networkd_settings_read_from_file_locked initialized networkd settings by reading plist directly
+2026-11-27 04:28:38.707 Df Heather[14160:af57] [com.apple.network:] networkd_settings_read_from_file_locked initialized networkd settings by reading plist directly
+2026-11-27 04:28:38.707 Df Heather[14160:af66] [com.apple.extensionkit:launch] Launching process with config: bundleID: com.apple.WebKit.Networking instance ID: Optional([_EXExtensionInstanceIdentifier: 3079F6F9-3C70-4499-A6DC-296AB96BC926])
+2026-11-27 04:28:38.708 E  Heather[14160:af66] [com.apple.extensionkit:default] Failed to resolve host network app id to config: bundleID: com.apple.WebKit.Networking instance ID: Optional([_EXExtensionInstanceIdentifier: 3079F6F9-3C70-4499-A6DC-296AB96BC926])
+2026-11-27 04:28:38.708 Df Heather[14160:af57] [com.apple.WebKit:Sandbox] Successfully created a sandbox extension for '/Users/runner/Library/Developer/CoreSimulator/Devices/85CA756E-61E0-4D53-8B3B-E601FE04D648/data/Containers/Data/Application/CE6D9BD4-625A-4E7C-A34C-5FB5174678AC/Library/Cookies'
+2026-11-27 04:28:38.708 Df Heather[14160:af57] [com.apple.WebKit:Sandbox] Successfully created a sandbox extension for '/Users/runner/Library/Developer/CoreSimulator/Devices/85CA756E-61E0-4D53-8B3B-E601FE04D648/data/Containers/Data/Application/CE6D9BD4-625A-4E7C-A34C-5FB5174678AC/Library/Caches/com.apple.WebKit.Networking'
+2026-11-27 04:28:38.709 Df Heather[14160:af57] [com.apple.WebKit:Sandbox] Successfully created a sandbox extension for '/Users/runner/Library/Developer/CoreSimulator/Devices/85CA756E-61E0-4D53-8B3B-E601FE04D648/data/Containers/Bundle/Application/88A67982-BBD5-497B-B08C-CF0D02C87018/Heather.app'
+2026-11-27 04:28:38.711 Df Heather[14160:af57] [com.apple.WebKit:ProcessSuspension] 0x10e0ec210 - [PID=0, throttler=0x10e140220] ProcessThrottler::Activity::Activity: Starting foreground activity / 'Process initialization'
+2026-11-27 04:28:38.714 Df Heather[14160:af57] [com.apple.WebKit:ProcessSuspension] 0x10e114150 - NavigationState is taking a process network assertion because a page load started
+2026-11-27 04:28:38.714 Df Heather[14160:af57] [com.apple.WebKit:Process] Taking network activity on WebProcess with PID 0
+2026-11-27 04:28:38.714 Df Heather[14160:af57] [com.apple.WebKit:ProcessSuspension] 0x10e0ec270 - [PID=0, throttler=0x10e0e0150] ProcessThrottler::Activity::Activity: Starting background activity / 'Page Load'
+2026-11-27 04:28:38.724 Df Heather[14160:af57] [com.apple.UIKit:BackgroundTask] Will add backgroundTask with taskName: Persistent SceneSession Map Update, expirationHandler: <__NSGlobalBlock__: 0x1e78c84e8>
+2026-11-27 04:28:38.727 Df Heather[14160:af57] [com.apple.UIKit:BackgroundTask] Creating new assertion because there is no existing background assertion.
+2026-11-27 04:28:38.727 Df Heather[14160:af57] [com.apple.UIKit:BackgroundTask] Creating new background assertion
+2026-11-27 04:28:38.727 Df Heather[14160:af57] [com.apple.UIKit:BackgroundTask] Created new background assertion <BKSProcessAssertion: 0x101be9630>
+2026-11-27 04:28:38.728 Df Heather[14160:af57] [com.apple.UIKit:BackgroundTask] Incrementing reference count for background assertion <BKSProcessAssertion: 0x101be9630>
+2026-11-27 04:28:38.728 Df Heather[14160:af57] [com.apple.UIKit:BackgroundTask] Created background task <_UIBackgroundTaskInfo: 0x101bf4900>: taskID = 2, taskName = Persistent SceneSession Map Update, creationTime = 847 (elapsed = 0).
+2026-11-27 04:28:38.728 Df Heather[14160:af57] [com.apple.UIKit:Application] Deactivation reason added: 5; deactivation reasons: 2048 -> 2080; animating application lifecycle event: 1
+2026-11-27 04:28:38.729 Df Heather[14160:af57] [com.apple.UIKit:InterfaceStyle] Should send trait collection or coordinate space update, interface style 1 -> 1, <UIWindowScene: 0x104404800> (7E2A1644-7281-482B-A6BB-5614752828D5)
+2026-11-27 04:28:38.729 Df Heather[14160:af57] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x104404800> (7E2A1644-7281-482B-A6BB-5614752828D5)
+2026-11-27 04:28:38.730 Df Heather[14160:af57] [com.apple.UIKit:HomeAffordanceObservation] Initializing: <_UIHomeAffordanceSceneNotifier: 0x101a489a0>; with scene: <UIWindowScene: 0x104404800>
+2026-11-27 04:28:38.730 Df Heather[14160:af57] [com.apple.BacklightServices:scenes] 0x101bed140 setDelegate:<0x101becf90 _UIBacklightEnvironment> hasDelegate:YES for environment:sceneID:com.aidenjenner.heather-7E2A1644-7281-482B-A6BB-5614752828D5
+2026-11-27 04:28:38.730 Df Heather[14160:af57] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x104404800> (7E2A1644-7281-482B-A6BB-5614752828D5)
+2026-11-27 04:28:38.730 Df Heather[14160:af57] [com.apple.UIKit:EventDeferring] [0x101a48930] Initialized with scene: <UIWindowScene: 0x104404800>; behavior: <_UIEventDeferringBehavior_iOS: 0x104410a80>; availableForProcess: 1, systemShellManagesKeyboardFocus: 1
+2026-11-27 04:28:38.734 Df Heather[14160:af57] [com.apple.BackBoard:EventDelivery] policyStatus:<BKSHIDEventDeliveryPolicyObserver: 0x1018620a0; process scope; status: target> was:none
+2026-11-27 04:28:38.734 Df Heather[14160:af57] [com.apple.UIKit:KeyWindow] Setting default evaluation strategy for UIUserInterfaceIdiomPhone to LastOneWins
+2026-11-27 04:28:38.734 Df Heather[14160:af57] [com.apple.UIKit:KeyWindow] Scene target of keyboard event deferring environment did change: 1; scene: UIWindowScene: 0x104404800; scene identity: com.apple.frontboard.systemappservices/FBSceneManager:sceneID%3Acom.aidenjenner.heather-7E2A1644-7281-482B-A6BB-5614752828D5
+2026-11-27 04:28:38.734 Df Heather[14160:af57] [com.apple.UIKit:EventDeferring] [0x101a48930] Scene target of event deferring environments did update: scene: 0x104404800; current systemShellManagesKeyboardFocus: 1; systemShellManagesKeyboardFocusForScene: 1; eligibleForRecordRemoval: 1;
+2026-11-27 04:28:38.734 Df Heather[14160:af57] [com.apple.UIKit:KeyWindow] Scene became target of keyboard event deferring environment: UIWindowScene: 0x104404800; scene identity: com.apple.frontboard.systemappservices/FBSceneManager:sceneID%3Acom.aidenjenner.heather-7E2A1644-7281-482B-A6BB-5614752828D5
+2026-11-27 04:28:38.734 Df Heather[14160:af57] [com.apple.UIKit:KeyWindow] Stack[KeyWindow] 0x101bed830: Taking no further action for migration from LastOneWins -> SystemShellManaged as there are no scenes
+2026-11-27 04:28:38.734 Df Heather[14160:af57] [com.apple.UIKit:KeyWindow] Setting default evaluation strategy for UIUserInterfaceIdiomPhone to SystemShellManaged
+2026-11-27 04:28:38.734 Df Heather[14160:af57] [com.apple.UIKit:KeyWindow] Key window needs update: 0; currentKeyWindowScene: 0x0; evaluatedKeyWindowScene: 0x104404800; currentApplicationKeyWindow: 0x0; evaluatedApplicationKeyWindow: 0x0; reason: UIWindowScene: 0x104404800: Window scene became target of keyboard environment
+2026-11-27 04:28:38.735 Df Heather[14160:af57] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x104404800> (7E2A1644-7281-482B-A6BB-5614752828D5)
+2026-11-27 04:28:38.735 Df Heather[14160:af57] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x104404800> (7E2A1644-7281-482B-A6BB-5614752828D5)
+2026-11-27 04:28:38.738 Df Heather[14160:af6d] [com.apple.BackBoard:EventDelivery] BKSHIDEventObserver - connection activation
+2026-11-27 04:28:38.739 Df Heather[14160:af57] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x104404800> (7E2A1644-7281-482B-A6BB-5614752828D5)
+2026-11-27 04:28:38.789 A  Heather[14160:af6d] (RunningBoardServices) didChangeInheritances
+2026-11-27 04:28:38.818 Df Heather[14160:af6b] [com.apple.runningboard:process] Starting death monitoring for handle [xpcservice<com.apple.WebKit.WebContent([app<com.aidenjenner.heather((null))>:14160])>{vt hash: 71395982}[uuid:70CE5859-6D57-495E-B995-4747E0DE2D95]{definition:com.apple.WebKit.WebContent[extension][client]}:14168]
+2026-11-27 04:28:38.849 Df Heather[14160:af57] [com.apple.UIKit:Orientation] <UIWindowScene: 0x104404800> (7E2A1644-7281-482B-A6BB-5614752828D5) Scene updated orientation preferences: none -> ( Pu )
+2026-11-27 04:28:38.865 Df Heather[14160:af57] [com.apple.UIKit:KeyWindow] Key window API is scene-level: YES
+2026-11-27 04:28:38.865 Df Heather[14160:af57] [com.apple.UIKit:KeyWindow] UIWindowScene: 0x104404800: Window became key in scene: UIWindow: 0x1019c8400; contextId: 0x45352E4D: reason: UIWindowScene: 0x104404800: Window requested to become key in scene: 0x1019c8400
+2026-11-27 04:28:38.865 Df Heather[14160:af57] [com.apple.UIKit:KeyWindow] Key window needs update: 1; currentKeyWindowScene: 0x0; evaluatedKeyWindowScene: 0x104404800; currentApplicationKeyWindow: 0x0; evaluatedApplicationKeyWindow: 0x1019c8400; reason: UIWindowScene: 0x104404800: Window requested to become key in scene: 0x1019c8400
+2026-11-27 04:28:38.865 Df Heather[14160:af57] [com.apple.UIKit:KeyWindow] Window did become application key: UIWindow: 0x1019c8400; contextId: 0x45352E4D; scene identity: com.apple.frontboard.systemappservices/FBSceneManager:sceneID%3Acom.aidenjenner.heather-7E2A1644-7281-482B-A6BB-5614752828D5
+2026-11-27 04:28:38.866 Df Heather[14160:af57] [com.apple.UIKit:EventDeferring] [0x101a48930] Begin local event deferring requested for token: 0x1018627c0; environments: 1; reason: UIWindowScene: 0x104404800: Begin event deferring in keyboardFocus for window: 0x1019c8400
+2026-11-27 04:28:38.870 Df Heather[14160:af57] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x104404800> (7E2A1644-7281-482B-A6BB-5614752828D5)
+2026-11-27 04:28:38.871 Df Heather[14160:af57] [com.apple.UIKit:AppLifecycle] sceneOfRecord: sceneID: sceneID:com.aidenjenner.heather-7E2A1644-7281-482B-A6BB-5614752828D5  persistentID: 7E2A1644-7281-482B-A6BB-5614752828D5
+2026-11-27 04:28:38.872 Df Heather[14160:af57] [com.apple.UIKit:Application] Ignoring already applied deactivation reason: 5; deactivation reasons: 2080
+2026-11-27 04:28:38.872 Df Heather[14160:af57] [com.apple.UIKit:Application] Deactivation reason added: 12; deactivation reasons: 2080 -> 6176; animating application lifecycle event: 1
+2026-11-27 04:28:38.872 Df Heather[14160:af57] [com.apple.WebKit:ViewState] 0x101ad8718 - [pageProxyID=7, webPageID=8, PID=0] WebPageProxy::applicationWillEnterForegroundForMedia: isSuspendedUnderLock? 0
+2026-11-27 04:28:38.873 Df Heather[14160:af57] [com.apple.UIKit:Application] Deactivation reason removed: 11; deactivation reasons: 6176 -> 4128; animating application lifecycle event: 1
+2026-11-27 04:28:38.873 Df Heather[14160:af57] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneIntelligenceSupportSettings> on FBSSceneSettings
+2026-11-27 04:28:38.878 Df Heather[14160:af57] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x104404800> (7E2A1644-7281-482B-A6BB-5614752828D5)
+2026-11-27 04:28:38.894 A  Heather[14160:af57] (CoreFoundation) Updating Key-Value Observers Of Preferences
+2026-11-27 04:28:38.934 Df Heather[14160:af6d] [com.apple.BackBoard:EventDelivery] policyStatus:<BKSHIDEventDeliveryPolicyObserver: 0x1018620a0; token: com.apple.frontboard.systemappservices/FBSceneManager:sceneID%3Acom.aidenjenner.heather-7E2A1644-7281-482B-A6BB-5614752828D5; status: ancestor> was:target
+2026-11-27 04:28:38.951 Df Heather[14160:af57] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x104404800> (7E2A1644-7281-482B-A6BB-5614752828D5)
+2026-11-27 04:28:38.959 Df Heather[14160:af57] [com.apple.WebKit:ViewState] 0x10e0d8100 - ApplicationStateTracker::setIsInBackground: 0
+2026-11-27 04:28:38.960 Df Heather[14160:af57] [com.apple.WebKit:ViewState] 0x10e0d8100 - ApplicationStateTracker: add observers for scene
+2026-11-27 04:28:38.960 Df Heather[14160:af57] [com.apple.WebKit:ViewState] 0x101a50000 - WKApplicationStateTrackingView: View with page [0x101ad8718, pageProxyID=7] was added to a window, _lastObservedStateWasBackground=0, isNowBackground=0
+2026-11-27 04:28:38.965 Df Heather[14160:af6b] [com.apple.extensionkit:launch] Created new process ExtensionProcess: bundleID: com.apple.WebKit.WebContent instance ID: Optional([_EXExtensionInstanceIdentifier: 70CE5859-6D57-495E-B995-4747E0DE2D95]) pid: 14168.
+2026-11-27 04:28:38.990 Df Heather[14160:af6b] [com.apple.WebKit:Process] AssertionCapability::AssertionCapability: taking assertion Foreground
+2026-11-27 04:28:39.014 Df Heather[14160:af57] [com.apple.WebKit:ViewState] 0x101ad8718 - [pageProxyID=7, webPageID=8, PID=0] WebPageProxy::updateActivityState: view visibility state changed 0 -> 1
+2026-11-27 04:28:39.019 Df Heather[14160:af57] [com.apple.BackBoard:Keyboard] Activating connection to server: (null)
+2026-11-27 04:28:39.020 Df Heather[14160:af57] [com.apple.BackBoard:Keyboard] server remote target <BSXPCServiceConnectionProxy<BKSKeyboardServiceClientToServerIPC>: 0x101a4b6b0>
+2026-11-27 04:28:39.020 Df Heather[14160:af57] [com.apple.BackBoard:Keyboard] currently observing: YES
+2026-11-27 04:28:39.021 Df Heather[14160:af57] [com.apple.BackBoard:Keyboard] connected: (
+    "<BKSHIDKeyboardDevice: 0x104413ea0> {\134n    senderID: 0xACEFADE00000003;\134n    transport: <nil>;\134n    language: <nil>;\134n    layout: US;\134n    countryCode: 0;\134n    standardType: 4294967295;\134n    subinterfaceID: 0;\134n    capsLockKeyHasLanguageSwitchLabel: NO;\134n    globeKeyLabelHasGlobeSymbol: NO;\134n}"
+)
+2026-11-27 04:28:39.021 Df Heather[14160:af57] [com.apple.BackBoard:Keyboard] currently observing: NO
+2026-11-27 04:28:39.021 Df Heather[14160:af57] [com.apple.BackBoard:Keyboard] disconnected: (
+    "<BKSHIDKeyboardDevice: 0x104413ea0> {\134n    senderID: 0xACEFADE00000003;\134n    transport: <nil>;\134n    language: <nil>;\134n    layout: US;\134n    countryCode: 0;\134n    standardType: 4294967295;\134n    subinterfaceID: 0;\134n    capsLockKeyHasLanguageSwitchLabel: NO;\134n    globeKeyLabelHasGlobeSymbol: NO;\134n}"
+)
+2026-11-27 04:28:39.022 Df Heather[14160:af57] [com.apple.BackBoard:Keyboard] currently observing: YES
+2026-11-27 04:28:39.023 Df Heather[14160:af57] [com.apple.BackBoard:Keyboard] connected: (
+    "<BKSHIDKeyboardDevice: 0x104413f20> {\134n    senderID: 0xACEFADE00000003;\134n    transport: <nil>;\134n    language: <nil>;\134n    layout: US;\134n    countryCode: 0;\134n    standardType: 4294967295;\134n    subinterfaceID: 0;\134n    capsLockKeyHasLanguageSwitchLabel: NO;\134n    globeKeyLabelHasGlobeSymbol: NO;\134n}"
+)
+2026-11-27 04:28:39.023 Df Heather[14160:af57] [com.apple.BackBoard:Keyboard] currently observing: NO
+2026-11-27 04:28:39.024 Df Heather[14160:af57] [com.apple.BackBoard:Keyboard] disconnected: (
+    "<BKSHIDKeyboardDevice: 0x104413f20> {\134n    senderID: 0xACEFADE00000003;\134n    transport: <nil>;\134n    language: <nil>;\134n    layout: US;\134n    countryCode: 0;\134n    standardType: 4294967295;\134n    subinterfaceID: 0;\134n    capsLockKeyHasLanguageSwitchLabel: NO;\134n    globeKeyLabelHasGlobeSymbol: NO;\134n}"
+)
+2026-11-27 04:28:39.050 Df Heather[14160:af57] [com.apple.UIKit:HardwareKeyboard] -[UIApplication GSKeyboardForHWLayout:senderID:forceRebuild:createIfNeeded:], New hardware layout is created with US layout and 0 standardType.
+2026-11-27 04:28:39.052 Df Heather[14160:af57] [com.apple.BackBoard:Keyboard] currently observing: YES
+2026-11-27 04:28:39.053 Df Heather[14160:af57] [com.apple.BackBoard:Keyboard] connected: (
+    "<BKSHIDKeyboardDevice: 0x104413f80> {\134n    senderID: 0xACEFADE00000003;\134n    transport: <nil>;\134n    language: <nil>;\134n    layout: US;\134n    countryCode: 0;\134n    standardType: 4294967295;\134n    subinterfaceID: 0;\134n    capsLockKeyHasLanguageSwitchLabel: NO;\134n    globeKeyLabelHasGlobeSymbol: NO;\134n}"
+)
+2026-11-27 04:28:39.053 Df Heather[14160:af57] [com.apple.BackBoard:Keyboard] currently observing: NO
+2026-11-27 04:28:39.053 Df Heather[14160:af57] [com.apple.BackBoard:Keyboard] disconnected: (
+    "<BKSHIDKeyboardDevice: 0x104413f80> {\134n    senderID: 0xACEFADE00000003;\134n    transport: <nil>;\134n    language: <nil>;\134n    layout: US;\134n    countryCode: 0;\134n    standardType: 4294967295;\134n    subinterfaceID: 0;\134n    capsLockKeyHasLanguageSwitchLabel: NO;\134n    globeKeyLabelHasGlobeSymbol: NO;\134n}"
+)
+2026-11-27 04:28:39.053 Df Heather[14160:af57] [com.apple.WebKit:ViewState] 0x101ad8718 - [pageProxyID=7, webPageID=8, PID=0] WebPageProxy::viewIsBecomingVisible:
+2026-11-27 04:28:39.094 Df Heather[14160:af57] [com.apple.WebKit:ScreenTime] Screen Time has updated to use the system shield for any blocked URL.
+2026-11-27 04:28:39.095 Df Heather[14160:af57] [com.apple.WebKit:ProcessSuspension] 0x101ad8718 - [pageProxyID=7, webPageID=8, PID=0] WebPageProxy::updateThrottleState: UIProcess is taking a foreground assertion because the view is visible
+2026-11-27 04:28:39.095 Df Heather[14160:af6d] [com.apple.UIIntelligenceSupport:xpc] establishing connection to agent
+2026-11-27 04:28:39.095 Df Heather[14160:af57] [com.apple.WebKit:ProcessSuspension] 0x10e0ec300 - [PID=0, throttler=0x10e0e0150] ProcessThrottler::Activity::Activity: Starting foreground activity / 'View is visible'
+2026-11-27 04:28:39.097 Df Heather[14160:af57] [com.apple.WebKit:RemoteLayerTree] RemoteLayerTreeDrawingAreaProxy(10)::hideContentUntilPendingUpdate
+2026-11-27 04:28:39.098 Df Heather[14160:af6d] [com.apple.xpc:session] [0x10454e850] Session created.
+2026-11-27 04:28:39.098 Df Heather[14160:af6d] [com.apple.xpc:session] [0x10454e850] Session created from connection [0x10442f200]
+2026-11-27 04:28:39.098 Df Heather[14160:af57] [com.apple.WebKit:ViewState] 0x1011e99e0 (pageProxyID=7) -[WKWebView _endLiveResize]
+2026-11-27 04:28:39.098 Df Heather[14160:af6d] [com.apple.xpc:connection] [0x10442f200] activating connection: mach=true listener=false peer=false name=com.apple.uiintelligencesupport.agent
+2026-11-27 04:28:39.099 Df Heather[14160:af6d] [com.apple.xpc:session] [0x10454e850] Session activated
+2026-11-27 04:28:39.104 Df Heather[14160:af6d] [com.apple.xpc:connection] [0x10197d680] activating connection: mach=true listener=false peer=false name=com.apple.fontservicesd
+2026-11-27 04:28:39.128 Df Heather[14160:af57] [com.apple.network:activity] Create activity from XPC object <nw_activity 50:1 [2FD623F4-39D7-430F-A684-765EC813F97D] (reporting strategy default)>
+2026-11-27 04:28:39.128 Df Heather[14160:af57] [com.apple.network:activity] Create activity from XPC object <nw_activity 50:2 [A5BC53E3-EA8B-4CD3-8296-40ACCE37DC80] (reporting strategy default)>
+2026-11-27 04:28:39.128 Df Heather[14160:af57] [com.apple.network:activity] Set activity <nw_activity 50:1 [2FD623F4-39D7-430F-A684-765EC813F97D] (reporting strategy default)> as the global parent
+2026-11-27 04:28:39.132 Df Heather[14160:af57] [com.apple.xpc:connection] [0x10197df40] activating connection: mach=false listener=false peer=false name=(anonymous)
+2026-11-27 04:28:39.132 Df Heather[14160:af57] [com.apple.UIKit:UpdateScheduler] Target list changed: <CADisplay:LCD PurpleMain>
+2026-11-27 04:28:39.133 Df Heather[14160:af57] [com.apple.UIKit:AppLifecycle] sceneOfRecord: sceneID: sceneID:com.aidenjenner.heather-7E2A1644-7281-482B-A6BB-5614752828D5  persistentID: 7E2A1644-7281-482B-A6BB-5614752828D5
+2026-11-27 04:28:39.134 Df Heather[14160:af57] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x104404800> (7E2A1644-7281-482B-A6BB-5614752828D5)
+2026-11-27 04:28:39.135 Df Heather[14160:af57] [com.apple.Accessibility:AXCommon] Read Per-App on Init: Smart invert = (null)
+2026-11-27 04:28:39.143 Df Heather[14160:af57] [com.apple.gamecontroller:Session] Creating the shared game controller session...
+2026-11-27 04:28:39.168 Df Heather[14160:af57] [com.apple.BackBoard:EventDelivery] policyStatus:<BKSHIDEventDeliveryPolicyObserver: 0x101bf0cc0; process scope; status: target> was:none
+2026-11-27 04:28:39.168 A  Heather[14160:af57] (GameController) [GCDeviceSession] Activate
+2026-11-27 04:28:39.187 Df Heather[14160:af57] [com.apple.UIKit:EventDeferring] [0x101a48930] Scene target of event deferring environments did update: scene: 0x104404800; current systemShellManagesKeyboardFocus: 1; systemShellManagesKeyboardFocusForScene: 1; eligibleForRecordRemoval: 1;
+2026-11-27 04:28:39.188 Df Heather[14160:af57] [com.apple.UIKit:KeyWindow] Scene became target of keyboard event deferring environment: UIWindowScene: 0x104404800; scene identity: com.apple.frontboard.systemappservices/FBSceneManager:sceneID%3Acom.aidenjenner.heather-7E2A1644-7281-482B-A6BB-5614752828D5
+2026-11-27 04:28:39.189 Df Heather[14160:af57] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x104404800> (7E2A1644-7281-482B-A6BB-5614752828D5)
+2026-11-27 04:28:39.191 Df Heather[14160:af57] [com.apple.UIKit:AppLifecycle] sceneOfRecord: sceneID: sceneID:com.aidenjenner.heather-7E2A1644-7281-482B-A6BB-5614752828D5  persistentID: 7E2A1644-7281-482B-A6BB-5614752828D5
+2026-11-27 04:28:39.193 Df Heather[14160:af57] [com.apple.UIKit:Application] Deactivation reason removed: 12; deactivation reasons: 4128 -> 32; animating application lifecycle event: 1
+2026-11-27 04:28:39.193 Df Heather[14160:af57] [com.apple.KeyboardArbiter:Client] Send setDeactivating: N (-DeactivationReason:SuspendedEventsOnly)
+2026-11-27 04:28:39.193 Df Heather[14160:af57] [com.apple.UIKit:Application] Deactivation reason removed: 5; deactivation reasons: 32 -> 0; animating application lifecycle event: 0
+2026-11-27 04:28:39.193 Df Heather[14160:af57] [com.apple.WebKit:Fullscreen] PlaybackSessionManagerProxy::applicationDidBecomeActive(2906663760)
+2026-11-27 04:28:39.193 A  Heather[14160:af57] (GameController) Notify ApplicationDidBecomeActive
+2026-11-27 04:28:39.197 Df Heather[14160:af6f] [com.apple.CoreAnalytics:client] No XPC connection in Simulator
+2026-11-27 04:28:39.201 A  Heather[14160:af6d] (RunningBoardServices) didChangeInheritances
+2026-11-27 04:28:39.204 E  Heather[14160:af6f] [com.apple.app_launch_measurement:General] Failed to send CA Event for app launch measurements for ca_event_type: 0 event_name: com.apple.app_launch_measurement.FirstFramePresentationMetric
+2026-11-27 04:28:39.205 A  Heather[14160:af6f] (CoreFoundation) Updating Key-Value Observers Of Preferences
+2026-11-27 04:28:39.210 A  Heather[14160:af6f] (CoreFoundation) Updating Key-Value Observers Of Preferences
+2026-11-27 04:28:39.212 A  Heather[14160:af6f] (CoreFoundation) Updating Key-Value Observers Of Preferences
+2026-11-27 04:28:39.217 A  Heather[14160:af6f] (CoreFoundation) Updating Key-Value Observers Of Preferences
+2026-11-27 04:28:39.230 A  Heather[14160:af6f] (CoreFoundation) Updating Key-Value Observers Of Preferences
+2026-11-27 04:28:39.232 A  Heather[14160:af6f] (CoreFoundation) Updating Key-Value Observers Of Preferences
+2026-11-27 04:28:39.235 Df Heather[14160:af68] [com.apple.UIKit:BackgroundTask] Ending background task with UIBackgroundTaskIdentifier: 2
+2026-11-27 04:28:39.239 Df Heather[14160:af68] [com.apple.UIKit:BackgroundTask] Ending task with identifier 2 and description: <_UIBackgroundTaskInfo: 0x101bf4900>: taskID = 2, taskName = Persistent SceneSession Map Update, creationTime = 847 (elapsed = 0), _expireHandler: <__NSGlobalBlock__: 0x1e78c84e8>
+2026-11-27 04:28:39.239 Df Heather[14160:af68] [com.apple.UIKit:BackgroundTask] Decrementing reference count for assertion <BKSProcessAssertion: 0x101be9630> (used by background task with identifier 2: <_UIBackgroundTaskInfo: 0x101bf4900>: taskID = 2, taskName = Persistent SceneSession Map Update, creationTime = 847 (elapsed = 0))
+2026-11-27 04:28:39.240 Df Heather[14160:af68] [com.apple.UIKit:BackgroundTask] Will invalidate assertion: <BKSProcessAssertion: 0x101be9630> for task identifier: 2
+2026-11-27 04:28:39.242 A  Heather[14160:af6f] (CoreFoundation) Updating Key-Value Observers Of Preferences
+2026-11-27 04:28:39.244 A  Heather[14160:af6f] (CoreFoundation) Updating Key-Value Observers Of Preferences
+2026-11-27 04:28:39.250 A  Heather[14160:af6f] (CoreFoundation) Updating Key-Value Observers Of Preferences
+2026-11-27 04:28:39.306 A  Heather[14160:af6f] (CoreFoundation) Updating Key-Value Observers Of Preferences
+2026-11-27 04:28:39.321 Df Heather[14160:af57] [com.apple.gamecontroller:Session] Connected devices changed (2 added, 0 removed) -> [2] {(
+    <GCController 0x101914f00 'MFi'/'Gamepad'>,
+    <GCKeyboard 0x1045be000 'Generic Keyboard'>
+)}
+2026-11-27 04:28:39.324 Df Heather[14160:af57] [com.apple.gamecontroller:Session] Connected devices changed (0 added, 0 removed) -> [2] {(
+    <GCController 0x101914f00 'MFi'/'Gamepad'>,
+    <GCKeyboard 0x1045be000 'Generic Keyboard'>
+)}
+2026-11-27 04:28:39.325 Df Heather[14160:af57] [com.apple.gamecontroller:Session] Connected devices changed (0 added, 0 removed) -> [2] {(
+    <GCController 0x101914f00 'MFi'/'Gamepad'>,
+    <GCKeyboard 0x1045be000 'Generic Keyboard'>
+)}
+2026-11-27 04:28:39.326 A  Heather[14160:af57] (GameControllerFoundation) [HID Event System Client] Activate
+2026-11-27 04:28:39.326 Df Heather[14160:af57] (WebKit) WebContent[14168] Installed launch log hook
+2026-11-27 04:28:39.327 Df Heather[14160:af57] [com.apple.xpc:connection] WebContent[14168] [0x1039d6cd0] invalidated after the last release of the connection object
+2026-11-27 04:28:39.328 Df Heather[14160:af57] [com.apple.KeyboardArbiter:Client] startConnection
+2026-11-27 04:28:39.332 Df Heather[14160:af57] [com.apple.xpc:connection] [0x10442fc00] activating connection: mach=true listener=false peer=false name=com.apple.UIKit.KeyboardManagement.hosted
+2026-11-27 04:28:39.332 Df Heather[14160:af57] [com.apple.WebKit:Process] 0x10e0e00c0 - [PID=14168] WebProcessProxy::didFinishLaunching:
+2026-11-27 04:28:39.334 Df Heather[14160:af57] [com.apple.WebKit:ProcessSuspension] 0x10e0e0150 - [PID=14168] ProcessThrottler::didConnectToProcess
+2026-11-27 04:28:39.336 Df Heather[14160:af57] [com.apple.WebKit:ProcessSuspension] 0x10e0e0150 - [PID=14168] ProcessThrottler::setThrottleState: Updating process assertion type to 3 (foregroundActivities=3, backgroundActivities=5)
+2026-11-27 04:28:39.338 Df Heather[14160:af57] [com.apple.WebKit:Process] AssertionCapability::AssertionCapability: taking assertion Foreground
+2026-11-27 04:28:39.339 Df Heather[14160:af57] [com.apple.WebKit:ProcessSuspension] 0x104581200 - WKProcessAssertionBackgroundTaskManager: beginBackgroundTaskWithName
+2026-11-27 04:28:39.339 Df Heather[14160:af57] [com.apple.WebKit:ProcessSuspension] WKProcessAssertionBackgroundTaskManager: Took a FinishTaskInterruptable assertion for own process
+2026-11-27 04:28:39.340 Df Heather[14160:af57] [com.apple.WebKit:ProcessSuspension] 0x10e0e00c0 - [PID=14168] WebProcessProxy::didChangeThrottleState: type=2
+2026-11-27 04:28:39.340 Df Heather[14160:af57] [com.apple.WebKit:ProcessSuspension] 0x10e0e00c0 - [PID=14168] WebProcessProxy::didChangeThrottleState(Foreground) Taking foreground assertion for network process
+2026-11-27 04:28:39.340 Df Heather[14160:af57] [com.apple.WebKit:ProcessSuspension] 0x10e0ec330 - [PID=0, throttler=0x10e140220] ProcessThrottler::Activity::Activity: Starting foreground activity / 'Networking for foreground view(s)'
+2026-11-27 04:28:39.340 Df Heather[14160:af57] [com.apple.WebKit:ProcessSuspension] 0x10e0ec360 - [PID=0, throttler=0x10e11c270] ProcessThrottler::Activity::Activity: Starting foreground activity / 'GPU for foreground view(s)'
+2026-11-27 04:28:39.340 Df Heather[14160:af57] [com.apple.WebKit:Process] 0x10e140190 - NetworkProcessProxy::sendXPCEndpointToProcess(0x10e0e00c0) state = 1 has connection = 1 XPC endpoint message = 0x0
+2026-11-27 04:28:39.341 Df Heather[14160:af57] [com.apple.KeyboardArbiter:Client] handleKeyboardChange: set currentKeyboard:N (wasKeyboard:N)
+2026-11-27 04:28:39.343 Df Heather[14160:af57] [com.apple.UIKit:KeyboardSceneDelegate] forceReloadInputViews
+2026-11-27 04:28:39.343 Df Heather[14160:af57] [com.apple.UIKit:KeyboardSceneDelegate] Reloading input views for key-window scene responder: <(null): 0x0; > force:Y
+2026-11-27 04:28:39.345 Df Heather[14160:af57] [com.apple.UIKit:KeyboardArbiterClientLog] isWritingToolsHandlingKeyboardTracking:Y (WT ready:Y, Arbiter ready:Y)
+2026-11-27 04:28:39.353 Df Heather[14160:af7f] [com.apple.WebKit:ProcessSuspension] 0x10e15c0c0 - ProcessAssertion::acquireSync Trying to take RBS assertion 'WebProcess Foreground Assertion' for process with PID=14168
+2026-11-27 04:28:39.372 Df Heather[14160:af7f] [com.apple.WebKit:ProcessSuspension] 0x10e15c0c0 - ProcessAssertion() Successfully granted capability
+2026-11-27 04:28:39.376 Df Heather[14160:af6e] [com.apple.runningboard:process] Starting death monitoring for handle [xpcservice<com.apple.WebKit.GPU([app<com.aidenjenner.heather((null))>:14160])>{vt hash: 223737757}[uuid:852D409A-BF85-4C14-A100-B9CAE02A8D9B]{definition:com.apple.WebKit.GPU[extension][client]}:14170]
+2026-11-27 04:28:39.402 Df Heather[14160:af57] [com.apple.network:activity] <nw_activity 50:1 [2FD623F4-39D7-430F-A684-765EC813F97D] (global parent) (reporting strategy default) complete (reason success)> complete with reason 2 (success), duration 2622ms
+2026-11-27 04:28:39.402 Df Heather[14160:af57] [com.apple.network:activity] <nw_activity 50:2 [A5BC53E3-EA8B-4CD3-8296-40ACCE37DC80] (reporting strategy default) complete (reason success)> complete with reason 2 (success), duration 2623ms
+2026-11-27 04:28:39.402 Df Heather[14160:af57] [com.apple.network:activity] Unsetting the global parent activity <nw_activity 50:1 [2FD623F4-39D7-430F-A684-765EC813F97D] (global parent) (reporting strategy default) complete (reason success)>
+2026-11-27 04:28:39.403 Df Heather[14160:af57] [com.apple.network:activity] Unset the global parent activity
+2026-11-27 04:28:39.403 Df Heather[14160:af57] [com.apple.app_launch_measurement:ApplicationLaunch] alm_release_pageins_recording_assertion: releasing pageins recording assertion
+2026-11-27 04:28:39.405 Df Heather[14160:af57] [com.apple.WebKit:ProcessSuspension] 0x10e0ec0c0 - [PID=14168, throttler=0x10e0e0150] ProcessThrottler::Activity::invalidate: Ending foreground activity / 'Process initialization'
+2026-11-27 04:28:39.406 E  Heather[14160:af6f] [com.apple.app_launch_measurement:General] Failed to send CA Event for app launch measurements for ca_event_type: 1 event_name: com.apple.app_launch_measurement.ExtendedLaunchMetrics
+2026-11-27 04:28:39.406 Df Heather[14160:af57] [com.apple.WebKit:ProcessSuspension] 0x10e140190 - NetworkProcessProxy::getNetworkProcessConnection: Taking a background assertion because web process pid 14168 (core identifier 2) is requesting a connection
+2026-11-27 04:28:39.407 Df Heather[14160:af57] [com.apple.WebKit:Process] WebContent[14168] getNetworkProcessConnection: Request connection for core identifier 2
+2026-11-27 04:28:39.434 Df Heather[14160:af6e] [com.apple.extensionkit:launch] Created new process ExtensionProcess: bundleID: com.apple.WebKit.GPU instance ID: Optional([_EXExtensionInstanceIdentifier: 852D409A-BF85-4C14-A100-B9CAE02A8D9B]) pid: 14170.
+2026-11-27 04:28:39.435 Df Heather[14160:af6e] [com.apple.WebKit:Process] AssertionCapability::AssertionCapability: taking assertion Foreground
+2026-11-27 04:28:39.436 Df Heather[14160:af57] [com.apple.xpc:connection] [0x10442f340] activating connection: mach=false listener=false peer=false name=(anonymous)
+2026-11-27 04:28:39.629 Df Heather[14160:af57] [com.apple.WebKit:Process] 0x10e11c1e0 - GPUProcessProxy::didFinishLaunching:
+2026-11-27 04:28:39.629 Df Heather[14160:af57] [com.apple.WebKit:Process] 0x10e11c1e0 - GPUProcessProxy::connectionWillOpen:
+2026-11-27 04:28:39.629 Df Heather[14160:af57] [com.apple.WebKit:ProcessSuspension] 0x10e11c270 - [PID=14170] ProcessThrottler::didConnectToProcess
+2026-11-27 04:28:39.629 Df Heather[14160:af57] [com.apple.WebKit:ProcessSuspension] 0x10e11c270 - [PID=14170] ProcessThrottler::setThrottleState: Updating process assertion type to 3 (foregroundActivities=2, backgroundActivities=1)
+2026-11-27 04:28:39.629 Df Heather[14160:af57] [com.apple.WebKit:Process] AssertionCapability::AssertionCapability: taking assertion Foreground
+2026-11-27 04:28:39.629 Df Heather[14160:af69] [com.apple.WebKit:ProcessSuspension] 0x10e15c180 - ProcessAssertion::acquireSync Trying to take RBS assertion 'GPUProcess Foreground Assertion' for process with PID=14170
+2026-11-27 04:28:39.630 Df Heather[14160:af57] [com.apple.WebKit:Process] 0x10e140190 - NetworkProcessProxy::sendXPCEndpointToProcess(0x10e11c1e0) state = 1 has connection = 1 XPC endpoint message = 0x0
+2026-11-27 04:28:39.632 A  Heather[14160:af6b] (CoreServicesInternal) CFURLCreateBookmarkData
+2026-11-27 04:28:39.633 Df Heather[14160:af69] [com.apple.WebKit:ProcessSuspension] 0x10e15c180 - ProcessAssertion() Successfully granted capability
+2026-11-27 04:28:39.702 Df Heather[14160:af57] [com.apple.WebKit:ProcessSuspension] 0x10e0ec150 - [PID=14170, throttler=0x10e11c270] ProcessThrottler::Activity::invalidate: Ending foreground activity / 'Process initialization'
+2026-11-27 04:28:39.897 Df Heather[14160:af66] [com.apple.runningboard:process] Starting death monitoring for handle [xpcservice<com.apple.WebKit.Networking([app<com.aidenjenner.heather((null))>:14160])>{vt hash: 114736818}[uuid:3079F6F9-3C70-4499-A6DC-296AB96BC926]{definition:com.apple.WebKit.Networking[extension][client]}:14173]
+2026-11-27 04:28:39.905 Df Heather[14160:af66] [com.apple.extensionkit:launch] Created new process ExtensionProcess: bundleID: com.apple.WebKit.Networking instance ID: Optional([_EXExtensionInstanceIdentifier: 3079F6F9-3C70-4499-A6DC-296AB96BC926]) pid: 14173.
+2026-11-27 04:28:39.906 Df Heather[14160:af66] [com.apple.WebKit:Process] AssertionCapability::AssertionCapability: taking assertion Foreground
+2026-11-27 04:28:39.907 Df Heather[14160:af57] [com.apple.xpc:connection] [0x10442c280] activating connection: mach=false listener=false peer=false name=(anonymous)
+2026-11-27 04:28:40.141 Df Heather[14160:af57] [com.apple.WebKit:Process] 0x10e140190 - NetworkProcessProxy::didFinishLaunching
+2026-11-27 04:28:40.141 F  Heather[14160:af57] [com.apple.WebKit:Process] Networking process (0x10e140190) took 1.440584 seconds to launch
+2026-11-27 04:28:40.141 A  Heather[14160:af57] (libsystem_trace.dylib) Activity for state dumps
+2026-11-27 04:28:40.142 Df Heather[14160:af57] [com.apple.WebKit:ProcessSuspension] 0x10e140220 - [PID=14173] ProcessThrottler::didConnectToProcess
+2026-11-27 04:28:40.142 Df Heather[14160:af57] [com.apple.WebKit:ProcessSuspension] 0x10e140220 - [PID=14173] ProcessThrottler::setThrottleState: Updating process assertion type to 3 (foregroundActivities=2, backgroundActivities=2)
+2026-11-27 04:28:40.142 Df Heather[14160:af57] [com.apple.WebKit:Process] AssertionCapability::AssertionCapability: taking assertion Foreground
+2026-11-27 04:28:40.142 Df Heather[14160:af7f] [com.apple.WebKit:ProcessSuspension] 0x10e15c240 - ProcessAssertion::acquireSync Trying to take RBS assertion 'NetworkProcess Foreground Assertion' for process with PID=14173
+2026-11-27 04:28:40.142 Sd Heather[14160:0] (21AB2359-DEEC-3444-94FE-B7257E43BE34) IOHIDManager State
+{
+    DispatchQueue = 0;
+    RunLoop = 1;
+    createOptions = 0;
+    isOpen = 0;
+    openOptions = 0;
+}
+2026-11-27 04:28:40.142 Sd Heather[14160:0] (C5DE29B6-3E2C-34DE-AA3C-32346C8FF586) UAUserActivity
+UAUserActivityManager supportsActivityContinuation=YES isEnabled=YES serverPid=0 PROJECT:UserActivity-551
+2026-11-27 04:28:40.144 Df Heather[14160:af7f] [com.apple.WebKit:ProcessSuspension] 0x10e15c240 - ProcessAssertion() Successfully granted capability
+2026-11-27 04:28:40.145 Df Heather[14160:af57] [com.apple.WebKit:Process] 0x10e140190 - NetworkProcessProxy::sendXPCEndpointToProcess(0x10e0e00c0) state = 1 has connection = 1 XPC endpoint message = 0x101914b00
+2026-11-27 04:28:40.145 Df Heather[14160:af57] [com.apple.WebKit:Process] 0x10e140190 - NetworkProcessProxy::sendXPCEndpointToProcess(0x10e11c1e0) state = 1 has connection = 1 XPC endpoint message = 0x101914b00
+2026-11-27 04:28:40.146 Df Heather[14160:af57] [com.apple.xpc:connection] WebContent[14168] [0x1039dbf40] activating connection: mach=false listener=false peer=false name=(anonymous)
+2026-11-27 04:28:40.197 Df Heather[14160:af57] [com.apple.WebKit:ProcessSuspension] 0x10e0ec210 - [PID=14173, throttler=0x10e140220] ProcessThrottler::Activity::invalidate: Ending foreground activity / 'Process initialization'
+2026-11-27 04:28:40.259 Df Heather[14160:af57] [com.apple.WebKit:Loading] WebContent[14168] Received Launch Services database
+2026-11-27 04:28:40.259 Df Heather[14160:af57] [com.apple.WebKit:Process] WebContent[14168] 0x110060100 - [sessionID=1] WebProcess::initializeLogForwarding: Debug logging enabled: 0
+2026-11-27 04:28:40.265 Df Heather[14160:af57] [com.apple.WebKit:Process] WebContent[14168] WebProcess::platformInitializeWebProcess
+2026-11-27 04:28:40.283 Df Heather[14160:af57] [com.apple.xpc:connection] WebContent[14168] [0x1039dd280] activating connection: mach=false listener=true peer=false name=(anonymous)
+2026-11-27 04:28:40.284 Df Heather[14160:af57] [com.apple.xpc:connection] WebContent[14168] [0x1039dd280] Connection returned listener port: 0x2f03
+2026-11-27 04:28:40.284 Df Heather[14160:af57] [com.apple.xpc:connection] WebContent[14168] [0x1039dd3c0] activating connection: mach=false listener=false peer=false name=(anonymous)
+2026-11-27 04:28:40.284 Df Heather[14160:af57] [com.apple.xpc:connection] WebContent[14168] [0x10713c000] activating connection: mach=false listener=false peer=true name=com.apple.xpc.anonymous.0x1039dd280.peer[14168].0x10713c000
+2026-11-27 04:28:40.356 Df Heather[14160:af57] [com.apple.Accessibility:AXSupportCommon] WebContent[14168] Application accessibility enabled: 0, (
+	0   libAccessibility.dylib              0x0000000192a7d6d4 _AXSApplicationAccessibilitySetEnabled + 80
+	1   WebKit                              0x000000018e85517c _ZN6WebKit10WebProcess28platformInitializeWebProcessERNS_28WebProcessCreationParametersE + 2196
+	2   WebKit                              0x000000018ea4ba0c _ZN6WebKit10WebProcess20initializeWebProcessEONS_28WebProcessCreationParametersEON3WTF17CompletionHandlerIFvN7WebCore15ProcessIdentityEEEE + 188
+	3   WebKit                              0x000000018e399bdc _ZN3IPC18handleMessageAsyncIN8Messages10WebProcess20InitializeWebProcessENS_10ConnectionEN6WebKit10WebProcessES6_FvONS5_28WebProcessCreationParametersEON3WTF17CompletionHandlerIFvN7WebCore15ProcessIdentityEEEEEEEvRT0_RNS_7DecoderEPT1_MT2_T3_ + 228
+	4   WebKit                              0x000000018ee1a098 _ZN3IPC10Connection15dispatchMessageEN3WTF9UniqueRefINS_7DecoderEEE + 620
+	5   WebKit                              0x000000018ee357e0 _Z<…>
+2026-11-27 04:28:40.357 Df Heather[14160:af57] [com.apple.Accessibility:AXSupportCommon] WebContent[14168] Stored App AX setting: 0
+2026-11-27 04:28:40.361 Df Heather[14160:af57] [com.apple.Accessibility:AXSupportCommon] WebContent[14168] AXS AccessibilityEnabled: (app ax: 0), ax settings: 0, cached: 0
+2026-11-27 04:28:40.365 Df Heather[14160:af66] [com.apple.xpc:connection] [0x10197df40] Re-initialization successful; calling out to event handler with XPC_ERROR_CONNECTION_INTERRUPTED
+2026-11-27 04:28:40.785 Df Heather[14160:af57] [com.apple.WebKit:Loading] 0x101ad8718 - [pageProxyID=7, webPageID=8, PID=14168] WebPageProxy::decidePolicyForNavigationAction: frameID=4294967297, isMainFrame=1, navigationID=14
+2026-11-27 04:28:40.802 Df Heather[14160:afae] [com.apple.WebKit:RemoteLayerBuffers] WebContent[14168]: [renderingBackend=11] Created rendering backend for pageProxyID=7, webPageID=8
+2026-11-27 04:28:40.803 A  Heather[14160:af66] (CoreFoundation) Loading Preferences From User Session CFPrefsD
+2026-11-27 04:28:40.804 Df Heather[14160:af66] [com.apple.xpc:connection] [0x10197f0c0] activating connection: mach=true listener=false peer=false name=com.apple.Safari.SafeBrowsing.Service
+2026-11-27 04:28:40.804 Df Heather[14160:afae] [com.apple.WebKit:Process] WebContent[14168] GPUProcessConnection::create - 0x110052220
+2026-11-27 04:28:40.814 Df Heather[14160:af57] [com.apple.WebKit:AppSSO] 0x10e0cc0d0 - SOAuthorizationCoordinator::tryAuthorize
+2026-11-27 04:28:40.826 A  Heather[14160:af57] (AppSSO) canPerformAuthorizationWithURL
+2026-11-27 04:28:40.829 A  Heather[14160:af57] (AppSSOCore) canPerformAuthorizationWithURL
+2026-11-27 04:28:40.836 Df Heather[14160:af57] [com.apple.authkit:nto] Fetching native takeover URLs
+2026-11-27 04:28:40.842 Df Heather[14160:af57] [com.apple.xpc:connection] [0x10197d900] activating connection: mach=true listener=false peer=false name=com.apple.ak.authorizationservices.xpc
+2026-11-27 04:28:40.845 Df Heather[14160:af57] [com.apple.WebKit:Sandbox] Successfully created a sandbox extension for '/Users/runner/Library/Developer/CoreSimulator/Devices/85CA756E-61E0-4D53-8B3B-E601FE04D648/data/Containers/Data/Application/CE6D9BD4-625A-4E7C-A34C-5FB5174678AC/tmp/com.aidenjenner.heather/WebKit/MediaCache'
+2026-11-27 04:28:40.845 Df Heather[14160:af57] [com.apple.WebKit:Sandbox] Successfully created a sandbox extension for '/Users/runner/Library/Developer/CoreSimulator/Devices/85CA756E-61E0-4D53-8B3B-E601FE04D648/data/Containers/Data/Application/CE6D9BD4-625A-4E7C-A34C-5FB5174678AC/Library/WebKit/com.aidenjenner.heather/WebsiteData/MediaKeys/v1'
+2026-11-27 04:28:40.846 Df Heather[14160:af57] [com.apple.WebKit:ProcessSuspension] 0x10e11c1e0 - GPUProcessProxy is taking a background assertion because a web process is requesting a connection
+2026-11-27 04:28:40.875 Df Heather[14160:af66] [com.apple.authkit:nto] URL shouldn't be processed
+2026-11-27 04:28:40.875 Df Heather[14160:af66] [com.apple.AppSSO:SOConfigurationClient] -[SOConfigurationClient init]  on <SOConfigurationClient: 0x101babc80>
+2026-11-27 04:28:40.876 Df Heather[14160:af66] [com.apple.xpc:connection] [0x10197de00] activating connection: mach=true listener=false peer=false name=com.apple.AppSSO.service-xpc
+2026-11-27 04:28:40.877 Df Heather[14160:af66] [com.apple.AppSSO:SOServiceConnection] <SOServiceConnection: 0x101babc40>: new XPC connection
+2026-11-27 04:28:40.877 Df Heather[14160:af69] [com.apple.AppSSO:SOConfigurationClient] -[SOConfigurationClient _reloadConfig]  on <SOConfigurationClient: 0x101babc80>
+2026-11-27 04:28:40.878 Df Heather[14160:af69] [com.apple.AppSSO:SOClient] -[SOClient configurationWithCompletion:]  on <SOClient: 0x1019edbf0>
+2026-11-27 04:28:40.975 Df Heather[14160:af57] [com.apple.WebKit:Process] 0x10e11c1e0 - GPUProcessProxy::didCreateContextForVisibilityPropagation: webPageProxyID: 7, pagePID: 8, contextID: 3
+2026-11-27 04:28:40.977 Df Heather[14160:af57] [com.apple.WebKit:Process] Created visibility propagation interaction <_UIVisibilityPropagationInteraction: 0x101bf0d80> for process with PID=14170
+2026-11-27 04:28:41.008 Df Heather[14160:afae] [com.apple.WebKit:Process] WebContent[14168] 0x110052220 - GPUProcessConnection::didInitialize
+2026-11-27 04:28:41.009 Df Heather[14160:afae] [com.apple.Accessibility:AXCommon] WebContent[14168] Read Per-App on Init: Smart invert = (null)
+2026-11-27 04:28:41.096 E  Heather[14160:af57] [com.apple.WebKit:ResourceLoadStatistics] Failed to request storage access quirks from WebPrivacy.
+2026-11-27 04:28:41.096 E  Heather[14160:af57] [com.apple.WebKit:ResourceLoadStatistics] Failed to request storage access user agent string quirks from WebPrivacy.
+2026-11-27 04:28:41.096 E  Heather[14160:af57] [com.apple.WebKit:ResourceLoadStatistics] Failed to request known fingerprinting scripts from WebPrivacy: Error Domain=WebPrivacyErrorDomain Code=1001 "List data not found" UserInfo={NSLocalizedDescription=List data not found}
+2026-11-27 04:28:41.098 E  Heather[14160:af57] [com.apple.WebKit:ResourceLoadStatistics] Failed to request query parameters from WebPrivacy.
+2026-11-27 04:28:41.599 Df Heather[14160:af57] [com.apple.WebKit:RemoteLayerTree] RemoteLayerTreeDrawingAreaProxy(10)::hideContentUntilPendingUpdate completed
+2026-11-27 04:28:41.613 Df Heather[14160:af57] [com.apple.WebKit:RemoteLayerTree] RemoteLayerTreeDrawingAreaProxy(10) Unhiding layer tree
+2026-11-27 04:28:41.882 Df Heather[14160:af69] [com.apple.AppSSO:SOClient] configurationWithCompletion: success = YES, error = (null)
+2026-11-27 04:28:41.884 Df Heather[14160:af57] [com.apple.WebKit:AppSSO] SOAuthorizationCoordinator::tryAuthorize: The requested URL is not registered for AppSSO handling. No further action needed.
+2026-11-27 04:28:41.884 Df Heather[14160:af57] [com.apple.WebKit:Loading] 0x101ad8718 - [pageProxyID=7, webPageID=8, PID=14168] WebPageProxy::decidePolicyForNavigationAction: listener called: frameID=4294967297, isMainFrame=1, navigationID=14, policyAction=Use, isAppBoundDomain=0, wasNavigationIntercepted=0
+2026-11-27 04:28:41.884 Df Heather[14160:af57] [com.apple.WebKit:Loading] 0x101ad8718 - [pageProxyID=7, webPageID=8, PID=14168] WebPageProxy::receivedNavigationActionPolicyDecision: frameID=4294967297, isMainFrame=1, navigationID=14, policyAction=Use
+2026-11-27 04:28:41.886 Df Heather[14160:af57] [com.apple.WebKit:ProcessSwapping] 0x101ad8718 - [pageProxyID=7, webPageID=8, PID=14168] WebPageProxy::decidePolicyForNavigationAction: keep using process 14168 for navigation, reason=Process has not yet committed any provisional loads
+2026-11-27 04:28:41.886 Df Heather[14160:af57] [com.apple.WebKit:Process] 0x10e0e00c0 - [PID=14168] WebProcessProxy::canTerminateAuxiliaryProcess: returns false (pageCount=1, remotePageCount=0, provisionalPageCount=0, suspendedPageCount=0, m_isInProcessCache=0, m_shutdownPreventingScopeCounter=0)
+2026-11-27 04:28:41.887 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [webFrameID=4294967297, webPageID=8] WebFrameLoaderClient::dispatchDecidePolicyForNavigationAction: Got policyAction Use from async IPC
+2026-11-27 04:28:41.887 Df Heather[14160:afae] [com.apple.WebKit:Loading] WebContent[14168] 0x110028fc0 - [pageID=8, frameID=4294967297] PolicyChecker::checkNavigationPolicy: continuing because this policyAction from dispatchDecidePolicyForNavigationAction is Use
+2026-11-27 04:28:41.887 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=8 frameID=4294967297 isMainFrame=1] FrameLoader::stopAllLoaders: m_provisionalDocumentLoader=0, m_documentLoader=4581003264
+2026-11-27 04:28:41.887 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [pageID=8, frameID=4294967297, isMainFrame=1] DocumentLoader::stopLoading
+2026-11-27 04:28:41.887 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=8 frameID=4294967297 isMainFrame=1] FrameLoader::setProvisionalDocumentLoader: Setting provisional document loader to 4580995072 (was 0)
+2026-11-27 04:28:41.887 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=8 frameID=4294967297 isMainFrame=1] FrameLoader::continueLoadAfterNavigationPolicy: Setting provisional document loader (m_provisionalDocumentLoader=4580995072)
+2026-11-27 04:28:41.887 Df Heather[14160:afae] [com.apple.WebKit:ProcessSuspension] WebContent[14168]: [webPageID=8] WebPage::freezeLayerTree: Adding a reason to freeze layer tree (reason=1, new=1, old=0)
+2026-11-27 04:28:41.887 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=8 frameID=4294967297 isMainFrame=1] FrameLoader::setPolicyDocumentLoader: Setting policy document loader to 0 (was 4580995072)
+2026-11-27 04:28:41.887 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=8 frameID=4294967297 isMainFrame=1] FrameLoader::prepareForLoadStart: Starting frame load
+2026-11-27 04:28:41.888 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: ProgressTracker::progressStarted: frameID 4294967297, value 0.100000, tracked frames 1, originating frameID 4294967297, isMainLoad 1
+2026-11-27 04:28:41.890 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [pageID=8, frameID=4294967297, isMainFrame=1] DocumentLoader::startLoadingMainResource: Starting load
+2026-11-27 04:28:41.891 Df Heather[14160:af57] [com.apple.WebKit:Loading] 0x101ad8718 - [pageProxyID=7, webPageID=8, PID=14168] WebPageProxy::didStartProvisionalLoadForFrame: frameID=4294967297, isMainFrame=1
+2026-11-27 04:28:41.891 Df Heather[14160:af57] [com.apple.WebKit:Loading] 0x10e0e00c0 - [PID=14168] WebProcessProxy::didStartProvisionalLoadForMainFrame:
+2026-11-27 04:28:41.892 E  Heather[14160:afae] [com.apple.WebKit:ResourceLoadStatistics] WebContent[14168] Unable to filter tracking query parameters (missing data)
+2026-11-27 04:28:41.897 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [pageID=8, frameID=4294967297, resourceID=20] ResourceLoader::willSendRequestInternal: calling completion handler
+2026-11-27 04:28:41.897 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=8, frameID=4294967297, resourceID=20 SubResourceLoader::willSendRequestInternal: resource load finished; calling completion handler
+2026-11-27 04:28:41.897 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168] 0x1100680e0 - [resourceLoader=0x111000800, frameLoader=0x11018c100, frame=0x110027260, webPageID=8, frameID=4294967297, resourceID=20] WebLoaderStrategy::tryLoadingUsingURLSchemeHandler: URL will be handled by a UIProcess URL scheme handler
+2026-11-27 04:28:41.897 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168] [schemeHandler=1, webPageID=8, frameID=4294967297, taskID=20] WebURLSchemeTaskProxy::startLoading
+2026-11-27 04:28:41.908 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168] [schemeHandler=1, webPageID=8, frameID=4294967297, taskID=20] WebURLSchemeTaskProxy::didReceiveData: Received data during response processing, queuing it.
+2026-11-27 04:28:41.908 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168] [schemeHandler=1, webPageID=8, frameID=4294967297, taskID=20] WebURLSchemeTaskProxy::didComplete
+2026-11-27 04:28:42.608 Df Heather[14160:af57] [com.apple.WebKit:ResourceLoadStatistics] StorageAccessPromptQuirkController::didUpdateCachedListData: Loaded 1 storage access prompt(s) quirks from WebPrivacy.
+2026-11-27 04:28:42.696 A  Heather[14160:af57] (libsystem_containermanager.dylib) container_system_group_path_for_identifier
+2026-11-27 04:28:42.696 Df Heather[14160:af57] [com.apple.containermanager:xpc] Requesting container lookup; class = 13, identifier = com.apple.nsurlsessiond, group_identifier = systemgroup.com.apple.nsurlstoragedresources, create = 1, temp = 0, euid = 501, uid = 501
+2026-11-27 04:28:42.696 A  Heather[14160:af57] (libsystem_containermanager.dylib) container_query_t
+2026-11-27 04:28:42.696 Df Heather[14160:af57] [com.apple.containermanager:xpc] Query; euid = 501, uid = 501, class = 13, identifier = [com.apple.nsurlsessiond](1), flags = 900000003
+2026-11-27 04:28:42.697 Df Heather[14160:af57] [com.apple.containermanager:unspecified] _container_query_get_result_at_index: success
+2026-11-27 04:28:42.697 A  Heather[14160:af57] (libsystem_containermanager.dylib) container_copy_object
+2026-11-27 04:28:42.697 Df Heather[14160:af57] [com.apple.containermanager:unspecified] container_system_group_path_for_identifier: success
+2026-11-27 04:28:46.992 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=8 frameID=4294967297 isMainFrame=1] FrameLoader::setDocumentLoader: Setting document loader to 4580995072 (was 4581003264)
+2026-11-27 04:28:46.993 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [pageID=8, frameID=4294967297, isMainFrame=1] DocumentLoader::detachFromFrame
+2026-11-27 04:28:46.994 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [pageID=8, frameID=4294967297, isMainFrame=1] DocumentLoader::stopLoading
+2026-11-27 04:28:46.994 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=8 frameID=4294967297 isMainFrame=1] FrameLoader::transitionToCommitted: Clearing provisional document loader (m_provisionalDocumentLoader=4580995072)
+2026-11-27 04:28:46.994 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=8 frameID=4294967297 isMainFrame=1] FrameLoader::setProvisionalDocumentLoader: Setting provisional document loader to 0 (was 4580995072)
+2026-11-27 04:28:46.998 Df Heather[14160:af57] [com.apple.WebKit:Loading] 0x101ad8718 - [pageProxyID=7, webPageID=8, PID=14168] WebPageProxy::didNavigateWithNavigationDataShared:
+2026-11-27 04:28:47.002 E  Heather[14160:afae] [com.apple.WebKit:ResourceLoadStatistics] WebContent[14168] Unable to hide query parameters from script (missing data)
+2026-11-27 04:28:47.002 Df Heather[14160:afae] [com.apple.WebKit:ProcessSuspension] WebContent[14168]: [webPageID=8] WebPage::unfreezeLayerTree: Removing a reason to freeze layer tree (reason=128, new=1, old=1)
+2026-11-27 04:28:47.002 Df Heather[14160:afae] [com.apple.WebKit:ProcessSuspension] WebContent[14168]: [webPageID=8] WebPage::unfreezeLayerTree: Removing a reason to freeze layer tree (reason=128, new=1, old=1)
+2026-11-27 04:28:47.010 Df Heather[14160:afae] [com.apple.WebKit:ProcessSuspension] WebContent[14168]: [webPageID=8] WebPage::unfreezeLayerTree: Removing a reason to freeze layer tree (reason=32, new=1, old=1)
+2026-11-27 04:28:47.011 Df Heather[14160:af57] [com.apple.WebKit:Loading] 0x101ad8718 - [pageProxyID=7, webPageID=8, PID=14168] WebPageProxy::didCommitLoadForFrame: frameID=4294967297, isMainFrame=1
+2026-11-27 04:28:47.020 E  Heather[14160:af57] [com.apple.WebKit:ResourceLoadStatistics] Failed to request allowed query parameters from WebPrivacy.
+2026-11-27 04:28:47.095 Df Heather[14160:afae] [com.apple.WebKit:ProcessSuspension] WebContent[14168]: [webPageID=8] WebPage::freezeLayerTree: Adding a reason to freeze layer tree (reason=128, new=129, old=1)
+2026-11-27 04:28:47.099 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [pageID=8, frameID=4294967297, resourceID=27] ResourceLoader::willSendRequestInternal: calling completion handler
+2026-11-27 04:28:47.099 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=8, frameID=4294967297, resourceID=27 SubResourceLoader::willSendRequestInternal: resource load finished; calling completion handler
+2026-11-27 04:28:47.099 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [webPageID=8, frameID=4294967297, resourceID=27] WebLoaderStrategy::scheduleLoad: URL will be scheduled with the NetworkProcess
+2026-11-27 04:28:47.099 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [webPageID=8, frameID=4294967297, resourceID=27] WebLoaderStrategy::scheduleLoad: Resource is being scheduled with the NetworkProcess (priority=3, existingNetworkResourceLoadIdentifierToResume=0)
+2026-11-27 04:28:47.100 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [webPageID=8, frameID=4294967297, resourceID=27] WebResourceLoader::WebResourceLoader
+2026-11-27 04:28:47.140 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168] [schemeHandler=1, webPageID=8, frameID=4294967297, taskID=20] WebURLSchemeTaskProxy::didComplete
+2026-11-27 04:28:47.140 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=8, frameID=4294967297, resourceID=20 SubResourceLoader::didFinishLoading
+2026-11-27 04:28:47.357 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [webPageID=8, frameID=4294967297, resourceID=27] WebResourceLoader::didReceiveResponse: (httpStatusCode=200)
+2026-11-27 04:28:47.357 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [webPageID=8, frameID=4294967297, resourceID=27] WebResourceLoader::didReceiveData: Started receiving data
+2026-11-27 04:28:47.358 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [webPageID=8, frameID=4294967297, resourceID=27] WebResourceLoader::didFinishResourceLoad: (length=5713)
+2026-11-27 04:28:47.358 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=8, frameID=4294967297, resourceID=27 SubResourceLoader::didFinishLoading
+2026-11-27 04:28:47.358 Df Heather[14160:afae] [com.apple.WebKit:ProcessSuspension] WebContent[14168]: [webPageID=8] WebPage::unfreezeLayerTree: Removing a reason to freeze layer tree (reason=128, new=1, old=129)
+2026-11-27 04:28:47.551 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [pageID=8, frameID=4294967297, resourceID=28] ResourceLoader::willSendRequestInternal: calling completion handler
+2026-11-27 04:28:47.551 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=8, frameID=4294967297, resourceID=28 SubResourceLoader::willSendRequestInternal: resource load finished; calling completion handler
+2026-11-27 04:28:47.551 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168] 0x1100680e0 - [resourceLoader=0x111006800, frameLoader=0x11018c100, frame=0x110027260, webPageID=8, frameID=4294967297, resourceID=28] WebLoaderStrategy::tryLoadingUsingURLSchemeHandler: URL will be handled by a UIProcess URL scheme handler
+2026-11-27 04:28:47.551 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168] [schemeHandler=1, webPageID=8, frameID=4294967297, taskID=28] WebURLSchemeTaskProxy::startLoading
+2026-11-27 04:28:47.661 Df Heather[14160:af57] [com.apple.UserNotifications:Connections] [com.aidenjenner.heather] Creating a user notification center
+2026-11-27 04:28:47.661 Df Heather[14160:af57] [com.apple.UserNotifications:Connections] [com.aidenjenner.heather] Getting notification settings (async)
+2026-11-27 04:28:47.664 Df Heather[14160:af6e] [com.apple.xpc:connection] [0x10442df40] activating connection: mach=true listener=false peer=false name=com.apple.usernotifications.listener
+2026-11-27 04:28:47.673 Df Heather[14160:af6b] [com.apple.UserNotifications:Connections] [com.aidenjenner.heather] Got notification settings [ hasResult: 1 hasCompletionHandler: 1 ]
+2026-11-27 04:28:47.726 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [pageID=8, frameID=4294967297, resourceID=34] ResourceLoader::willSendRequestInternal: calling completion handler
+2026-11-27 04:28:47.726 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=8, frameID=4294967297, resourceID=34 SubResourceLoader::willSendRequestInternal: resource load finished; calling completion handler
+2026-11-27 04:28:47.726 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [webPageID=8, frameID=4294967297, resourceID=34] WebLoaderStrategy::scheduleLoad: URL will be loaded as data
+2026-11-27 04:28:47.727 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [webPageID=0, frameID=0, resourceID=0] WebResourceLoader::WebResourceLoader
+2026-11-27 04:28:47.764 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [pageID=8, frameID=4294967297, resourceID=35] ResourceLoader::willSendRequestInternal: calling completion handler
+2026-11-27 04:28:47.764 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=8, frameID=4294967297, resourceID=35 SubResourceLoader::willSendRequestInternal: resource load finished; calling completion handler
+2026-11-27 04:28:47.764 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [webPageID=8, frameID=4294967297, resourceID=35] WebLoaderStrategy::scheduleLoad: URL will be scheduled with the NetworkProcess
+2026-11-27 04:28:47.764 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [webPageID=8, frameID=4294967297, resourceID=35] WebLoaderStrategy::scheduleLoad: Resource is being scheduled with the NetworkProcess (priority=2, existingNetworkResourceLoadIdentifierToResume=0)
+2026-11-27 04:28:47.764 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [webPageID=8, frameID=4294967297, resourceID=35] WebResourceLoader::WebResourceLoader
+2026-11-27 04:28:47.764 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [pageID=8, frameID=4294967297, resourceID=36] ResourceLoader::willSendRequestInternal: calling completion handler
+2026-11-27 04:28:47.764 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=8, frameID=4294967297, resourceID=36 SubResourceLoader::willSendRequestInternal: resource load finished; calling completion handler
+2026-11-27 04:28:47.764 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [webPageID=8, frameID=4294967297, resourceID=36] WebLoaderStrategy::scheduleLoad: URL will be scheduled with the NetworkProcess
+2026-11-27 04:28:47.764 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [webPageID=8, frameID=4294967297, resourceID=36] WebLoaderStrategy::scheduleLoad: Resource is being scheduled with the NetworkProcess (priority=2, existingNetworkResourceLoadIdentifierToResume=0)
+2026-11-27 04:28:47.764 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [webPageID=8, frameID=4294967297, resourceID=36] WebResourceLoader::WebResourceLoader
+2026-11-27 04:28:47.764 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [pageID=8, frameID=4294967297, resourceID=37] ResourceLoader::willSendRequestInternal: calling completion handler
+2026-11-27 04:28:47.764 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=8, frameID=4294967297, resourceID=37 SubResourceLoader::willSendRequestInternal: resource load finished; calling completion handler
+2026-11-27 04:28:47.764 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [webPageID=8, frameID=4294967297, resourceID=37] WebLoaderStrategy::scheduleLoad: URL will be scheduled with the NetworkProcess
+2026-11-27 04:28:47.764 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [webPageID=8, frameID=4294967297, resourceID=37] WebLoaderStrategy::scheduleLoad: Resource is being scheduled with the NetworkProcess (priority=2, existingNetworkResourceLoadIdentifierToResume=0)
+2026-11-27 04:28:47.764 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [webPageID=8, frameID=4294967297, resourceID=37] WebResourceLoader::WebResourceLoader
+2026-11-27 04:28:47.773 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [pageID=8, frameID=4294967297, resourceID=41] ResourceLoader::willSendRequestInternal: calling completion handler
+2026-11-27 04:28:47.773 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=8, frameID=4294967297, resourceID=41 SubResourceLoader::willSendRequestInternal: resource load finished; calling completion handler
+2026-11-27 04:28:47.774 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [webPageID=8, frameID=4294967297, resourceID=41] WebLoaderStrategy::scheduleLoad: URL will be loaded as data
+2026-11-27 04:28:47.774 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [webPageID=0, frameID=0, resourceID=0] WebResourceLoader::WebResourceLoader
+2026-11-27 04:28:47.779 Df Heather[14160:afae] [com.apple.WebKit:ProcessSuspension] WebContent[14168]: [webPageID=8] WebPage::unfreezeLayerTree: Removing a reason to freeze layer tree (reason=1, new=0, old=1)
+2026-11-27 04:28:47.780 Df Heather[14160:afae] [com.apple.WebKit:Layout] WebContent[14168]: [pageID=8, frameID=4294967297, isMainFrame=1] LocalFrameView::fireLayoutRelatedMilestonesIfNeeded: Firing first visually non-empty layout milestone on the main frame
+2026-11-27 04:28:47.780 Df Heather[14160:afae] [com.apple.WebKit:Layout] WebContent[14168]: [webFrameID=4294967297, webPageID=8] WebLocalFrameLoaderClient::dispatchDidReachLayoutMilestone: dispatching DidReachLayoutMilestone (milestones=DidFirstVisuallyNonEmptyLayout)
+2026-11-27 04:28:47.780 Df Heather[14160:afae] [com.apple.WebKit:Layout] WebContent[14168]: [webFrameID=4294967297, webPageID=8] WebLocalFrameLoaderClient::dispatchDidReachLayoutMilestone: dispatching DidFirstVisuallyNonEmptyLayoutForFrame
+2026-11-27 04:28:47.780 Df Heather[14160:afae] [com.apple.WebKit:Layout] WebContent[14168]: [webFrameID=4294967297, webPageID=8] WebLocalFrameLoaderClient::completePageTransitionIfNeeded: dispatching didCompletePageTransition
+2026-11-27 04:28:47.780 Df Heather[14160:af57] [com.apple.WebKit:Loading] 0x101ad8718 - [pageProxyID=7, webPageID=8, PID=14168] WebPageProxy::didFinishDocumentLoadForFrame: frameID=4294967297, isMainFrame=1
+2026-11-27 04:28:47.781 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168] [schemeHandler=1, webPageID=8, frameID=4294967297, taskID=28] WebURLSchemeTaskProxy::didComplete
+2026-11-27 04:28:47.781 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=8, frameID=4294967297, resourceID=28 SubResourceLoader::didFinishLoading
+2026-11-27 04:28:47.783 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=8, frameID=4294967297, resourceID=34 SubResourceLoader::didFinishLoading
+2026-11-27 04:28:47.784 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=0 frameID=8589934593 isMainFrame=1] FrameLoader::setPolicyDocumentLoader: Setting policy document loader to 4581036032 (was 0)
+2026-11-27 04:28:47.784 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [pageID=0, frameID=8589934593, isMainFrame=1] DocumentLoader::attachToFrame
+2026-11-27 04:28:47.784 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=0 frameID=8589934593 isMainFrame=1] FrameLoader::setProvisionalDocumentLoader: Setting provisional document loader to 4581036032 (was 0)
+2026-11-27 04:28:47.784 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=0 frameID=8589934593 isMainFrame=1] FrameLoader::setDocumentLoader: Setting document loader to 4581036032 (was 0)
+2026-11-27 04:28:47.784 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=0 frameID=8589934593 isMainFrame=1] FrameLoader::transitionToCommitted: Clearing provisional document loader (m_provisionalDocumentLoader=4581036032)
+2026-11-27 04:28:47.784 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=0 frameID=8589934593 isMainFrame=1] FrameLoader::setProvisionalDocumentLoader: Setting provisional document loader to 0 (was 4581036032)
+2026-11-27 04:28:47.786 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [pageID=0, frameID=8589934593, isMainFrame=1] DocumentLoader::startLoadingMainResource: Returning empty document
+2026-11-27 04:28:47.786 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=0 frameID=8589934593 isMainFrame=1] FrameLoader::setPolicyDocumentLoader: Setting policy document loader to 0 (was 4581036032)
+2026-11-27 04:28:47.786 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=0 frameID=8589934593 isMainFrame=1] FrameLoader::setState: main frame load completed
+2026-11-27 04:28:47.906 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=8, frameID=4294967297, resourceID=41 SubResourceLoader::didFinishLoading
+2026-11-27 04:28:47.906 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=0 frameID=8589934594 isMainFrame=1] FrameLoader::setPolicyDocumentLoader: Setting policy document loader to 4581015552 (was 0)
+2026-11-27 04:28:47.906 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [pageID=0, frameID=8589934594, isMainFrame=1] DocumentLoader::attachToFrame
+2026-11-27 04:28:47.906 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=0 frameID=8589934594 isMainFrame=1] FrameLoader::setProvisionalDocumentLoader: Setting provisional document loader to 4581015552 (was 0)
+2026-11-27 04:28:47.906 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=0 frameID=8589934594 isMainFrame=1] FrameLoader::setDocumentLoader: Setting document loader to 4581015552 (was 0)
+2026-11-27 04:28:47.906 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=0 frameID=8589934594 isMainFrame=1] FrameLoader::transitionToCommitted: Clearing provisional document loader (m_provisionalDocumentLoader=4581015552)
+2026-11-27 04:28:47.906 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=0 frameID=8589934594 isMainFrame=1] FrameLoader::setProvisionalDocumentLoader: Setting provisional document loader to 0 (was 4581015552)
+2026-11-27 04:28:47.906 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [pageID=0, frameID=8589934594, isMainFrame=1] DocumentLoader::startLoadingMainResource: Returning empty document
+2026-11-27 04:28:47.906 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=0 frameID=8589934594 isMainFrame=1] FrameLoader::setPolicyDocumentLoader: Setting policy document loader to 0 (was 4581015552)
+2026-11-27 04:28:47.906 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=0 frameID=8589934594 isMainFrame=1] FrameLoader::setState: main frame load completed
+2026-11-27 04:28:47.925 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [webPageID=8, frameID=4294967297, resourceID=36] WebResourceLoader::didReceiveResponse: (httpStatusCode=200)
+2026-11-27 04:28:47.925 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [webPageID=8, frameID=4294967297, resourceID=35] WebResourceLoader::didReceiveResponse: (httpStatusCode=200)
+2026-11-27 04:28:47.925 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [webPageID=8, frameID=4294967297, resourceID=37] WebResourceLoader::didReceiveResponse: (httpStatusCode=200)
+2026-11-27 04:28:47.925 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [webPageID=8, frameID=4294967297, resourceID=36] WebResourceLoader::didReceiveData: Started receiving data
+2026-11-27 04:28:47.925 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [webPageID=8, frameID=4294967297, resourceID=36] WebResourceLoader::didFinishResourceLoad: (length=11364)
+2026-11-27 04:28:47.925 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=8, frameID=4294967297, resourceID=36 SubResourceLoader::didFinishLoading
+2026-11-27 04:28:47.932 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [webPageID=8, frameID=4294967297, resourceID=35] WebResourceLoader::didReceiveData: Started receiving data
+2026-11-27 04:28:47.932 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [webPageID=8, frameID=4294967297, resourceID=35] WebResourceLoader::didFinishResourceLoad: (length=11208)
+2026-11-27 04:28:47.932 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=8, frameID=4294967297, resourceID=35 SubResourceLoader::didFinishLoading
+2026-11-27 04:28:47.933 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [webPageID=8, frameID=4294967297, resourceID=37] WebResourceLoader::didReceiveData: Started receiving data
+2026-11-27 04:28:47.933 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: [webPageID=8, frameID=4294967297, resourceID=37] WebResourceLoader::didFinishResourceLoad: (length=29704)
+2026-11-27 04:28:47.933 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=8, frameID=4294967297, resourceID=37 SubResourceLoader::didFinishLoading
+2026-11-27 04:28:48.003 Df Heather[14160:afae] [com.apple.WebKit:Layout] WebContent[14168]: [webFrameID=4294967297, webPageID=8] WebLocalFrameLoaderClient::dispatchDidReachLayoutMilestone: dispatching DidFirstLayoutForFrame
+2026-11-27 04:28:48.004 Df Heather[14160:afae] [com.apple.WebKit:Layout] WebContent[14168]: [webFrameID=4294967297, webPageID=8] WebLocalFrameLoaderClient::dispatchDidReachLayoutMilestone: dispatching DidReachLayoutMilestone (milestones=DidFirstLayout)
+2026-11-27 04:28:48.004 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=8 frameID=4294967297 isMainFrame=1] FrameLoader::setState: main frame load completed
+2026-11-27 04:28:48.005 Df Heather[14160:afae] [com.apple.WebKit:PerformanceLogging] WebContent[14168]: Memory usage info dump at MainFrameLoadCompleted:
+2026-11-27 04:28:48.005 Df Heather[14160:afae] [com.apple.WebKit:PerformanceLogging] WebContent[14168]:   page_count: 1
+2026-11-27 04:28:48.005 Df Heather[14160:afae] [com.apple.WebKit:PerformanceLogging] WebContent[14168]:   backforward_cache_page_count: 0
+2026-11-27 04:28:48.005 Df Heather[14160:afae] [com.apple.WebKit:PerformanceLogging] WebContent[14168]:   document_count: 3
+2026-11-27 04:28:48.005 Df Heather[14160:afae] [com.apple.WebKit:PerformanceLogging] WebContent[14168]:   javascript_gc_heap_capacity_mb: 7
+2026-11-27 04:28:48.005 Df Heather[14160:afae] [com.apple.WebKit:PerformanceLogging] WebContent[14168]:   javascript_gc_heap_extra_memory_size_mb: 0
+2026-11-27 04:28:48.006 Df Heather[14160:afae] [com.apple.WebKit:PerformanceLogging] WebContent[14168]:   internal_mb: 24
+2026-11-27 04:28:48.006 Df Heather[14160:afae] [com.apple.WebKit:PerformanceLogging] WebContent[14168]:   compressed_mb: 0
+2026-11-27 04:28:48.006 Df Heather[14160:afae] [com.apple.WebKit:PerformanceLogging] WebContent[14168]:   phys_footprint_mb: 26
+2026-11-27 04:28:48.006 Df Heather[14160:afae] [com.apple.WebKit:PerformanceLogging] WebContent[14168]:   resident_size_mb: 157
+2026-11-27 04:28:48.006 Df Heather[14160:afae] [com.apple.WebKit:PerformanceLogging] WebContent[14168]:   virtual_size_mb: 418658
+2026-11-27 04:28:48.006 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: ProgressTracker::progressCompleted: frameID 4294967297, value 0.500000, tracked frames 1, originating frameID 4294967297, isMainLoad 1
+2026-11-27 04:28:48.006 Df Heather[14160:afae] [com.apple.WebKit:Network] WebContent[14168]: ProgressTracker::finalProgressComplete: value 0.500000, tracked frames 0, originating frameID 4294967297, isMainLoad 1, isMainLoadProgressing 0
+2026-11-27 04:28:48.006 Df Heather[14160:af57] [com.apple.WebKit:Loading] 0x101ad8718 - [pageProxyID=7, webPageID=8, PID=14168] WebPageProxy::didFinishLoadForFrame: frameID=4294967297, isMainFrame=1
+2026-11-27 04:28:48.007 Df Heather[14160:afae] [com.apple.WebKit:ResourceLoading] WebContent[14168]: [pageID=8 frameID=4294967297 isMainFrame=1] FrameLoader::checkLoadCompleteForThisFrame: Finished frame load
+2026-11-27 04:28:48.007 Df Heather[14160:af57] [com.apple.WebKit:ProcessSuspension] 0x10e114150 - NavigationState will release its process network assertion soon because the page load completed
+2026-11-27 04:28:48.007 Df Heather[14160:af57] [com.apple.WebKit:ProcessSuspension] 0x10e0ec1e0 - [PID=14168, throttler=0x10e0e0150] ProcessThrottler::Activity::invalidate: Ending foreground activity / 'Client navigation'
+2026-11-27 04:28:48.007 E  Heather[14160:af57] [com.apple.WebKit:ResourceLoadStatistics] Failed to request restricted opener domains from WebPrivacy
+2026-11-27 04:28:48.031 Df Heather[14160:afae] [com.apple.WebKit:Layout] WebContent[14168]: [webFrameID=4294967297, webPageID=8] WebLocalFrameLoaderClient::dispatchDidReachLayoutMilestone: dispatching DidReachLayoutMilestone (milestones=DidFirstMeaningfulPaint)
+2026-11-27 04:28:49.238 Df Heather[14160:af57] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x104404800> (7E2A1644-7281-482B-A6BB-5614752828D5)
+2026-11-27 04:28:49.258 Df Heather[14160:af57] [com.apple.WebKit:Loading] 0x101ad8718 - [pageProxyID=7, webPageID=8, PID=14168] WebPageProxy::didGeneratePageLoadTiming: url=<private> firstVisualLayout=5.891 firstMeaningfulPaint=7.250 domContentLoaded=5.891 loadEvent=6.117 subresourcesFinished=6.045
+2026-11-27 04:28:51.009 Df Heather[14160:af57] [com.apple.WebKit:ProcessSuspension] 0x10e114150 NavigationState is releasing background process assertion because a page load completed
+2026-11-27 04:28:51.009 Df Heather[14160:af57] [com.apple.WebKit:Process] Dropping network activity on WebProcess with PID 14168
+2026-11-27 04:28:51.009 Df Heather[14160:af57] [com.apple.WebKit:ProcessSuspension] 0x10e0ec270 - [PID=14168, throttler=0x10e0e0150] ProcessThrottler::Activity::invalidate: Ending background activity / 'Page Load'
+2026-11-27 04:28:58.011 Df Heather[14160:afae] [com.apple.WebKit:PerformanceLogging] WebContent[14168]: PerformanceMonitor::measurePostLoadMemoryUsage: Process was using 27892160 bytes of memory after the page load.

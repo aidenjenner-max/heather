@@ -1,0 +1,21 @@
+Xcode 26.6
+Build version 17F113
+ProductName:		macOS
+ProductVersion:		26.7.2
+BuildVersion:		25G332
+Command line invocation:
+    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/xcodebuild -list -project ios/Heather.xcodeproj
+
+Information about project "Heather":
+    Targets:
+        Heather
+
+    Build Configurations:
+        Debug
+        Release
+
+    If no build configuration is specified and -scheme is not passed then "Release" is used.
+
+    Schemes:
+        Heather
+
