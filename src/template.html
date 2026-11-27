@@ -3512,7 +3512,9 @@ function myAnswer(q) {
 const FAM_MAX = 10;   // most family memories in one Memory Lane round
 function famStillToAnswer(q) {
   const me = (S.circle.me || {}).id, done = new Set((q.answers || []).map(a => a.member_id));
-  return circleMembers().filter(m => m.id !== q.author_id && !done.has(m.id) && !(m.id === me && myAnswer(q) !== undefined));
+  // The server's list leaves out anyone who reported the memory or hid its author, so they don't hold it up
+  const waiting = Array.isArray(q.waiting) ? new Set(q.waiting) : null;
+  return circleMembers().filter(m => m.id !== q.author_id && !done.has(m.id) && (!waiting || waiting.has(m.id)) && !(m.id === me && myAnswer(q) !== undefined));
 }
 function famForMe() { return inCircle() ? familyQs().filter(q => q.shared && !famPlayed(q.id)) : []; }
 function famOpenForOthers() {
